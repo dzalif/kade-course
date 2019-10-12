@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/listLeagueFragment">
+    <fragment
+        android:id="@+id/listLeagueFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.ListLeagueFragment"
+        android:label="List League Fragment"
+        tools:layout="@layout/fragment_list_league"/>
+</navigation>
