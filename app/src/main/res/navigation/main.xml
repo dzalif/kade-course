@@ -6,7 +6,33 @@
     app:startDestination="@id/listLeagueFragment">
     <fragment
         android:id="@+id/listLeagueFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.ListLeagueFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.listleague.ListLeagueFragment"
         android:label="List League Fragment"
-        tools:layout="@layout/fragment_list_league"/>
+        tools:layout="@layout/fragment_list_league">
+        <action
+            android:id="@+id/action_listLeagueFragment_to_detailLeagueFragment"
+            app:destination="@id/detailLeagueFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailLeagueFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.detailleague.DetailLeagueFragment"
+        android:label="fragment_detail_league"
+        tools:layout="@layout/fragment_detail_league" >
+        <action
+            android:id="@+id/action_detailLeagueFragment_to_nextMatchFragment"
+            app:destination="@id/nextMatchFragment" />
+        <action
+            android:id="@+id/action_detailLeagueFragment_to_previousMatchFragment"
+            app:destination="@id/previousMatchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nextMatchFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch.NextMatchFragment"
+        android:label="fragment_next_match"
+        tools:layout="@layout/fragment_next_match" />
+    <fragment
+        android:id="@+id/previousMatchFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.previousmatch.PreviousMatchFragment"
+        android:label="fragment_previous_match"
+        tools:layout="@layout/fragment_previous_match" />
 </navigation>

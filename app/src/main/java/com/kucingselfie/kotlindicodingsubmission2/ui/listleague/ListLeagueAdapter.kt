@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui
+package com.kucingselfie.kotlindicodingsubmission2.ui.listleague
 
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +15,9 @@ class ListLeagueAdapter(private val items: List<League>, private val clickListen
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-       return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_league, parent, false))
+       return ViewHolder(
+           LayoutInflater.from(parent.context).inflate(R.layout.item_league, parent, false)
+       )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -29,7 +31,9 @@ class ListLeagueAdapter(private val items: List<League>, private val clickListen
             clickListener: (league: League) -> Unit
         ) {
             name.text = league.leagueName
-            itemView.setOnClickListener { clickListener(league) }
+            itemView.setOnClickListener {
+                clickListener(league)
+            }
         }
     }
 

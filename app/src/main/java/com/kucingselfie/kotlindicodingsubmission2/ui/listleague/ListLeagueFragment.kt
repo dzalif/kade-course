@@ -1,16 +1,14 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui
+package com.kucingselfie.kotlindicodingsubmission2.ui.listleague
 
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 
 import com.kucingselfie.kotlindicodingsubmission2.R
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentListLeagueBinding
 import com.kucingselfie.kotlindicodingsubmission2.model.League
-import kotlinx.android.synthetic.main.fragment_list_league.*
 
 /**
  * A simple [Fragment] subclass.
@@ -28,10 +26,10 @@ class ListLeagueFragment : Fragment() {
 
         initData()
 
-        binding.listLeague.adapter = ListLeagueAdapter(items) {
-
-        }
-
+        binding.listLeague.adapter =
+            ListLeagueAdapter(items) {
+                findNavController().navigate(R.id.action_listLeagueFragment_to_detailLeagueFragment)
+            }
         return binding.root
     }
 

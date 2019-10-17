@@ -14,8 +14,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_URL", '"https://www.thesportsdb.com/"'
-        buildConfigField "String", "TSDB_API_KEY", '"1"'
+        buildConfigField "String", "BASE_URL", '"https://thesportsdb.com/api/v1/json/1/"'
     }
     buildTypes {
         release {
@@ -47,11 +46,15 @@ dependencies {
     implementation deps.lifecycle.runtime
     implementation deps.lifecycle.java8
     implementation deps.retrofit.runtime
+    implementation deps.lifecycle.extensions
     implementation deps.retrofit.gson
     implementation deps.glide.runtime
     implementation deps.constraint_layout
     implementation deps.kotlin.stdlib
     implementation deps.retrofit.calladapter
+    implementation deps.navigation.ui
+    implementation deps.navigation.ui_ktx
+    implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
 
     implementation deps.timber
 
