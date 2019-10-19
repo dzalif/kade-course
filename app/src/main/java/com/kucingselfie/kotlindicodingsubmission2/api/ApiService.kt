@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.kucingselfie.kotlindicodingsubmission2.BuildConfig
 import com.kucingselfie.kotlindicodingsubmission2.api.response.DetailLeagueResponse
+import com.kucingselfie.kotlindicodingsubmission2.api.response.DetailMatchResponse
 import com.kucingselfie.kotlindicodingsubmission2.api.response.NextMatchResponse
 import com.kucingselfie.kotlindicodingsubmission2.api.response.PreviousMatchResponse
 import kotlinx.coroutines.Deferred
@@ -43,6 +44,9 @@ interface ApiService {
 
     @GET("eventspastleague.php")
     fun getPreviousMatch(@Query("id") idleague: Int) : Deferred<PreviousMatchResponse>
+
+    @GET("lookupevent.php")
+    fun getDetailMatch(@Query("id") idevent: Int) : Deferred<DetailMatchResponse>
 }
 
 object TheSportsApi {

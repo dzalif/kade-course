@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentPreviousMatchBinding
 import com.kucingselfie.kotlindicodingsubmission2.model.Match
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
@@ -71,7 +72,8 @@ class PreviousMatchFragment : Fragment() {
 
     private fun initAdapter() {
         adapter = NextMatchAdapter(requireContext(), items) {
-
+            val action = PreviousMatchFragmentDirections.actionPreviousMatchFragmentToDetailMatchFragment(it.id)
+            findNavController().navigate(action)
         }
         binding.rvPreviousMatch.adapter = adapter
     }

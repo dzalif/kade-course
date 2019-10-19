@@ -14,4 +14,8 @@
     <string name="league_title">League Title</string>
     <string name="next_match">Next Match</string>
     <string name="previous_match">Previous Match</string>
+    <string name="home">Home</string>
+    <string name="away">Away</string>
+    <string name="match_score">%s : %s</string>
+    <string name="date_and_time_match">Waktu match : \n%s %s</string>
 </resources>
