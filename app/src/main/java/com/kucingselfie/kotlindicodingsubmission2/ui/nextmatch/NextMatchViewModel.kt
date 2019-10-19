@@ -1,10 +1,10 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.detailleague
+package com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kotlindicodingsubmission2.api.TheSportsApi
-import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
+import com.kucingselfie.kotlindicodingsubmission2.model.Match
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -12,30 +12,30 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class DetailLeagueViewModel : ViewModel() {
+class NextMatchViewModel : ViewModel() {
 
     private val _status = MutableLiveData<Result>()
     val status: LiveData<Result>
-            get() = _status
+        get() = _status
 
-    private val _detailLeague = MutableLiveData<List<DetailLeague>>()
-    val detailLeague: LiveData<List<DetailLeague>>
-    get() = _detailLeague
+    private val _nextMatch = MutableLiveData<List<Match>>()
+    val nextMatch: LiveData<List<Match>>
+        get() = _nextMatch
 
     private var vmJob = Job()
     private val coroutineScope = CoroutineScope(vmJob + Dispatchers.Main)
 
-    fun getDetailLeague() {
+    fun getNextMatch(idLeague: String) {
         coroutineScope.launch {
-            val getDetailDeferred = TheSportsApi.retrofitService.getDetailLeague(4328)
+            val getDetailDeferred = TheSportsApi.retrofitService.getNextMatch(idLeague.toInt())
             try {
                 _status.value = Result.LOADING
                 val listResult = getDetailDeferred.await()
-                _detailLeague.value = listResult.leagues
+                _nextMatch.value = listResult.events
                 _status.value = Result.SUCCESS
             } catch (e: Exception) {
                 _status.value = Result.ERROR
-                _detailLeague.value = mutableListOf()
+                _nextMatch.value = mutableListOf()
             }
         }
     }

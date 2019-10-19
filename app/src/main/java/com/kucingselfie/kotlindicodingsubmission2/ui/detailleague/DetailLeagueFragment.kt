@@ -3,7 +3,6 @@ package com.kucingselfie.kotlindicodingsubmission2.ui.detailleague
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,6 +11,8 @@ import com.kucingselfie.kotlindicodingsubmission2.R
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentDetailLeagueBinding
 import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
+import com.kucingselfie.kotlindicodingsubmission2.util.invisible
+import com.kucingselfie.kotlindicodingsubmission2.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.*
 
 /**
@@ -22,6 +23,8 @@ class DetailLeagueFragment : Fragment() {
     private val vm: DetailLeagueViewModel by lazy {
         ViewModelProviders.of(this).get(DetailLeagueViewModel::class.java)
     }
+
+    private lateinit var idLeague: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,8 +39,8 @@ class DetailLeagueFragment : Fragment() {
 
         vm.status.observe(this, Observer {
             when(it) {
-                Result.LOADING -> { progressBar.visibility = View.VISIBLE }
-                else -> { progressBar.visibility = View.INVISIBLE }
+                Result.LOADING -> { progressBar.visible() }
+                else -> { progressBar.invisible() }
             }
         })
 
@@ -53,6 +56,7 @@ class DetailLeagueFragment : Fragment() {
     private fun displayData(it: List<DetailLeague>) {
         leagueTitle.text = it[0].leagueName
         leagueDesc.text = it[0].description
+        idLeague = it[0].id
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -65,7 +69,8 @@ class DetailLeagueFragment : Fragment() {
         when (item.itemId) {
             R.id.action_next_match -> {
                 // Navigate to Next Match
-                findNavController().navigate(R.id.action_detailLeagueFragment_to_nextMatchFragment)
+                val action = DetailLeagueFragmentDirections.actionDetailLeagueFragmentToNextMatchFragment(idLeague)
+                findNavController().navigate(action)
                 return true
             }
             R.id.action_previous_match -> {
