@@ -20,7 +20,7 @@ class NextMatchAdapter(private val context: Context, private var items: List<Mat
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        return ViewHolder( LayoutInflater.from(parent.context).inflate(R.layout.item_next_match, parent, false))
+        return ViewHolder( LayoutInflater.from(parent.context).inflate(R.layout.item_match, parent, false))
     }
 
     override fun getItemCount(): Int = items.size

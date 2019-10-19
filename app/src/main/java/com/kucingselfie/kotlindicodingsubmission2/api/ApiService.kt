@@ -6,6 +6,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.kucingselfie.kotlindicodingsubmission2.BuildConfig
 import com.kucingselfie.kotlindicodingsubmission2.api.response.DetailLeagueResponse
 import com.kucingselfie.kotlindicodingsubmission2.api.response.NextMatchResponse
+import com.kucingselfie.kotlindicodingsubmission2.api.response.PreviousMatchResponse
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -39,6 +40,9 @@ interface ApiService {
 
     @GET("eventsnextleague.php")
     fun getNextMatch(@Query("id") idleague: Int) : Deferred<NextMatchResponse>
+
+    @GET("eventspastleague.php")
+    fun getPreviousMatch(@Query("id") idleague: Int) : Deferred<PreviousMatchResponse>
 }
 
 object TheSportsApi {

@@ -75,7 +75,8 @@ class DetailLeagueFragment : Fragment() {
             }
             R.id.action_previous_match -> {
                 // Navigate to Previous Match
-                findNavController().navigate(R.id.action_detailLeagueFragment_to_previousMatchFragment)
+                val action = DetailLeagueFragmentDirections.actionDetailLeagueFragmentToPreviousMatchFragment(idLeague)
+                findNavController().navigate(action)
                 return true
             }
         }
