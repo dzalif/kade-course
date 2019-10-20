@@ -14,6 +14,10 @@ fun View.invisible() {
     this.visibility = View.INVISIBLE
 }
 
+fun View.gone() {
+    this.visibility = View.GONE
+}
+
 fun String.toGMT7(): String? {
     if (this.isNotEmpty()) {
         val dateFormat = SimpleDateFormat("HH:mm:ssZ", Locale.US)

@@ -78,5 +78,17 @@
         <argument
             android:name="idEvent"
             app:argType="string" />
+        <action
+            android:id="@+id/action_detailMatchFragment_to_searchFragment"
+            app:destination="@id/searchFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.searchevent.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
 </navigation>
