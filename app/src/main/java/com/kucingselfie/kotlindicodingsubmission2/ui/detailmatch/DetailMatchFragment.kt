@@ -2,22 +2,18 @@ package com.kucingselfie.kotlindicodingsubmission2.ui.detailmatch
 
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.api.response.DetailMatchResponse
-
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentDetailMatchBinding
-import com.kucingselfie.kotlindicodingsubmission2.model.DetailMatch
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
-import com.kucingselfie.kotlindicodingsubmission2.ui.detailleague.DetailLeagueFragmentDirections
-import com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch.NextMatchFragmentArgs
 import com.kucingselfie.kotlindicodingsubmission2.util.invisible
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
-import kotlinx.android.synthetic.main.fragment_detail_league.*
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 import kotlinx.android.synthetic.main.fragment_detail_match.*
 
@@ -29,6 +25,7 @@ class DetailMatchFragment : Fragment() {
     private lateinit var binding: FragmentDetailMatchBinding
 
     private lateinit var idEvent: String
+    private var imageEvent: String? = null
 
     private val vm: DetailMatchViewModel by lazy {
         ViewModelProviders.of(this).get(DetailMatchViewModel::class.java)
@@ -40,16 +37,16 @@ class DetailMatchFragment : Fragment() {
     ): View? {
         binding = FragmentDetailMatchBinding.inflate(inflater)
 
-        //Enable options menu
-        setHasOptionsMenu(true)
-
         //Get id event
         idEvent = DetailMatchFragmentArgs.fromBundle(arguments!!).idEvent
+        imageEvent = DetailMatchFragmentArgs.fromBundle(arguments!!).imageEvent
+
+        displayImageEvent(imageEvent)
 
         vm.getDetailMatch(idEvent)
 
         vm.status.observe(this, Observer {
-            when(it) {
+            when (it) {
                 Result.LOADING -> {
                     progressBar.visible()
                     group.invisible()
@@ -68,21 +65,12 @@ class DetailMatchFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.detail_match_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle presses on the action bar menu items
-        when (item.itemId) {
-            R.id.action_search_match -> {
-                // Navigate to Search Match
-                findNavController().navigate(R.id.action_detailMatchFragment_to_searchFragment)
-                return true
-            }
+    private fun displayImageEvent(imageEvent: String?) {
+        imageEvent?.let {
+            Glide.with(requireContext()).load(imageEvent)
+                .placeholder(R.drawable.ic_placeholder_image)
+                .into(binding.imageEvent)
         }
-        return super.onOptionsItemSelected(item)
     }
 
 }

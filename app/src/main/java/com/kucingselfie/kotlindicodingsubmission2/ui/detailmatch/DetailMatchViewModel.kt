@@ -12,12 +12,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.Exception
-import java.text.DateFormat
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DetailMatchViewModel : ViewModel() {
+
+    companion object {
+        const val GK = "(GK)"
+        const val FW = "(FW)"
+        const val MD = "(MD)"
+        const val DF = "(DF)"
+    }
 
     private val _status = MutableLiveData<Result>()
     val status: LiveData<Result>
@@ -54,7 +57,17 @@ class DetailMatchViewModel : ViewModel() {
             events[0].intHomeScore ?: "0",
             events[0].strAwayTeam,
             events[0].strHomeTeam,
-            events[0].strTime?.toGMT7()
+            events[0].strTime?.toGMT7(),
+            events[0].strHomeFormation ?: "",
+            events[0].strAwayFormation ?: "",
+            events[0].strHomeGK + GK,
+            events[0].strHomeFW + FW,
+            events[0].strHomeMD + MD,
+            events[0].strHomeDF + DF,
+            events[0].strAwayGK + GK,
+            events[0].strAwayFW + FW,
+            events[0].strAwayMD + MD,
+            events[0].strAwayDF + DF
         )
     }
 

@@ -65,7 +65,7 @@ class NextMatchFragment : Fragment() {
 
     private fun initAdapter() {
         adapter = NextMatchAdapter(requireContext(), items) {
-            val action = NextMatchFragmentDirections.actionNextMatchFragmentToDetailMatchFragment(it.id)
+            val action = NextMatchFragmentDirections.actionNextMatchFragmentToDetailMatchFragment(it.id, it.eventImage ?: "")
             findNavController().navigate(action)
         }
         binding.rvNextMatch.adapter = adapter

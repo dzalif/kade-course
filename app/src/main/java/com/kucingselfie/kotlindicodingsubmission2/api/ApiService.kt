@@ -27,9 +27,9 @@ var gson: Gson = GsonBuilder()
 
 private val retrofit = Retrofit.Builder()
     .baseUrl(BuildConfig.BASE_URL)
+    .client(client)
     .addConverterFactory(GsonConverterFactory.create(gson))
     .addCallAdapterFactory(CoroutineCallAdapterFactory())
-    .client(client)
     .build()
 
 interface ApiService {

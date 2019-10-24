@@ -8,5 +8,5 @@ class Match(
     @SerializedName("strEvent")
     val event: String,
     @SerializedName("strThumb")
-    val eventImage: String
+    val eventImage: String?
 )

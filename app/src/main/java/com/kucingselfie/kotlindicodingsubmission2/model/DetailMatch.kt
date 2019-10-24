@@ -17,5 +17,25 @@ data class DetailMatch(
     @SerializedName("strHomeTeam")
     val strHomeTeam: String,
     @SerializedName("strTime")
-    val strTime: String?
+    val strTime: String?,
+    @SerializedName("strHomeFormation")
+    val strHomeFormation: String?,
+    @SerializedName("strAwayFormation")
+    val strAwayFormation: String?,
+    @SerializedName("strHomeLineupGoalkeeper")
+    val strHomeGK: String,
+    @SerializedName("strHomeLineupForward")
+    val strHomeFW: String,
+    @SerializedName("strHomeLineupMidfield")
+    val strHomeMD: String,
+    @SerializedName("strHomeLineupDefense")
+    val strHomeDF: String,
+    @SerializedName("strAwayLineupGoalkeeper")
+    val strAwayGK: String,
+    @SerializedName("strAwayLineupForward")
+    val strAwayFW: String,
+    @SerializedName("strAwayLineupMidfield")
+    val strAwayMD: String,
+    @SerializedName("strAwayLineupDefense")
+    val strAwayDF: String
 )

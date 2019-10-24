@@ -72,7 +72,7 @@ class PreviousMatchFragment : Fragment() {
 
     private fun initAdapter() {
         adapter = NextMatchAdapter(requireContext(), items) {
-            val action = PreviousMatchFragmentDirections.actionPreviousMatchFragmentToDetailMatchFragment(it.id)
+            val action = PreviousMatchFragmentDirections.actionPreviousMatchFragmentToDetailMatchFragment(it.id, it.eventImage!!)
             findNavController().navigate(action)
         }
         binding.rvPreviousMatch.adapter = adapter
