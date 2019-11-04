@@ -11,4 +11,9 @@
         android:title="@string/previous_match"
         app:showAsAction="never"
         />
+    <item
+        android:id="@+id/action_favorite_match"
+        android:title="Favorite Match"
+        app:showAsAction="never"
+        />
 </menu>

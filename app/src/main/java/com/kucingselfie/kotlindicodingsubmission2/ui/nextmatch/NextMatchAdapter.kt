@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kucingselfie.kotlindicodingsubmission2.R
 import com.kucingselfie.kotlindicodingsubmission2.model.Match
+import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
 
 class NextMatchAdapter(private val context: Context, private var items: List<Match>, private val clickListener: (Match) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

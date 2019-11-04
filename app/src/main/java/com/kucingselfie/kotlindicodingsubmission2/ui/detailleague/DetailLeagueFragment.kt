@@ -79,6 +79,10 @@ class DetailLeagueFragment : Fragment() {
                 findNavController().navigate(action)
                 return true
             }
+            R.id.action_favorite_match -> {
+                findNavController().navigate(R.id.action_detailLeagueFragment_to_favoriteMatchFragment)
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
     }

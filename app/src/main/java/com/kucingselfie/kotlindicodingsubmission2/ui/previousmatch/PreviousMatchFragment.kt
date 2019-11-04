@@ -10,7 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentPreviousMatchBinding
+import com.kucingselfie.kotlindicodingsubmission2.model.LastMatch
 import com.kucingselfie.kotlindicodingsubmission2.model.Match
+import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
 import com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch.NextMatchAdapter
 import com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch.NextMatchFragmentArgs

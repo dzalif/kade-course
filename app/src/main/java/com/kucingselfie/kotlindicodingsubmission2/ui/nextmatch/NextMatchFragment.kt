@@ -2,14 +2,13 @@ package com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch
 
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentNextMatchBinding
 import com.kucingselfie.kotlindicodingsubmission2.model.Match
 import com.kucingselfie.kotlindicodingsubmission2.model.Result

@@ -43,6 +43,9 @@
             app:exitAnim="@anim/fragment_fade_exit"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_detailLeagueFragment_to_favoriteMatchFragment"
+            app:destination="@id/favoriteMatchFragment" />
     </fragment>
 
     <fragment
@@ -89,4 +92,9 @@
             android:name="imageEvent"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteMatchFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch.FavoriteMatchFragment"
+        android:label="Favorite Match"
+        tools:layout="@layout/fragment_favorite_match"/>
 </navigation>

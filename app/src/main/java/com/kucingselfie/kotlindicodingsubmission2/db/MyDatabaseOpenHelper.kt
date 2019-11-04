@@ -2,7 +2,9 @@ package com.kucingselfie.kotlindicodingsubmission2.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import org.jetbrains.anko.db.ManagedSQLiteOpenHelper
+import com.kucingselfie.kotlindicodingsubmission2.model.LastMatchFavorite
+import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
+import org.jetbrains.anko.db.*
 
 class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeam.db", null, 1) {
 
@@ -18,11 +20,33 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
         }
     }
     override fun onCreate(db: SQLiteDatabase?) {
+        //Create table
+        db?.createTable(
+            NextMatchFavorite.TABLE_NEXT_MATCH_FAVORITE,
+            true,
+            NextMatchFavorite.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+            NextMatchFavorite.MATCH_ID to TEXT + UNIQUE,
+            NextMatchFavorite.MATCH_NAME to TEXT,
+            NextMatchFavorite.MATCH_PICTURE to TEXT
+        )
 
+        db?.createTable(
+            LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE,
+            true,
+            LastMatchFavorite.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
+            LastMatchFavorite.MATCH_ID to TEXT + UNIQUE,
+            LastMatchFavorite.MATCH_NAME to TEXT,
+            LastMatchFavorite.MATCH_PICTURE to TEXT
+        )
     }
 
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        //Upgrade table
+        db?.dropTable(NextMatchFavorite.TABLE_NEXT_MATCH_FAVORITE, true)
+        db?.dropTable(LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE, true)
     }
-
 }
+
+//Access property for context
+val Context.database: MyDatabaseOpenHelper
+get() = MyDatabaseOpenHelper.getInstance(applicationContext)
