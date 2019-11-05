@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kotlindicodingsubmission2.api.TheSportsApi
 import com.kucingselfie.kotlindicodingsubmission2.model.Match
+import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

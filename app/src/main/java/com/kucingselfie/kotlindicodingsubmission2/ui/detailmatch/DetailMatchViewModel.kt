@@ -53,6 +53,7 @@ class DetailMatchViewModel : ViewModel() {
         return DetailMatch(
             events[0].dateEvent,
             events[0].idEvent,
+            events[0].eventName,
             events[0].intAwayScore ?: "0",
             events[0].intHomeScore ?: "0",
             events[0].strAwayTeam,

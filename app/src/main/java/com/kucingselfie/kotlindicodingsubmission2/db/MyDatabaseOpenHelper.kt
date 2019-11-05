@@ -6,7 +6,7 @@ import com.kucingselfie.kotlindicodingsubmission2.model.LastMatchFavorite
 import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
 import org.jetbrains.anko.db.*
 
-class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeam.db", null, 1) {
+class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeams.db", null, 1) {
 
     companion object {
         private var instance: MyDatabaseOpenHelper? = null

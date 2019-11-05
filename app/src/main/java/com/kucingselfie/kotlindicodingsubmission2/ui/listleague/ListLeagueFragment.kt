@@ -86,7 +86,8 @@ class ListLeagueFragment : Fragment() {
         adapter = SearchAdapter(requireContext(), itemsResult) {
             val action = ListLeagueFragmentDirections.actionListLeagueFragmentToDetailMatchFragment(
                 it.idEvent,
-                it.imageEvent ?: ""
+                it.imageEvent ?: "",
+                false
             )
             findNavController().navigate(action)
         }

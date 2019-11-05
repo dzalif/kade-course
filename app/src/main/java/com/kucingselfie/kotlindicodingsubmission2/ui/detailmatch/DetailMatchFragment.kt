@@ -36,7 +36,7 @@ class DetailMatchFragment : Fragment() {
     private var isFavorite: Boolean = false
     private var isNextMatch: Boolean = false
     private var nextMatch: NextMatch? = null
-    private var lastmatch: LastMatch? = null
+    private var lastMatch: LastMatch? = null
 
     private val vm: DetailMatchViewModel by lazy {
         ViewModelProviders.of(this).get(DetailMatchViewModel::class.java)
@@ -53,6 +53,7 @@ class DetailMatchFragment : Fragment() {
         //Get id event
         idEvent = DetailMatchFragmentArgs.fromBundle(arguments!!).idEvent
         imageEvent = DetailMatchFragmentArgs.fromBundle(arguments!!).imageEvent
+        isNextMatch = DetailMatchFragmentArgs.fromBundle(arguments!!).isNextMatch
 
         displayImageEvent(imageEvent)
 
@@ -75,6 +76,11 @@ class DetailMatchFragment : Fragment() {
 
         vm.detailMatch.observe(this, Observer {
             binding.model = it
+            if (isNextMatch) {
+                nextMatch = NextMatch(idEvent, it.eventName, imageEvent)
+            } else {
+                lastMatch = LastMatch(idEvent, it.eventName, imageEvent)
+            }
         })
 
         return binding.root
@@ -84,14 +90,14 @@ class DetailMatchFragment : Fragment() {
         if (isNextMatch) {
             context?.database?.use {
                 val result = select(NextMatchFavorite.TABLE_NEXT_MATCH_FAVORITE)
-                    .whereArgs("(MATCH_ID) = {id}", "id" to id)
+                    .whereArgs("(MATCH_ID) = {id}", "id" to idEvent)
                 val favorite = result.parseList(classParser<NextMatchFavorite>())
                 if (favorite.isNotEmpty()) isFavorite = true
             }
         } else {
             context?.database?.use {
                 val result = select(LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE)
-                    .whereArgs("(MATCH_ID) = {id}", "id" to id)
+                    .whereArgs("(MATCH_ID) = {id}", "id" to idEvent)
                 val favorite = result.parseList(classParser<LastMatchFavorite>())
                 if (favorite.isNotEmpty()) isFavorite = true
             }
@@ -143,7 +149,7 @@ class DetailMatchFragment : Fragment() {
     private fun removeFromLastMatchFavorite() {
         try {
             context?.database?.use {
-                delete(LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE, "(MATCH_ID = {id})", "id" to id)
+                delete(LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE, "(MATCH_ID = {id})", "id" to idEvent)
             }
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -153,7 +159,7 @@ class DetailMatchFragment : Fragment() {
     private fun removeFromNextMatchFavorite() {
         try {
             context?.database?.use {
-                delete(NextMatchFavorite.TABLE_NEXT_MATCH_FAVORITE, "(MATCH_ID = {id})", "id" to id)
+                delete(NextMatchFavorite.TABLE_NEXT_MATCH_FAVORITE, "(MATCH_ID = {id})", "id" to idEvent)
             }
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -165,9 +171,9 @@ class DetailMatchFragment : Fragment() {
             context?.database?.use {
                 insert(
                     LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE,
-                    LastMatchFavorite.MATCH_ID to lastmatch?.id,
-                    LastMatchFavorite.MATCH_NAME to lastmatch?.event,
-                    LastMatchFavorite.MATCH_PICTURE to lastmatch?.eventImage
+                    LastMatchFavorite.MATCH_ID to lastMatch?.id,
+                    LastMatchFavorite.MATCH_NAME to lastMatch?.event,
+                    LastMatchFavorite.MATCH_PICTURE to lastMatch?.eventImage
                 )
             }
             Toast.makeText(requireContext(), "Added to last match favorite", Toast.LENGTH_SHORT).show()

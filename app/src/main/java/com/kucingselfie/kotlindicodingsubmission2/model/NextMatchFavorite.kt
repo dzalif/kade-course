@@ -4,7 +4,7 @@ data class NextMatchFavorite(
     val id: Long?,
     val matchId: String?,
     val matchName: String?,
-    val matchPicture: String
+    val matchPicture: String?
 ) {
     companion object {
         const val TABLE_NEXT_MATCH_FAVORITE: String = "TABLE_NEXT_MATCH_FAVORITE"

@@ -10,11 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentPreviousMatchBinding
-import com.kucingselfie.kotlindicodingsubmission2.model.LastMatch
 import com.kucingselfie.kotlindicodingsubmission2.model.Match
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
-import com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch.NextMatchAdapter
+import com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch.MatchAdapter
 import com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch.NextMatchFragmentArgs
 import com.kucingselfie.kotlindicodingsubmission2.util.invisible
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
@@ -29,7 +27,7 @@ class PreviousMatchFragment : Fragment() {
 
     private lateinit var binding: FragmentPreviousMatchBinding
 
-    private lateinit var adapter: NextMatchAdapter
+    private lateinit var adapter: MatchAdapter
 
     private var items: MutableList<Match> = mutableListOf()
 
@@ -73,8 +71,8 @@ class PreviousMatchFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = NextMatchAdapter(requireContext(), items) {
-            val action = PreviousMatchFragmentDirections.actionPreviousMatchFragmentToDetailMatchFragment(it.id, it.eventImage!!)
+        adapter = MatchAdapter(requireContext(), items) {
+            val action = PreviousMatchFragmentDirections.actionPreviousMatchFragmentToDetailMatchFragment(it.id, it.eventImage!!, false)
             findNavController().navigate(action)
         }
         binding.rvPreviousMatch.adapter = adapter

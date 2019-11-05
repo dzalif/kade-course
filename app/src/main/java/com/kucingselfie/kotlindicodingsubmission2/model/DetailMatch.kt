@@ -5,37 +5,39 @@ import com.google.gson.annotations.SerializedName
 
 data class DetailMatch(
     @SerializedName("dateEvent")
-    val dateEvent: String,
+    val dateEvent: String? = null,
     @SerializedName("idEvent")
-    val idEvent: String,
+    val idEvent: String? = null,
+    @SerializedName("strEvent")
+    val eventName: String? = null,
     @SerializedName("intAwayScore")
-    val intAwayScore: String?,
+    val intAwayScore: String? = null,
     @SerializedName("intHomeScore")
-    val intHomeScore: String?,
+    val intHomeScore: String? = null,
     @SerializedName("strAwayTeam")
-    val strAwayTeam: String,
+    val strAwayTeam: String? = null,
     @SerializedName("strHomeTeam")
-    val strHomeTeam: String,
+    val strHomeTeam: String? = null,
     @SerializedName("strTime")
-    val strTime: String?,
+    val strTime: String? = null,
     @SerializedName("strHomeFormation")
-    val strHomeFormation: String?,
+    val strHomeFormation: String? = null,
     @SerializedName("strAwayFormation")
-    val strAwayFormation: String?,
+    val strAwayFormation: String? = null,
     @SerializedName("strHomeLineupGoalkeeper")
-    val strHomeGK: String,
+    val strHomeGK: String? = null,
     @SerializedName("strHomeLineupForward")
-    val strHomeFW: String,
+    val strHomeFW: String? = null,
     @SerializedName("strHomeLineupMidfield")
-    val strHomeMD: String,
+    val strHomeMD: String? = null,
     @SerializedName("strHomeLineupDefense")
-    val strHomeDF: String,
+    val strHomeDF: String? = null,
     @SerializedName("strAwayLineupGoalkeeper")
-    val strAwayGK: String,
+    val strAwayGK: String? = null,
     @SerializedName("strAwayLineupForward")
-    val strAwayFW: String,
+    val strAwayFW: String? = null,
     @SerializedName("strAwayLineupMidfield")
-    val strAwayMD: String,
+    val strAwayMD: String? = null,
     @SerializedName("strAwayLineupDefense")
-    val strAwayDF: String
+    val strAwayDF: String? = null
 )

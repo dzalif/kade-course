@@ -25,7 +25,7 @@ class NextMatchFragment : Fragment() {
 
     private lateinit var binding: FragmentNextMatchBinding
 
-    private lateinit var adapter: NextMatchAdapter
+    private lateinit var adapter: MatchAdapter
 
     private var items: MutableList<Match> = mutableListOf()
 
@@ -63,8 +63,8 @@ class NextMatchFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = NextMatchAdapter(requireContext(), items) {
-            val action = NextMatchFragmentDirections.actionNextMatchFragmentToDetailMatchFragment(it.id, it.eventImage ?: "")
+        adapter = MatchAdapter(requireContext(), items) {
+            val action = NextMatchFragmentDirections.actionNextMatchFragmentToDetailMatchFragment(it.id, it.eventImage ?: "", true)
             findNavController().navigate(action)
         }
         binding.rvNextMatch.adapter = adapter

@@ -91,10 +91,31 @@
         <argument
             android:name="imageEvent"
             app:argType="string" />
+        <argument
+            android:name="isNextMatch"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/favoriteMatchFragment"
         android:name="com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch.FavoriteMatchFragment"
         android:label="Favorite Match"
         tools:layout="@layout/fragment_favorite_match"/>
+    <fragment
+        android:id="@+id/lastMatchFavoriteFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch.LastMatchFavoriteFragment"
+        tools:layout="@layout/fragment_last_match_favorite"
+        android:label="LastMatchFavoriteFragment" >
+        <action
+            android:id="@+id/action_lastMatchFavoriteFragment_to_detailMatchFragment"
+            app:destination="@id/detailMatchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nextMatchFavoriteFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch.NextMatchFavoriteFragment"
+        tools:layout="@layout/fragment_next_match_favorite"
+        android:label="NextMatchFavoriteFragment" >
+        <action
+            android:id="@+id/action_nextMatchFavoriteFragment_to_detailMatchFragment"
+            app:destination="@id/detailMatchFragment" />
+    </fragment>
 </navigation>

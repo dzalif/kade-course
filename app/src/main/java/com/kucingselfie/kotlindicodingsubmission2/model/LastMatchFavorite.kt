@@ -1,10 +1,10 @@
 package com.kucingselfie.kotlindicodingsubmission2.model
 
-class LastMatchFavorite(
+data class LastMatchFavorite(
     val id: Long?,
     val matchId: String?,
     val matchName: String?,
-    val matchPicture: String
+    val matchPicture: String?
 ) {
     companion object {
         const val TABLE_LAST_MATCH_FAVORITE: String = "TABLE_LAST_MATCH_FAVORITE"

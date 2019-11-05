@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch
+package com.kucingselfie.kotlindicodingsubmission2.ui.previousmatch
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
+import com.kucingselfie.kotlindicodingsubmission2.model.LastMatch
+import com.kucingselfie.kotlindicodingsubmission2.model.LastMatchFavorite
 
-class NextMatchAdapter(private val context: Context, private var items: List<NextMatchFavorite>, private val clickListener: (NextMatchFavorite) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
+class LastMatchAdapter(private val context: Context, private var items: List<LastMatchFavorite>, private val clickListener: (LastMatchFavorite) -> Unit) : RecyclerView.Adapter<LastMatchAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(context, items[position], clickListener)
     }
@@ -31,8 +31,8 @@ class NextMatchAdapter(private val context: Context, private var items: List<Nex
         private val image = view.findViewById<ImageView>(R.id.eventImage)
         fun bind(
             context: Context,
-            match: NextMatchFavorite,
-            clickListener: (league: NextMatchFavorite) -> Unit
+            match: LastMatchFavorite,
+            clickListener: (league: LastMatchFavorite) -> Unit
         ) {
             name.text = match.matchName
             Glide.with(context).load(match.matchPicture).placeholder(R.drawable.ic_placeholder_image).into(image)

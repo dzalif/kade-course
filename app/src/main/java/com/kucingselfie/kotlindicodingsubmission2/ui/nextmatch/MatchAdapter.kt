@@ -9,10 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
+import com.kucingselfie.kotlindicodingsubmission2.model.Match
 
-class NextMatchAdapter(private val context: Context, private var items: List<NextMatchFavorite>, private val clickListener: (NextMatchFavorite) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
+class MatchAdapter(private val context: Context, private var items: List<Match>, private val clickListener: (Match) -> Unit) : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(context, items[position], clickListener)
     }
@@ -31,15 +30,20 @@ class NextMatchAdapter(private val context: Context, private var items: List<Nex
         private val image = view.findViewById<ImageView>(R.id.eventImage)
         fun bind(
             context: Context,
-            match: NextMatchFavorite,
-            clickListener: (league: NextMatchFavorite) -> Unit
+            match: Match,
+            clickListener: (league: Match) -> Unit
         ) {
-            name.text = match.matchName
-            Glide.with(context).load(match.matchPicture).placeholder(R.drawable.ic_placeholder_image).into(image)
+            name.text = match.event
+            Glide.with(context).load(match.eventImage).placeholder(R.drawable.ic_placeholder_image).into(image)
 
             itemView.setOnClickListener {
                 clickListener(match)
             }
         }
+    }
+
+    fun refreshData(items: List<Match>) {
+        this.items = items
+        notifyDataSetChanged()
     }
 }

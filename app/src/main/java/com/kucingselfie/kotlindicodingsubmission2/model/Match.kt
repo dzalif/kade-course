@@ -2,7 +2,7 @@ package com.kucingselfie.kotlindicodingsubmission2.model
 
 import com.google.gson.annotations.SerializedName
 
-class NextMatch(
+data class Match(
     @SerializedName("idEvent")
     val id: String,
     @SerializedName("strEvent")
@@ -11,20 +11,20 @@ class NextMatch(
     val eventImage: String?
 )
 
-class LastMatch(
+data class NextMatch(
     @SerializedName("idEvent")
-    val id: String,
+    val id: String? = null,
     @SerializedName("strEvent")
-    val event: String,
+    val event: String? = null,
     @SerializedName("strThumb")
-    val eventImage: String?
+    val eventImage: String? = null
 )
 
-class Match(
+data class LastMatch(
     @SerializedName("idEvent")
-    val id: String,
+    val id: String? = null,
     @SerializedName("strEvent")
-    val event: String,
+    val event: String? = null,
     @SerializedName("strThumb")
-    val eventImage: String?
+    val eventImage: String? = null
 )
