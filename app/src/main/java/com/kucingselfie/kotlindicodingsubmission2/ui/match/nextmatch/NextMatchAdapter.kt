@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch
+package com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,9 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.model.Match
+import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
+import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
 
-class MatchAdapter(private val context: Context, private var items: List<Match>, private val clickListener: (Match) -> Unit) : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
+class NextMatchAdapter(private val context: Context, private var items: List<NextMatchFavorite>, private val clickListener: (NextMatchFavorite) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(context, items[position], clickListener)
     }
@@ -20,7 +21,9 @@ class MatchAdapter(private val context: Context, private var items: List<Match>,
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        return ViewHolder( LayoutInflater.from(parent.context).inflate(R.layout.item_match, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_match, parent, false)
+        )
     }
 
     override fun getItemCount(): Int = items.size
@@ -30,20 +33,15 @@ class MatchAdapter(private val context: Context, private var items: List<Match>,
         private val image = view.findViewById<ImageView>(R.id.eventImage)
         fun bind(
             context: Context,
-            match: Match,
-            clickListener: (league: Match) -> Unit
+            match: NextMatchFavorite,
+            clickListener: (league: NextMatchFavorite) -> Unit
         ) {
-            name.text = match.event
-            Glide.with(context).load(match.eventImage).placeholder(R.drawable.ic_placeholder_image).into(image)
+            name.text = match.matchName
+            Glide.with(context).load(match.matchPicture).placeholder(R.drawable.ic_placeholder_image).into(image)
 
             itemView.setOnClickListener {
                 clickListener(match)
             }
         }
-    }
-
-    fun refreshData(items: List<Match>) {
-        this.items = items
-        notifyDataSetChanged()
     }
 }

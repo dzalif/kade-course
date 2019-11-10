@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentNextMatchFavoriteBinding
 import com.kucingselfie.kotlindicodingsubmission2.db.database
 import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
-import com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch.NextMatchAdapter
+import com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch.NextMatchAdapter
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 
@@ -48,9 +49,12 @@ class NextMatchFavoriteFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = NextMatchAdapter(requireContext(), favorites) {
-//            val action = NextMatchFavoriteFragmentDirections.actionNextMatchFavoriteFragmentToDetailMatchFragment(it.id!!, it.eventImage ?: "", true)
-//            findNavController().navigate(action)
+        adapter = NextMatchAdapter(
+            requireContext(),
+            favorites
+        ) {
+            val action = FavoriteMatchFragmentDirections.actionFavoriteMatchFragmentToDetailMatchFragment(it.matchId!!, it.matchPicture ?: "", true)
+            findNavController().navigate(action)
         }
         binding.rvNextMatchFavorite.adapter = adapter
     }

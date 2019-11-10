@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.previousmatch
+package com.kucingselfie.kotlindicodingsubmission2.ui.match.previousmatch
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

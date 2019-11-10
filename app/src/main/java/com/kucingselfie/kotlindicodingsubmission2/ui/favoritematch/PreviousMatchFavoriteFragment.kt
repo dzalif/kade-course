@@ -6,20 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentLastMatchFavoriteBinding
 import com.kucingselfie.kotlindicodingsubmission2.db.database
 import com.kucingselfie.kotlindicodingsubmission2.model.LastMatchFavorite
-import com.kucingselfie.kotlindicodingsubmission2.ui.previousmatch.LastMatchAdapter
+import com.kucingselfie.kotlindicodingsubmission2.ui.match.previousmatch.PreviousMatchAdapter
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 
 /**
  * A simple [Fragment] subclass.
  */
-class LastMatchFavoriteFragment : Fragment() {
+class PreviousMatchFavoriteFragment : Fragment() {
 
     private lateinit var binding: FragmentLastMatchFavoriteBinding
-    private lateinit var adapter: LastMatchAdapter
+    private lateinit var adapter: PreviousMatchAdapter
     private var favorites: MutableList<LastMatchFavorite> = mutableListOf()
 
     override fun onCreateView(
@@ -47,10 +48,14 @@ class LastMatchFavoriteFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = LastMatchAdapter(requireContext(), favorites) {
-//            val action = PreviousMatchFragmentDirections.actionPreviousMatchFragmentToDetailMatchFragment(it.id!!, it.eventImage!!, false)
-//            findNavController().navigate(action)
-        }
+        adapter =
+            PreviousMatchAdapter(
+                requireContext(),
+                favorites
+            ) {
+                val action = FavoriteMatchFragmentDirections.actionFavoriteMatchFragmentToDetailMatchFragment(it.matchId!!, it.matchPicture ?: "", true)
+                findNavController().navigate(action)
+            }
         binding.rvLastMatchFavorite.adapter = adapter
     }
 

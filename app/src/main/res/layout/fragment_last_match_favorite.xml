@@ -5,7 +5,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.favoritematch.LastMatchFavoriteFragment">
+        tools:context=".ui.favoritematch.PreviousMatchFavoriteFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvLastMatchFavorite"

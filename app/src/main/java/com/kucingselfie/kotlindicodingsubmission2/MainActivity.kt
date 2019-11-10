@@ -1,15 +1,12 @@
 package com.kucingselfie.kotlindicodingsubmission2
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.kucingselfie.kotlindicodingsubmission2.ui.listleague.ListLeagueFragment
+import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +22,34 @@ class MainActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.mainToolbar)
         setSupportActionBar(toolbar)
         setupActionBarWithNavController(navController)
+
+        initBottomNav()
+    }
+
+    private fun initBottomNav() {
+        bottomNavigationView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener(navigationListener)
+    }
+
+    private val navigationListener =
+        NavController.OnDestinationChangedListener { _, destination, _ ->
+            invalidateOptionsMenu()
+            when(destination.id) {
+                R.id.listLeagueFragment -> {
+                    hideToolbarBack()
+                }
+                R.id.matchFragment -> {
+                    hideToolbarBack()
+                }
+                R.id.favoriteMatchFragment -> {
+                    hideToolbarBack()
+                }
+            }
+
+        }
+
+    private fun hideToolbarBack() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.nextmatch
+package com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch
 
 
 import android.os.Bundle
@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.kucingselfie.kotlindicodingsubmission2.common.ID_LEAGUE
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentNextMatchBinding
 import com.kucingselfie.kotlindicodingsubmission2.model.Match
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
+import com.kucingselfie.kotlindicodingsubmission2.ui.match.MatchFragmentDirections
 import com.kucingselfie.kotlindicodingsubmission2.util.invisible
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.*
@@ -42,7 +44,7 @@ class NextMatchFragment : Fragment() {
         binding.lifecycleOwner = this
 
         //Get id league
-        idLeague = NextMatchFragmentArgs.fromBundle(arguments!!).idLeague
+        idLeague = ID_LEAGUE
         initAdapter()
         vm.getNextMatch(idLeague)
 
@@ -63,8 +65,16 @@ class NextMatchFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = MatchAdapter(requireContext(), items) {
-            val action = NextMatchFragmentDirections.actionNextMatchFragmentToDetailMatchFragment(it.id, it.eventImage ?: "", true)
+        adapter = MatchAdapter(
+            requireContext(),
+            items
+        ) {
+            val action =
+                MatchFragmentDirections.actionMatchFragmentToDetailMatchFragment(
+                    it.id,
+                    it.eventImage ?: "",
+                    true
+                )
             findNavController().navigate(action)
         }
         binding.rvNextMatch.adapter = adapter

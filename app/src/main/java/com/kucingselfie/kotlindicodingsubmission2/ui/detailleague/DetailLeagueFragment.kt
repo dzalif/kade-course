@@ -58,32 +58,4 @@ class DetailLeagueFragment : Fragment() {
         leagueDesc.text = it[0].description
         idLeague = it[0].id
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.detail_league_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle presses on the action bar menu items
-        when (item.itemId) {
-            R.id.action_next_match -> {
-                // Navigate to Next Match
-                val action = DetailLeagueFragmentDirections.actionDetailLeagueFragmentToNextMatchFragment(idLeague)
-                findNavController().navigate(action)
-                return true
-            }
-            R.id.action_previous_match -> {
-                // Navigate to Previous Match
-                val action = DetailLeagueFragmentDirections.actionDetailLeagueFragmentToPreviousMatchFragment(idLeague)
-                findNavController().navigate(action)
-                return true
-            }
-            R.id.action_favorite_match -> {
-                findNavController().navigate(R.id.action_detailLeagueFragment_to_favoriteMatchFragment)
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
 }

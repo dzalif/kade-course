@@ -58,7 +58,7 @@ class DetailMatchViewModel : ViewModel() {
             events[0].intHomeScore ?: "0",
             events[0].strAwayTeam,
             events[0].strHomeTeam,
-            events[0].strTime?.toGMT7(),
+            events[0].strTime?.toGMT7() ?: "",
             events[0].strHomeFormation ?: "",
             events[0].strAwayFormation ?: "",
             events[0].strHomeGK + GK,
