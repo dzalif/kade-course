@@ -11,6 +11,8 @@ import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentNextMatchF
 import com.kucingselfie.kotlindicodingsubmission2.db.database
 import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
 import com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch.NextMatchAdapter
+import com.kucingselfie.kotlindicodingsubmission2.util.invisible
+import com.kucingselfie.kotlindicodingsubmission2.util.visible
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 
@@ -28,7 +30,6 @@ class NextMatchFavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
         binding = FragmentNextMatchFavoriteBinding.inflate(inflater)
         binding.executePendingBindings()
 
@@ -45,6 +46,12 @@ class NextMatchFavoriteFragment : Fragment() {
             val favorite = result.parseList(classParser<NextMatchFavorite>())
             favorites.addAll(favorite)
             adapter.notifyDataSetChanged()
+        }
+
+        if (favorites.isEmpty()) {
+            binding.layoutEmptyData.visible()
+        } else {
+            binding.layoutEmptyData.invisible()
         }
     }
 

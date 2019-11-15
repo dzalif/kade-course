@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 
 import com.kucingselfie.kotlindicodingsubmission2.R
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentListLeagueBinding
-import com.kucingselfie.kotlindicodingsubmission2.model.League
+import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
 import com.kucingselfie.kotlindicodingsubmission2.model.Search
 import com.kucingselfie.kotlindicodingsubmission2.ui.searchevent.SearchAdapter
@@ -19,7 +19,7 @@ import com.kucingselfie.kotlindicodingsubmission2.ui.searchevent.SearchViewModel
 import com.kucingselfie.kotlindicodingsubmission2.util.gone
 import com.kucingselfie.kotlindicodingsubmission2.util.invisible
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
-import kotlinx.android.synthetic.main.fragment_detail_league.*
+import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 
 /**
  * A simple [Fragment] subclass.
@@ -27,8 +27,9 @@ import kotlinx.android.synthetic.main.fragment_detail_league.*
 class ListLeagueFragment : Fragment() {
 
     private lateinit var adapter: SearchAdapter
+    private lateinit var listLeagueAdapter: ListLeagueAdapter
 
-    private var items: MutableList<League> = mutableListOf()
+    private var items: MutableList<DetailLeague> = mutableListOf()
 
     private var itemsResult: MutableList<Search> = mutableListOf()
 
@@ -48,12 +49,8 @@ class ListLeagueFragment : Fragment() {
         setHasOptionsMenu(true)
 
         initData()
-        initSearchAdapter()
-
-        binding.listLeague.adapter =
-            ListLeagueAdapter(items) {
-                findNavController().navigate(R.id.action_listLeagueFragment_to_detailLeagueFragment)
-            }
+        initAdapter()
+        observeData()
 
         vm.status.observe(this, Observer {
             when (it) {
@@ -62,7 +59,7 @@ class ListLeagueFragment : Fragment() {
                 }
                 else -> {
                     progressBar.invisible()
-                    binding.rvSearch.visible()
+                    binding.rvSearch.gone()
                 }
             }
         })
@@ -70,10 +67,28 @@ class ListLeagueFragment : Fragment() {
         vm.search.observe(this, Observer {
             if (it.isNotEmpty()) {
                 displayData(it)
+            } else {
+                binding.rvSearch.gone()
             }
         })
 
         return binding.root
+    }
+
+    private fun observeData() {
+        vm.listLeague.observe(this, Observer {
+            it?.let {
+                binding.rvSearch.gone()
+                binding.listLeague.visible()
+                displayListLeague(it)
+            }
+        })
+    }
+
+    private fun displayListLeague(it: List<DetailLeague>) {
+        items.clear()
+        itemsResult.clear()
+        listLeagueAdapter.refreshData(it)
     }
 
     private fun displayData(it: MutableList<Search>) {
@@ -82,7 +97,7 @@ class ListLeagueFragment : Fragment() {
         adapter.refreshData(it)
     }
 
-    private fun initSearchAdapter() {
+    private fun initAdapter() {
         adapter = SearchAdapter(requireContext(), itemsResult) {
             val action = ListLeagueFragmentDirections.actionListLeagueFragmentToDetailMatchFragment(
                 it.idEvent,
@@ -92,6 +107,12 @@ class ListLeagueFragment : Fragment() {
             findNavController().navigate(action)
         }
         binding.rvSearch.adapter = adapter
+
+        listLeagueAdapter = ListLeagueAdapter(items) {
+            val action = ListLeagueFragmentDirections.actionListLeagueFragmentToDetailLeagueFragment(it.id)
+            findNavController().navigate(action)
+        }
+        binding.listLeague.adapter = listLeagueAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -127,10 +148,6 @@ class ListLeagueFragment : Fragment() {
     }
 
     private fun initData() {
-        val name = resources.getStringArray(R.array.league)
-        items.clear()
-        for (i in name.indices) {
-            items.add(League(name[i]))
-        }
+        vm.getListLeague()
     }
 }

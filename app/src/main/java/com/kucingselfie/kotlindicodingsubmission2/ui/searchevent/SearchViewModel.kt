@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kotlindicodingsubmission2.api.TheSportsApi
+import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
 import com.kucingselfie.kotlindicodingsubmission2.model.Search
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +22,10 @@ class SearchViewModel : ViewModel() {
     private val _search = MutableLiveData<MutableList<Search>>()
     val search: LiveData<MutableList<Search>>
         get() = _search
+
+    private val _listLeague = MutableLiveData<List<DetailLeague>>()
+    val listLeague: LiveData<List<DetailLeague>>
+    get() = _listLeague
 
     private var vmJob = Job()
     private val coroutineScope = CoroutineScope(vmJob + Dispatchers.Main)
@@ -43,6 +48,21 @@ class SearchViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         vmJob.cancel()
+    }
+
+    fun getListLeague() {
+        coroutineScope.launch {
+            val result = TheSportsApi.retrofitService.getListLeague("England", "Soccer")
+            try {
+                _status.value = Result.LOADING
+                val listResult = result.await()
+                _listLeague.value = listResult.countrys
+                _status.value = Result.SUCCESS
+            } catch (e: Exception) {
+                _status.value = Result.ERROR
+                _search.value = mutableListOf()
+            }
+        }
     }
 
 }

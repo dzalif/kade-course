@@ -11,7 +11,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.lang.Exception
+import java.util.concurrent.TimeoutException
 
 class DetailMatchViewModel : ViewModel() {
 
@@ -42,7 +44,12 @@ class DetailMatchViewModel : ViewModel() {
                 val event = setEventData(listResult.events)
                 _detailMatch.value = event
                 _status.value = Result.SUCCESS
-            } catch (e: Exception) {
+            } catch (e: Throwable) {
+                when(e) {
+                    is IOException -> _status.value = Result.NO_INTERNET_CONNECTION
+                    is TimeoutException -> _status.value = Result.TIMEOUT
+                    else -> _status.value = Result.UNKNOWN_ERROR
+                }
                 _status.value = Result.ERROR
                 _detailMatch.value = null
             }

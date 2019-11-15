@@ -37,7 +37,6 @@ class MatchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
         binding = FragmentMatchBinding.inflate(inflater)
         binding.executePendingBindings()
         viewPager = binding.viewPager

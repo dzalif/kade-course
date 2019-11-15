@@ -6,8 +6,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
-import com.kucingselfie.kotlindicodingsubmission2.R
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentDetailLeagueBinding
 import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
@@ -35,7 +33,9 @@ class DetailLeagueFragment : Fragment() {
         binding.lifecycleOwner = this
         setHasOptionsMenu(true)
 
-        vm.getDetailLeague()
+        getArgFromBundle()
+
+        vm.getDetailLeague(idLeague)
 
         vm.status.observe(this, Observer {
             when(it) {
@@ -51,6 +51,11 @@ class DetailLeagueFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun getArgFromBundle() {
+        //Get id league
+        idLeague = DetailLeagueFragmentArgs.fromBundle(arguments!!).idLeague
     }
 
     private fun displayData(it: List<DetailLeague>) {

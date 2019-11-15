@@ -18,6 +18,8 @@ import com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch.MatchAdapte
 import com.kucingselfie.kotlindicodingsubmission2.util.invisible
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.*
+import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
+import kotlinx.android.synthetic.main.fragment_previous_match.*
 
 /**
  * A simple [Fragment] subclass.
@@ -53,8 +55,18 @@ class PreviousMatchFragment : Fragment() {
 
         vm.status.observe(this, Observer {
             when(it) {
-                Result.LOADING -> { progressBar.visible() }
-                else -> { progressBar.invisible() }
+                Result.LOADING -> {
+                    progressBar.visible()
+                    layoutEmptyData.invisible()
+                }
+                Result.NO_DATA -> {
+                    progressBar.invisible()
+                    layoutEmptyData.visible()
+                }
+                Result.SUCCESS -> {
+                    progressBar.invisible()
+                    layoutEmptyData.invisible()
+                }
             }
         })
 

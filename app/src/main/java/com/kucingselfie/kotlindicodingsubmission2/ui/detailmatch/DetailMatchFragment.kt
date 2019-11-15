@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.kucingselfie.kotlindicodingsubmission2.R
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentDetailMatchBinding
 import com.kucingselfie.kotlindicodingsubmission2.db.database
@@ -62,28 +63,55 @@ class DetailMatchFragment : Fragment() {
         vm.getDetailMatch(idEvent)
 
         vm.status.observe(this, Observer {
-            when (it) {
-                Result.LOADING -> {
-                    progressBar.visible()
-                    group.invisible()
-                }
-                else -> {
-                    group.visible()
-                    progressBar.invisible()
+            it?.let {
+                when (it) {
+                    Result.LOADING -> {
+                        progressBar.visible()
+                        group.invisible()
+                        setEnabledMenuFavorite(false)
+                    }
+                    Result.NO_INTERNET_CONNECTION -> {
+                        showSnackbar(R.string.no_internet_connection)
+                    }
+                    Result.UNKNOWN_ERROR -> {
+                        showSnackbar(R.string.unknown_error)
+                    }
+                    Result.TIMEOUT -> {
+                        showSnackbar(R.string.timeout)
+                    }
+                    Result.SUCCESS -> {
+                        group.visible()
+                        progressBar.invisible()
+                        setEnabledMenuFavorite(true)
+                    }
                 }
             }
         })
 
         vm.detailMatch.observe(this, Observer {
-            binding.model = it
-            if (isNextMatch) {
-                nextMatch = NextMatch(idEvent, it.eventName, imageEvent)
-            } else {
-                lastMatch = LastMatch(idEvent, it.eventName, imageEvent)
+            it?.let {
+                binding.model = it
+                if (isNextMatch) {
+                    nextMatch = NextMatch(idEvent, it.eventName, imageEvent)
+                } else {
+                    lastMatch = LastMatch(idEvent, it.eventName, imageEvent)
+                }
             }
         })
 
         return binding.root
+    }
+
+    private fun setEnabledMenuFavorite(menuFavorite: Boolean) {
+        menuItem?.getItem(0)?.isEnabled = menuFavorite
+    }
+
+    private fun showSnackbar(message: Int) {
+        Snackbar.make(
+            constraintLayout,
+            getString(message),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun favoriteState() {
@@ -120,6 +148,12 @@ class DetailMatchFragment : Fragment() {
     }
 
     private fun setFavorite() {
+        if (isFavorite) {
+            changeStateMenuIcon()
+        }
+    }
+
+    private fun changeStateMenuIcon() {
         if (isFavorite)
             menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_favorite_active)
         else

@@ -16,7 +16,8 @@ import com.kucingselfie.kotlindicodingsubmission2.model.Result
 import com.kucingselfie.kotlindicodingsubmission2.ui.match.MatchFragmentDirections
 import com.kucingselfie.kotlindicodingsubmission2.util.invisible
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
-import kotlinx.android.synthetic.main.fragment_detail_league.*
+import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
+import kotlinx.android.synthetic.main.fragment_next_match.*
 
 /**
  * A simple [Fragment] subclass.
@@ -50,8 +51,18 @@ class NextMatchFragment : Fragment() {
 
         vm.status.observe(this, Observer {
             when(it) {
-                Result.LOADING -> { progressBar.visible() }
-                else -> { progressBar.invisible() }
+                Result.LOADING -> {
+                    progressBar.visible()
+                    layoutEmptyData.invisible()
+                }
+                Result.SUCCESS -> {
+                    progressBar.invisible()
+                    layoutEmptyData.invisible()
+                }
+                Result.NO_DATA -> {
+                    progressBar.invisible()
+                    layoutEmptyData.visible()
+                }
             }
         })
 

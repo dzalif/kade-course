@@ -32,7 +32,11 @@ class NextMatchViewModel : ViewModel() {
                 _status.value = Result.LOADING
                 val listResult = getDetailDeferred.await()
                 _nextMatch.value = listResult.events
-                _status.value = Result.SUCCESS
+                if (listResult.events.isEmpty()) {
+                    _status.value = Result.NO_DATA
+                } else {
+                    _status.value = Result.SUCCESS
+                }
             } catch (e: Exception) {
                 _status.value = Result.ERROR
                 _nextMatch.value = mutableListOf()

@@ -33,6 +33,9 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface ApiService {
+    @GET("search_all_leagues.php")
+    fun getListLeague(@Query("c") c: String, @Query("s") s: String) : Deferred<ListLeagueResponse>
+
     @GET("lookupleague.php")
     fun getDetailLeague(@Query("id") idleague: Int) : Deferred<DetailLeagueResponse>
 

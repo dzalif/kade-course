@@ -25,9 +25,9 @@ class DetailLeagueViewModel : ViewModel() {
     private var vmJob = Job()
     private val coroutineScope = CoroutineScope(vmJob + Dispatchers.Main)
 
-    fun getDetailLeague() {
+    fun getDetailLeague(idLeague: String) {
         coroutineScope.launch {
-            val getDetailDeferred = TheSportsApi.retrofitService.getDetailLeague(4328)
+            val getDetailDeferred = TheSportsApi.retrofitService.getDetailLeague(idLeague.toInt())
             try {
                 _status.value = Result.LOADING
                 val listResult = getDetailDeferred.await()

@@ -29,6 +29,11 @@
         android:name="com.kucingselfie.kotlindicodingsubmission2.ui.detailleague.DetailLeagueFragment"
         android:label="Detail League"
         tools:layout="@layout/fragment_detail_league">
+
+        <argument
+            android:name="idLeague"
+            app:argType="string" />
+
         <action
             android:id="@+id/action_detailLeagueFragment_to_nextMatchFragment"
             app:destination="@id/nextMatchFragment"
