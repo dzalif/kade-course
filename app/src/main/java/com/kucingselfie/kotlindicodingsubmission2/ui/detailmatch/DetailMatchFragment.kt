@@ -16,6 +16,7 @@ import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentDetailMatc
 import com.kucingselfie.kotlindicodingsubmission2.db.database
 import com.kucingselfie.kotlindicodingsubmission2.model.*
 import com.kucingselfie.kotlindicodingsubmission2.util.invisible
+import com.kucingselfie.kotlindicodingsubmission2.util.toGMT7
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 import kotlinx.android.synthetic.main.fragment_detail_match.*
@@ -91,15 +92,23 @@ class DetailMatchFragment : Fragment() {
         vm.detailMatch.observe(this, Observer {
             it?.let {
                 binding.model = it
+                //Concat date and match time
+                val formattedMatchTime = formatDate(it)
                 if (isNextMatch) {
-                    nextMatch = NextMatch(idEvent, it.eventName, imageEvent)
+                    nextMatch = NextMatch(idEvent, it.eventName, imageEvent, formattedMatchTime)
                 } else {
-                    lastMatch = LastMatch(idEvent, it.eventName, imageEvent)
+                    lastMatch = LastMatch(idEvent, it.eventName, imageEvent, formattedMatchTime)
                 }
             }
         })
 
         return binding.root
+    }
+
+    private fun formatDate(it: DetailMatch): String? {
+        //Do concat if match time is not null, otherwise just save only a date
+        return if (it.strTime.isNullOrEmpty()) it.dateEvent
+        else it.dateEvent + it.strTime.toGMT7()
     }
 
     private fun setEnabledMenuFavorite(menuFavorite: Boolean) {
@@ -207,7 +216,8 @@ class DetailMatchFragment : Fragment() {
                     LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE,
                     LastMatchFavorite.MATCH_ID to lastMatch?.id,
                     LastMatchFavorite.MATCH_NAME to lastMatch?.event,
-                    LastMatchFavorite.MATCH_PICTURE to lastMatch?.eventImage
+                    LastMatchFavorite.MATCH_PICTURE to lastMatch?.eventImage,
+                    LastMatchFavorite.MATCH_TIME to lastMatch?.dateEvent
                 )
             }
             Toast.makeText(requireContext(), "Added to last match favorite", Toast.LENGTH_SHORT).show()
@@ -223,7 +233,8 @@ class DetailMatchFragment : Fragment() {
                     NextMatchFavorite.TABLE_NEXT_MATCH_FAVORITE,
                     NextMatchFavorite.MATCH_ID to nextMatch?.id,
                     NextMatchFavorite.MATCH_NAME to nextMatch?.event,
-                    NextMatchFavorite.MATCH_PICTURE to nextMatch?.eventImage
+                    NextMatchFavorite.MATCH_PICTURE to nextMatch?.eventImage,
+                    NextMatchFavorite.MATCH_TIME to nextMatch?.dateEvent
                     )
             }
             Toast.makeText(requireContext(), "Added to next match favorite", Toast.LENGTH_SHORT).show()

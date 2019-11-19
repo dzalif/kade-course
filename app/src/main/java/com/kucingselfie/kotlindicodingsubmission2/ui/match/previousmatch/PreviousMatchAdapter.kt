@@ -1,5 +1,6 @@
 package com.kucingselfie.kotlindicodingsubmission2.ui.match.previousmatch
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,7 @@ class PreviousMatchAdapter(private val context: Context, private var items: List
         viewType: Int
     ): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_match, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_favorite_match, parent, false)
         )
     }
 
@@ -30,6 +31,8 @@ class PreviousMatchAdapter(private val context: Context, private var items: List
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val name = view.findViewById<TextView>(R.id.eventInfo)
         private val image = view.findViewById<ImageView>(R.id.eventImage)
+        private val time = view.findViewById<TextView>(R.id.eventTime)
+        @SuppressLint("SetTextI18n")
         fun bind(
             context: Context,
             match: LastMatchFavorite,
@@ -37,6 +40,7 @@ class PreviousMatchAdapter(private val context: Context, private var items: List
         ) {
             name.text = match.matchName
             Glide.with(context).load(match.matchPicture).placeholder(R.drawable.ic_placeholder_image).into(image)
+            time.text = "${context.getString(R.string.match_time)}${match.matchTime}"
 
             itemView.setOnClickListener {
                 clickListener(match)

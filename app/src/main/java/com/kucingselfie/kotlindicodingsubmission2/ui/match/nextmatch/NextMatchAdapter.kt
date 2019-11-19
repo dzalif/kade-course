@@ -1,5 +1,6 @@
 package com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,7 @@ class NextMatchAdapter(private val context: Context, private var items: List<Nex
         viewType: Int
     ): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_match, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_favorite_match, parent, false)
         )
     }
 
@@ -31,6 +32,8 @@ class NextMatchAdapter(private val context: Context, private var items: List<Nex
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val name = view.findViewById<TextView>(R.id.eventInfo)
         private val image = view.findViewById<ImageView>(R.id.eventImage)
+        private val time = view.findViewById<TextView>(R.id.eventTime)
+        @SuppressLint("SetTextI18n")
         fun bind(
             context: Context,
             match: NextMatchFavorite,
@@ -38,6 +41,7 @@ class NextMatchAdapter(private val context: Context, private var items: List<Nex
         ) {
             name.text = match.matchName
             Glide.with(context).load(match.matchPicture).placeholder(R.drawable.ic_placeholder_image).into(image)
+            time.text = "${context.getString(R.string.match_time)}${match.matchTime}"
 
             itemView.setOnClickListener {
                 clickListener(match)

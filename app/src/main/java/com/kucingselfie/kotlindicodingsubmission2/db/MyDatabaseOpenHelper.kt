@@ -6,7 +6,7 @@ import com.kucingselfie.kotlindicodingsubmission2.model.LastMatchFavorite
 import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
 import org.jetbrains.anko.db.*
 
-class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeams.db", null, 1) {
+class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeams.db", null, 2) {
 
     companion object {
         private var instance: MyDatabaseOpenHelper? = null
@@ -27,7 +27,8 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
             NextMatchFavorite.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
             NextMatchFavorite.MATCH_ID to TEXT + UNIQUE,
             NextMatchFavorite.MATCH_NAME to TEXT,
-            NextMatchFavorite.MATCH_PICTURE to TEXT
+            NextMatchFavorite.MATCH_PICTURE to TEXT,
+            NextMatchFavorite.MATCH_TIME to TEXT
         )
 
         db?.createTable(
@@ -36,7 +37,8 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
             LastMatchFavorite.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
             LastMatchFavorite.MATCH_ID to TEXT + UNIQUE,
             LastMatchFavorite.MATCH_NAME to TEXT,
-            LastMatchFavorite.MATCH_PICTURE to TEXT
+            LastMatchFavorite.MATCH_PICTURE to TEXT,
+            LastMatchFavorite.MATCH_TIME to TEXT
         )
     }
 

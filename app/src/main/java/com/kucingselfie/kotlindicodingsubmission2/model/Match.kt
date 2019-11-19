@@ -17,7 +17,8 @@ data class NextMatch(
     @SerializedName("strEvent")
     val event: String? = null,
     @SerializedName("strThumb")
-    val eventImage: String? = null
+    val eventImage: String? = null,
+    val dateEvent: String? = null
 )
 
 data class LastMatch(
@@ -26,5 +27,6 @@ data class LastMatch(
     @SerializedName("strEvent")
     val event: String? = null,
     @SerializedName("strThumb")
-    val eventImage: String? = null
+    val eventImage: String? = null,
+    val dateEvent: String? = null
 )
