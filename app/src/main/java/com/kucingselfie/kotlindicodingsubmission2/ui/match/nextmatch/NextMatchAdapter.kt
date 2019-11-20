@@ -41,7 +41,7 @@ class NextMatchAdapter(private val context: Context, private var items: List<Nex
         ) {
             name.text = match.matchName
             Glide.with(context).load(match.matchPicture).placeholder(R.drawable.ic_placeholder_image).into(image)
-            time.text = "${context.getString(R.string.match_time)}${match.matchTime}"
+            time.text = match.matchTime
 
             itemView.setOnClickListener {
                 clickListener(match)

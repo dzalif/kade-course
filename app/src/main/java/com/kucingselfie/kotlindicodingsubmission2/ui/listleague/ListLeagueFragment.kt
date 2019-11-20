@@ -59,16 +59,18 @@ class ListLeagueFragment : Fragment() {
                 }
                 else -> {
                     progressBar.invisible()
-                    binding.rvSearch.gone()
                 }
             }
         })
 
+        //Observe search data
         vm.search.observe(this, Observer {
-            if (it.isNotEmpty()) {
-                displayData(it)
-            } else {
-                binding.rvSearch.gone()
+            it?.let {
+                if (it.isNotEmpty()) {
+                    binding.rvSearch.visible()
+                    binding.listLeague.gone()
+                    displayData(it)
+                }
             }
         })
 
@@ -76,6 +78,7 @@ class ListLeagueFragment : Fragment() {
     }
 
     private fun observeData() {
+        //Observe list league data
         vm.listLeague.observe(this, Observer {
             it?.let {
                 binding.rvSearch.gone()
@@ -88,13 +91,15 @@ class ListLeagueFragment : Fragment() {
     private fun displayListLeague(it: List<DetailLeague>) {
         items.clear()
         itemsResult.clear()
-        listLeagueAdapter.refreshData(it)
+        items.addAll(it)
+        listLeagueAdapter.refreshData(items)
     }
 
     private fun displayData(it: MutableList<Search>) {
         items.clear()
         itemsResult.clear()
-        adapter.refreshData(it)
+        itemsResult.addAll(it)
+        adapter.refreshData(itemsResult)
     }
 
     private fun initAdapter() {
