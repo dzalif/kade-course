@@ -19,5 +19,11 @@
             tools:listitem="@layout/item_match">
         </androidx.recyclerview.widget.RecyclerView>
 
+        <include
+            android:id="@+id/layoutEmptyData"
+            layout="@layout/layout_empty_data"
+            android:visibility="invisible"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

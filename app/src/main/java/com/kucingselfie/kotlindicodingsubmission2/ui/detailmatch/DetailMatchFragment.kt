@@ -220,7 +220,7 @@ class DetailMatchFragment : Fragment() {
                     LastMatchFavorite.MATCH_TIME to lastMatch?.dateEvent
                 )
             }
-            Toast.makeText(requireContext(), "Added to last match favorite", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Added to previous match favorite", Toast.LENGTH_SHORT).show()
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
         }

@@ -11,6 +11,8 @@ import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentLastMatchF
 import com.kucingselfie.kotlindicodingsubmission2.db.database
 import com.kucingselfie.kotlindicodingsubmission2.model.LastMatchFavorite
 import com.kucingselfie.kotlindicodingsubmission2.ui.match.previousmatch.PreviousMatchAdapter
+import com.kucingselfie.kotlindicodingsubmission2.util.invisible
+import com.kucingselfie.kotlindicodingsubmission2.util.visible
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 
@@ -44,6 +46,12 @@ class PreviousMatchFavoriteFragment : Fragment() {
             val favorite = result.parseList(classParser<LastMatchFavorite>())
             favorites.addAll(favorite)
             adapter.notifyDataSetChanged()
+        }
+
+        if (favorites.isEmpty()) {
+            binding.layoutEmptyData.visible()
+        } else {
+            binding.layoutEmptyData.invisible()
         }
     }
 
