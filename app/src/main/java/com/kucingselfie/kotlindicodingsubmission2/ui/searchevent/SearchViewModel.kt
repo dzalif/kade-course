@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kotlindicodingsubmission2.api.TheSportsApi
+import com.kucingselfie.kotlindicodingsubmission2.common.ENGLAND
+import com.kucingselfie.kotlindicodingsubmission2.common.SOCCER
 import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
 import com.kucingselfie.kotlindicodingsubmission2.model.Search
@@ -32,7 +34,7 @@ class SearchViewModel : ViewModel() {
 
     fun doSearch(query: String) {
         coroutineScope.launch {
-            val result = TheSportsApi.retrofitService.searchEvents(query)
+            val result = TheSportsApi.retrofitService.searchEvents(query, SOCCER)
             try {
                 _status.value = Result.LOADING
                 val listResult = result.await()
@@ -52,7 +54,7 @@ class SearchViewModel : ViewModel() {
 
     fun getListLeague() {
         coroutineScope.launch {
-            val result = TheSportsApi.retrofitService.getListLeague("England", "Soccer")
+            val result = TheSportsApi.retrofitService.getListLeague(ENGLAND, SOCCER)
             try {
                 _status.value = Result.LOADING
                 val listResult = result.await()
