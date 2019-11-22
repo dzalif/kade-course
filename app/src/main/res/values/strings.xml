@@ -29,4 +29,5 @@
     <string name="layout_empty_data">Tidak ada data</string>
     <string name="match_title">Match Title</string>
     <string name="match_time">Jadwal Pertandingan :\n</string>
+    <string name="please_choose_league">Silahkan pilih liga</string>
 </resources>

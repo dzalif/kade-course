@@ -135,5 +135,17 @@
         <action
             android:id="@+id/action_matchFragment_to_detailMatchFragment"
             app:destination="@id/detailMatchFragment" />
+        <argument
+            android:name="idLeague"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/chooseLeagueFragment"
+        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.match.chooseleague.ChooseLeagueFragment"
+        tools:layout="@layout/fragment_choose_league"
+        android:label="Choose League" >
+        <action
+            android:id="@+id/action_chooseLeagueFragment_to_matchFragment"
+            app:destination="@id/matchFragment" />
     </fragment>
 </navigation>

@@ -6,6 +6,8 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.kucingselfie.kotlindicodingsubmission2.R
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentDetailLeagueBinding
 import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
@@ -62,5 +64,7 @@ class DetailLeagueFragment : Fragment() {
         leagueTitle.text = it[0].leagueName
         leagueDesc.text = it[0].description
         idLeague = it[0].id
+        val image = it[0].logo
+        Glide.with(requireContext()).load(image).placeholder(R.drawable.trophy).into(imageView)
     }
 }

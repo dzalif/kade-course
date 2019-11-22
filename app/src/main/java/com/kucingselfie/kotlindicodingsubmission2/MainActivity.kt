@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.listLeagueFragment -> {
                     hideToolbarBack()
                 }
-                R.id.matchFragment -> {
+                R.id.chooseLeagueFragment -> {
                     hideToolbarBack()
                 }
                 R.id.favoriteMatchFragment -> {

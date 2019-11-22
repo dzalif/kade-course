@@ -21,9 +21,7 @@ import com.kucingselfie.kotlindicodingsubmission2.util.invisible
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class ListLeagueFragment : Fragment() {
 
     private lateinit var adapter: SearchAdapter
@@ -113,7 +111,7 @@ class ListLeagueFragment : Fragment() {
         }
         binding.rvSearch.adapter = adapter
 
-        listLeagueAdapter = ListLeagueAdapter(items) {
+        listLeagueAdapter = ListLeagueAdapter(requireContext(), items) {
             val action = ListLeagueFragmentDirections.actionListLeagueFragmentToDetailLeagueFragment(it.id)
             findNavController().navigate(action)
         }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,7 +18,6 @@ import com.kucingselfie.kotlindicodingsubmission2.ui.match.MatchFragmentDirectio
 import com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch.MatchAdapter
 import com.kucingselfie.kotlindicodingsubmission2.util.invisible
 import com.kucingselfie.kotlindicodingsubmission2.util.visible
-import kotlinx.android.synthetic.main.fragment_detail_league.*
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 import kotlinx.android.synthetic.main.fragment_previous_match.*
 
@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_previous_match.*
  * A simple [Fragment] subclass.
  */
 
-class PreviousMatchFragment : Fragment() {
+class PreviousMatchFragment() : Fragment() {
 
     private lateinit var idLeague: String
 
@@ -49,7 +49,8 @@ class PreviousMatchFragment : Fragment() {
         binding.lifecycleOwner = this
 
         //Get id league
-        idLeague = ID_LEAGUE
+        idLeague = arguments?.getString("idLeague")!!
+
         initAdapter()
         vm.getPreviousMatch(idLeague)
 

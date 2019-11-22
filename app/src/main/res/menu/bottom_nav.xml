@@ -8,7 +8,7 @@
         android:title="@string/label_league"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/matchFragment"
+        android:id="@+id/chooseLeagueFragment"
         android:enabled="true"
         android:icon="@drawable/ic_match"
         android:title="@string/label_match"
