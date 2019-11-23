@@ -41,7 +41,7 @@ class ListLeagueAdapter(
             clickListener: (league: DetailLeague) -> Unit
         ) {
             name.text = league.leagueName
-            Glide.with(context).load(league.logo).placeholder(R.drawable.trophy)
+            Glide.with(context).load(league.badge).placeholder(R.drawable.trophy)
                 .into(image)
             itemView.setOnClickListener {
                 clickListener(league)

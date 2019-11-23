@@ -50,6 +50,9 @@ interface ApiService {
 
     @GET("searchevents.php")
     fun searchEvents(@Query("e") query: String, @Query("strSport") s: String) : Deferred<SearchResponse>
+
+    @GET("lookupteam.php")
+    fun getDetailTeam(@Query("id") id: String)
 }
 
 object TheSportsApi {

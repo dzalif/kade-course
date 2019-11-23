@@ -11,6 +11,8 @@ data class DetailLeague(
     val description: String,
     @SerializedName("strLogo")
     val logo: String,
+    @SerializedName("strBadge")
+    val badge: String,
     @SerializedName("strNaming")
     val strNaming: String
 )

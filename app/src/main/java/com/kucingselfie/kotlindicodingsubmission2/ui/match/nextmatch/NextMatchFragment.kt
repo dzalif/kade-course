@@ -18,9 +18,7 @@ import com.kucingselfie.kotlindicodingsubmission2.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 import kotlinx.android.synthetic.main.fragment_next_match.*
 
-/**
- * A simple [Fragment] subclass
- */
+
 class NextMatchFragment : Fragment() {
 
     private lateinit var idLeague: String

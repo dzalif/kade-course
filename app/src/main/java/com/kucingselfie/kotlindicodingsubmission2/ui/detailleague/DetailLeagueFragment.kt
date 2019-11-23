@@ -64,7 +64,7 @@ class DetailLeagueFragment : Fragment() {
         leagueTitle.text = it[0].leagueName
         leagueDesc.text = it[0].description
         idLeague = it[0].id
-        val image = it[0].logo
+        val image = it[0].badge
         Glide.with(requireContext()).load(image).placeholder(R.drawable.trophy).into(imageView)
     }
 }
