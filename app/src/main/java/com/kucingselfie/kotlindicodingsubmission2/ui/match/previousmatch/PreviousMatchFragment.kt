@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_previous_match.*
  * A simple [Fragment] subclass.
  */
 
-class PreviousMatchFragment() : Fragment() {
+class PreviousMatchFragment : Fragment() {
 
     private lateinit var idLeague: String
 
@@ -93,7 +93,9 @@ class PreviousMatchFragment() : Fragment() {
             val action =
                 MatchFragmentDirections.actionMatchFragmentToDetailMatchFragment(
                     it.id,
-                    it.eventImage!!,
+                    it.eventImage ?: "",
+                    it.teamHomeId,
+                    it.teamAwayId,
                     false
                 )
             findNavController().navigate(action)

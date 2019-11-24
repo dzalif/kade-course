@@ -97,6 +97,12 @@
             android:name="imageEvent"
             app:argType="string" />
         <argument
+            android:name="idHomeTeam"
+            app:argType="string"/>
+        <argument
+            android:name="idAwayTeam"
+            app:argType="string"/>
+        <argument
             android:name="isNextMatch"
             app:argType="boolean" />
     </fragment>

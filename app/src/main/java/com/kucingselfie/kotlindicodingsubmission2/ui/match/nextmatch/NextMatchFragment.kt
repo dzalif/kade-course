@@ -65,8 +65,10 @@ class NextMatchFragment : Fragment() {
         })
 
         vm.nextMatch.observe(this, Observer {
-            if (it.isNotEmpty()) {
-                displayData(it)
+            it?.let {
+                if (it.isNotEmpty()) {
+                    displayData(it)
+                }
             }
         })
 
@@ -82,6 +84,8 @@ class NextMatchFragment : Fragment() {
                 MatchFragmentDirections.actionMatchFragmentToDetailMatchFragment(
                     it.id,
                     it.eventImage ?: "",
+                    it.teamHomeId,
+                    it.teamAwayId,
                     true
                 )
             findNavController().navigate(action)

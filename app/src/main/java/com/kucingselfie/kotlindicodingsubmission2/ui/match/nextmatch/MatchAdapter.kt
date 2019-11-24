@@ -36,7 +36,7 @@ class MatchAdapter(private val context: Context, private var items: List<Match>,
             clickListener: (league: Match) -> Unit
         ) {
             name.text = match.event
-            Glide.with(context).load(match.eventImage).placeholder(R.drawable.ic_placeholder_image).into(image)
+            Glide.with(context).load(match.eventImage).placeholder(R.drawable.ic_match_placeholder).into(image)
 
             itemView.setOnClickListener {
                 clickListener(match)

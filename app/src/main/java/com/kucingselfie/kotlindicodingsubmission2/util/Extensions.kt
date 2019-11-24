@@ -20,7 +20,7 @@ fun View.gone() {
 
 fun String.toGMT7(): String? {
     if (this.isNotEmpty()) {
-        val dateFormat = SimpleDateFormat("HH:mm:ssZ", Locale.US)
+        val dateFormat = SimpleDateFormat("HH:mm:ss", Locale.US)
 
         try {
             val date = dateFormat.parse(this)

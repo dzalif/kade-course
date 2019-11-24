@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
+import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.google.android.material.snackbar.Snackbar
 import com.kucingselfie.kotlindicodingsubmission2.R
 import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentDetailMatchBinding
@@ -25,6 +27,7 @@ import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 
+
 /**
  * A simple [Fragment] subclass.
  */
@@ -39,6 +42,8 @@ class DetailMatchFragment : Fragment() {
     private var isNextMatch: Boolean = false
     private var nextMatch: NextMatch? = null
     private var lastMatch: LastMatch? = null
+    private lateinit var teamHomeId: String
+    private lateinit var teamAwayId: String
 
     private val vm: DetailMatchViewModel by lazy {
         ViewModelProviders.of(this).get(DetailMatchViewModel::class.java)
@@ -54,14 +59,17 @@ class DetailMatchFragment : Fragment() {
 
         //Get id event
         idEvent = DetailMatchFragmentArgs.fromBundle(arguments!!).idEvent
+
         imageEvent = DetailMatchFragmentArgs.fromBundle(arguments!!).imageEvent
         isNextMatch = DetailMatchFragmentArgs.fromBundle(arguments!!).isNextMatch
+        teamHomeId = DetailMatchFragmentArgs.fromBundle(arguments!!).idHomeTeam
+        teamAwayId = DetailMatchFragmentArgs.fromBundle(arguments!!).idAwayTeam
 
-        displayImageEvent(imageEvent)
+        Toast.makeText(requireContext(), isNextMatch.toString(), Toast.LENGTH_SHORT).show()
 
         favoriteState()
 
-        vm.getDetailMatch(idEvent)
+        vm.getDetailMatch(idEvent, teamHomeId, teamAwayId)
 
         vm.status.observe(this, Observer {
             it?.let {
@@ -91,14 +99,37 @@ class DetailMatchFragment : Fragment() {
 
         vm.detailMatch.observe(this, Observer {
             it?.let {
+                //Bind model data
                 binding.model = it
                 //Concat date and match time
                 val formattedMatchTime = formatDate(it)
+                //Get team badge
                 if (isNextMatch) {
                     nextMatch = NextMatch(idEvent, it.eventName, imageEvent, formattedMatchTime)
                 } else {
                     lastMatch = LastMatch(idEvent, it.eventName, imageEvent, formattedMatchTime)
                 }
+            }
+        })
+
+        //Enable cross fade transition on glide
+        val transition = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
+
+        vm.detailHomeTeam.observe(this, Observer {
+            it?.let {
+                val homeTeamBadge = it[0].strTeamBadge
+                Glide.with(requireContext()).load(homeTeamBadge)
+                    .transition(withCrossFade(transition))
+                    .into(binding.homeTeamBadge)
+            }
+        })
+
+        vm.detailAwayTeam.observe(this, Observer {
+            it?.let {
+                val awayTeamBadge = it[0].strTeamBadge
+                Glide.with(requireContext()).load(awayTeamBadge)
+                    .transition(withCrossFade(transition))
+                    .into(binding.awayTeamBadge)
             }
         })
 
@@ -108,7 +139,7 @@ class DetailMatchFragment : Fragment() {
     private fun formatDate(it: DetailMatch): String? {
         //Do concat if match time is not null, otherwise just save only a date
         return if (it.strTime.isNullOrEmpty()) it.dateEvent
-        else it.dateEvent + it.strTime.toGMT7()
+        else "${it.dateEvent}${it.strTime.toGMT7()}"
     }
 
     private fun setEnabledMenuFavorite(menuFavorite: Boolean) {
@@ -141,14 +172,6 @@ class DetailMatchFragment : Fragment() {
         }
     }
 
-    private fun displayImageEvent(imageEvent: String?) {
-        imageEvent?.let {
-            Glide.with(requireContext()).load(imageEvent)
-                .placeholder(R.drawable.ic_placeholder_image)
-                .into(binding.imageEvent)
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.detail_match_menu, menu)
         menuItem = menu
@@ -164,9 +187,11 @@ class DetailMatchFragment : Fragment() {
 
     private fun changeStateMenuIcon() {
         if (isFavorite)
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_favorite_active)
+            menuItem?.getItem(0)?.icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_favorite_active)
         else
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_favorite_inactive)
+            menuItem?.getItem(0)?.icon =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_favorite_inactive)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -177,7 +202,7 @@ class DetailMatchFragment : Fragment() {
                     if (isNextMatch) removeFromNextMatchFavorite()
                     else removeFromLastMatchFavorite()
                 } else {
-                    if(isNextMatch) addToNextMatchFavorite()
+                    if (isNextMatch) addToNextMatchFavorite()
                     else addToLastMatchFavorite()
                 }
 
@@ -192,7 +217,11 @@ class DetailMatchFragment : Fragment() {
     private fun removeFromLastMatchFavorite() {
         try {
             context?.database?.use {
-                delete(LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE, "(MATCH_ID = {id})", "id" to idEvent)
+                delete(
+                    LastMatchFavorite.TABLE_LAST_MATCH_FAVORITE,
+                    "(MATCH_ID = {id})",
+                    "id" to idEvent
+                )
             }
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -202,7 +231,11 @@ class DetailMatchFragment : Fragment() {
     private fun removeFromNextMatchFavorite() {
         try {
             context?.database?.use {
-                delete(NextMatchFavorite.TABLE_NEXT_MATCH_FAVORITE, "(MATCH_ID = {id})", "id" to idEvent)
+                delete(
+                    NextMatchFavorite.TABLE_NEXT_MATCH_FAVORITE,
+                    "(MATCH_ID = {id})",
+                    "id" to idEvent
+                )
             }
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -220,7 +253,8 @@ class DetailMatchFragment : Fragment() {
                     LastMatchFavorite.MATCH_TIME to lastMatch?.dateEvent
                 )
             }
-            Toast.makeText(requireContext(), "Added to previous match favorite", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Added to previous match favorite", Toast.LENGTH_SHORT)
+                .show()
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
         }
@@ -235,9 +269,10 @@ class DetailMatchFragment : Fragment() {
                     NextMatchFavorite.MATCH_NAME to nextMatch?.event,
                     NextMatchFavorite.MATCH_PICTURE to nextMatch?.eventImage,
                     NextMatchFavorite.MATCH_TIME to nextMatch?.dateEvent
-                    )
+                )
             }
-            Toast.makeText(requireContext(), "Added to next match favorite", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Added to next match favorite", Toast.LENGTH_SHORT)
+                .show()
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
         }

@@ -8,7 +8,11 @@ data class Match(
     @SerializedName("strEvent")
     val event: String,
     @SerializedName("strThumb")
-    val eventImage: String?
+    val eventImage: String?,
+    @SerializedName("idHomeTeam")
+    val teamHomeId: String,
+    @SerializedName("idAwayTeam")
+    val teamAwayId: String
 )
 
 data class NextMatch(

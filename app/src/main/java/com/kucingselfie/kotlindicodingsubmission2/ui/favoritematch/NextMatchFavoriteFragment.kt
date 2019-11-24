@@ -60,7 +60,14 @@ class NextMatchFavoriteFragment : Fragment() {
             requireContext(),
             favorites
         ) {
-            val action = FavoriteMatchFragmentDirections.actionFavoriteMatchFragmentToDetailMatchFragment(it.matchId!!, it.matchPicture ?: "", true)
+            val action =
+                FavoriteMatchFragmentDirections.actionFavoriteMatchFragmentToDetailMatchFragment(
+                    it.matchId!!,
+                    it.matchPicture ?: "",
+                    "",
+                    "",
+                    true
+                )
             findNavController().navigate(action)
         }
         binding.rvNextMatchFavorite.adapter = adapter

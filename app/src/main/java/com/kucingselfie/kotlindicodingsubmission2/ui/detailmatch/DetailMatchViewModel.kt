@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kotlindicodingsubmission2.api.TheSportsApi
+import com.kucingselfie.kotlindicodingsubmission2.api.response.DetailTeam
 import com.kucingselfie.kotlindicodingsubmission2.model.DetailMatch
 import com.kucingselfie.kotlindicodingsubmission2.model.Result
 import com.kucingselfie.kotlindicodingsubmission2.util.toGMT7
@@ -32,10 +33,16 @@ class DetailMatchViewModel : ViewModel() {
     val detailMatch: LiveData<DetailMatch>
         get() = _detailMatch
 
+    private val _detailHomeTeam = MutableLiveData<List<DetailTeam>>()
+    val detailHomeTeam: LiveData<List<DetailTeam>> get() = _detailHomeTeam
+
+    private val _detailAwayTeam = MutableLiveData<List<DetailTeam>>()
+    val detailAwayTeam: LiveData<List<DetailTeam>> get() = _detailAwayTeam
+
     private var vmJob = Job()
     private val coroutineScope = CoroutineScope(vmJob + Dispatchers.Main)
 
-    fun getDetailMatch(idEvent: String) {
+    fun getDetailMatch(idEvent: String, teamHomeId: String, teamAwayId: String) {
         coroutineScope.launch {
             val getDetailDeferred = TheSportsApi.retrofitService.getDetailMatch(idEvent.toInt())
             try {
@@ -43,7 +50,6 @@ class DetailMatchViewModel : ViewModel() {
                 val listResult = getDetailDeferred.await()
                 val event = setEventData(listResult.events)
                 _detailMatch.value = event
-                _status.value = Result.SUCCESS
             } catch (e: Throwable) {
                 when(e) {
                     is IOException -> _status.value = Result.NO_INTERNET_CONNECTION
@@ -54,6 +60,9 @@ class DetailMatchViewModel : ViewModel() {
                 _detailMatch.value = null
             }
         }
+
+        getDetailHomeTeam(teamHomeId)
+        getDetailAwayTeam(teamAwayId)
     }
 
     private fun setEventData(events: List<DetailMatch>) : DetailMatch {
@@ -82,5 +91,43 @@ class DetailMatchViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         vmJob.cancel()
+    }
+
+    fun getDetailHomeTeam(teamHomeId: String) {
+        coroutineScope.launch {
+            val getDetailDeferred = TheSportsApi.retrofitService.getDetailTeam(teamHomeId)
+            try {
+                _status.value = Result.LOADING
+                val listResult = getDetailDeferred.await()
+                _detailHomeTeam.value = listResult.teams
+                if (listResult.teams.isEmpty()) {
+                    _status.value = Result.NO_DATA
+                } else {
+                    _status.value = Result.SUCCESS
+                }
+            } catch (e: Exception) {
+                _status.value = Result.ERROR
+                _detailHomeTeam.value = mutableListOf()
+            }
+        }
+    }
+
+    fun getDetailAwayTeam(teamAwayId: String) {
+        coroutineScope.launch {
+            val getDetailDeferred = TheSportsApi.retrofitService.getDetailTeam(teamAwayId)
+            try {
+                _status.value = Result.LOADING
+                val listResult = getDetailDeferred.await()
+                _detailAwayTeam.value = listResult.teams
+                if (listResult.teams.isEmpty()) {
+                    _status.value = Result.NO_DATA
+                } else {
+                    _status.value = Result.SUCCESS
+                }
+            } catch (e: Exception) {
+                _status.value = Result.ERROR
+                _detailAwayTeam.value = mutableListOf()
+            }
+        }
     }
 }
