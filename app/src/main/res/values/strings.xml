@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kotlin Dicoding Submission 2</string>
+    <string name="app_name">Kotlin Dicoding Submission 3</string>
     <array name="league">
         <item>English Premier League</item>
         <item>English League Championship</item>
@@ -30,4 +30,8 @@
     <string name="match_title">Match Title</string>
     <string name="match_time">Jadwal Pertandingan :\n</string>
     <string name="please_choose_league">Silahkan pilih liga</string>
+    <string name="added_to_previous_match_favorite">Added to previous match favorite</string>
+    <string name="added_to_next_match_favorite">Added to next match favorite</string>
+    <string name="removed_from_next_match_favorite">Remove from next match favorite</string>
+    <string name="removed_from_previous_match_favorite">Removed from previous match favorite</string>
 </resources>

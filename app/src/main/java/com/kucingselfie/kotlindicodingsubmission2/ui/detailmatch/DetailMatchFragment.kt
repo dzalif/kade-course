@@ -4,6 +4,7 @@ package com.kucingselfie.kotlindicodingsubmission2.ui.detailmatch
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -65,8 +66,6 @@ class DetailMatchFragment : Fragment() {
         teamHomeId = DetailMatchFragmentArgs.fromBundle(arguments!!).idHomeTeam
         teamAwayId = DetailMatchFragmentArgs.fromBundle(arguments!!).idAwayTeam
 
-        Toast.makeText(requireContext(), isNextMatch.toString(), Toast.LENGTH_SHORT).show()
-
         favoriteState()
 
         vm.getDetailMatch(idEvent, teamHomeId, teamAwayId)
@@ -118,28 +117,30 @@ class DetailMatchFragment : Fragment() {
         vm.detailHomeTeam.observe(this, Observer {
             it?.let {
                 val homeTeamBadge = it[0].strTeamBadge
-                Glide.with(requireContext()).load(homeTeamBadge)
-                    .transition(withCrossFade(transition))
-                    .into(binding.homeTeamBadge)
+                displayTeamLogo(homeTeamBadge, binding.homeTeamBadge, transition)
             }
         })
 
         vm.detailAwayTeam.observe(this, Observer {
             it?.let {
                 val awayTeamBadge = it[0].strTeamBadge
-                Glide.with(requireContext()).load(awayTeamBadge)
-                    .transition(withCrossFade(transition))
-                    .into(binding.awayTeamBadge)
+                displayTeamLogo(awayTeamBadge, binding.awayTeamBadge, transition)
             }
         })
 
         return binding.root
     }
 
+    private fun displayTeamLogo(teamUrl: String, teamImage: ImageView, transition: DrawableCrossFadeFactory) {
+        Glide.with(requireContext()).load(teamUrl)
+            .transition(withCrossFade(transition))
+            .into(teamImage)
+    }
+
     private fun formatDate(it: DetailMatch): String? {
         //Do concat if match time is not null, otherwise just save only a date
         return if (it.strTime.isNullOrEmpty()) it.dateEvent
-        else "${it.dateEvent}${it.strTime.toGMT7()}"
+        else "${it.dateEvent} ${it.strTime.toGMT7()}"
     }
 
     private fun setEnabledMenuFavorite(menuFavorite: Boolean) {
@@ -180,9 +181,7 @@ class DetailMatchFragment : Fragment() {
     }
 
     private fun setFavorite() {
-        if (isFavorite) {
-            changeStateMenuIcon()
-        }
+        changeStateMenuIcon()
     }
 
     private fun changeStateMenuIcon() {
@@ -223,6 +222,7 @@ class DetailMatchFragment : Fragment() {
                     "id" to idEvent
                 )
             }
+            showSnackbar(R.string.removed_from_previous_match_favorite)
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
         }
@@ -237,6 +237,7 @@ class DetailMatchFragment : Fragment() {
                     "id" to idEvent
                 )
             }
+            showSnackbar(R.string.removed_from_next_match_favorite)
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
         }
@@ -250,11 +251,12 @@ class DetailMatchFragment : Fragment() {
                     LastMatchFavorite.MATCH_ID to lastMatch?.id,
                     LastMatchFavorite.MATCH_NAME to lastMatch?.event,
                     LastMatchFavorite.MATCH_PICTURE to lastMatch?.eventImage,
-                    LastMatchFavorite.MATCH_TIME to lastMatch?.dateEvent
+                    LastMatchFavorite.MATCH_TIME to lastMatch?.dateEvent,
+                    LastMatchFavorite.HOME_TEAM_ID to teamHomeId,
+                    LastMatchFavorite.AWAY_TEAM_ID to teamAwayId
                 )
             }
-            Toast.makeText(requireContext(), "Added to previous match favorite", Toast.LENGTH_SHORT)
-                .show()
+            showSnackbar(R.string.added_to_previous_match_favorite)
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
         }
@@ -268,11 +270,12 @@ class DetailMatchFragment : Fragment() {
                     NextMatchFavorite.MATCH_ID to nextMatch?.id,
                     NextMatchFavorite.MATCH_NAME to nextMatch?.event,
                     NextMatchFavorite.MATCH_PICTURE to nextMatch?.eventImage,
-                    NextMatchFavorite.MATCH_TIME to nextMatch?.dateEvent
+                    NextMatchFavorite.MATCH_TIME to nextMatch?.dateEvent,
+                    NextMatchFavorite.HOME_TEAM_ID to teamHomeId,
+                    NextMatchFavorite.AWAY_TEAM_ID to teamAwayId
                 )
             }
-            Toast.makeText(requireContext(), "Added to next match favorite", Toast.LENGTH_SHORT)
-                .show()
+            showSnackbar(R.string.added_to_next_match_favorite)
         } catch (e: SQLiteConstraintException) {
             Toast.makeText(requireContext(), e.localizedMessage, Toast.LENGTH_SHORT).show()
         }

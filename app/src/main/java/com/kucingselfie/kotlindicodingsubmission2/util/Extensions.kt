@@ -30,5 +30,5 @@ fun String.toGMT7(): String? {
             e.printStackTrace()
         }
     }
-    return null
+    return ""
 }

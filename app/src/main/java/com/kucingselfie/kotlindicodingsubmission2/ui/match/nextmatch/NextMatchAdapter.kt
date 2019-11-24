@@ -40,7 +40,7 @@ class NextMatchAdapter(private val context: Context, private var items: List<Nex
             clickListener: (league: NextMatchFavorite) -> Unit
         ) {
             name.text = match.matchName
-            Glide.with(context).load(match.matchPicture).placeholder(R.drawable.ic_placeholder_image).into(image)
+            Glide.with(context).load(match.matchPicture).placeholder(R.drawable.ic_match_placeholder).into(image)
             time.text = match.matchTime
 
             itemView.setOnClickListener {

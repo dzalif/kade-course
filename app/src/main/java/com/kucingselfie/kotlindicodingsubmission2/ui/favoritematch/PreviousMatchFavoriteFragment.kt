@@ -65,9 +65,9 @@ class PreviousMatchFavoriteFragment : Fragment() {
                     FavoriteMatchFragmentDirections.actionFavoriteMatchFragmentToDetailMatchFragment(
                         it.matchId!!,
                         it.matchPicture ?: "",
-                        "",
-                        "",
-                        true
+                        it.homeTeamId!!,
+                        it.awayTeamId!!,
+                        false
                     )
                 findNavController().navigate(action)
             }

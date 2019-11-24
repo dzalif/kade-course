@@ -28,7 +28,9 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
             NextMatchFavorite.MATCH_ID to TEXT + UNIQUE,
             NextMatchFavorite.MATCH_NAME to TEXT,
             NextMatchFavorite.MATCH_PICTURE to TEXT,
-            NextMatchFavorite.MATCH_TIME to TEXT
+            NextMatchFavorite.MATCH_TIME to TEXT,
+            NextMatchFavorite.HOME_TEAM_ID to TEXT,
+            NextMatchFavorite.AWAY_TEAM_ID to TEXT
         )
 
         db?.createTable(
@@ -38,7 +40,9 @@ class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "Favorit
             LastMatchFavorite.MATCH_ID to TEXT + UNIQUE,
             LastMatchFavorite.MATCH_NAME to TEXT,
             LastMatchFavorite.MATCH_PICTURE to TEXT,
-            LastMatchFavorite.MATCH_TIME to TEXT
+            LastMatchFavorite.MATCH_TIME to TEXT,
+            LastMatchFavorite.HOME_TEAM_ID to TEXT,
+            LastMatchFavorite.AWAY_TEAM_ID to TEXT
         )
     }
 
