@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.kucingselfie.kadesubmission.api.TheSportsApi
 import com.kucingselfie.kadesubmission.common.ENGLAND
 import com.kucingselfie.kadesubmission.common.SOCCER
+import com.kucingselfie.kadesubmission.data.LeagueRepository
 import com.kucingselfie.kadesubmission.model.DetailLeague
 import com.kucingselfie.kadesubmission.model.Result
 import com.kucingselfie.kadesubmission.model.Search
@@ -14,8 +15,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import javax.inject.Inject
 
-class SearchViewModel : ViewModel() {
+class SearchViewModel @Inject constructor(repository: LeagueRepository): ViewModel() {
 
     private val _status = MutableLiveData<Result>()
     val status: LiveData<Result>

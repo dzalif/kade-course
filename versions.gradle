@@ -124,6 +124,14 @@ navigation.ui_ktx = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 navigation.safe_args_plugin = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
 deps.navigation = navigation
 
+def dagger = [:]
+dagger.runtime = "com.google.dagger:dagger:$versions.dagger"
+dagger.android = "com.google.dagger:dagger-android:$versions.dagger"
+dagger.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
+dagger.compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
+dagger.android_support_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger"
+deps.dagger = dagger
+
 static def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()

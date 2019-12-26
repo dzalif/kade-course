@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kadesubmission.R
 import com.kucingselfie.kadesubmission.databinding.FragmentListLeagueBinding
+import com.kucingselfie.kadesubmission.di.Injectable
 import com.kucingselfie.kadesubmission.model.DetailLeague
 import com.kucingselfie.kadesubmission.model.Result
 import com.kucingselfie.kadesubmission.model.Search
@@ -18,10 +20,13 @@ import com.kucingselfie.kadesubmission.ui.searchevent.SearchViewModel
 import com.kucingselfie.kadesubmission.util.gone
 import com.kucingselfie.kadesubmission.util.invisible
 import com.kucingselfie.kadesubmission.util.visible
-import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
+import kotlinx.android.synthetic.main.fragment_detail_league.*
+import javax.inject.Inject
 
 
-class ListLeagueFragment : Fragment() {
+class ListLeagueFragment : Fragment(), Injectable {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var adapter: SearchAdapter
     private lateinit var listLeagueAdapter: ListLeagueAdapter
@@ -32,9 +37,7 @@ class ListLeagueFragment : Fragment() {
 
     lateinit var binding: FragmentListLeagueBinding
 
-    private val vm: SearchViewModel by lazy {
-        ViewModelProviders.of(this).get(SearchViewModel::class.java)
-    }
+    private val vm: SearchViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
