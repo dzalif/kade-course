@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.listleague
+package com.kucingselfie.kadesubmission.ui.listleague
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.model.DetailLeague
 import org.jetbrains.anko.find
 
 class ListLeagueAdapter(

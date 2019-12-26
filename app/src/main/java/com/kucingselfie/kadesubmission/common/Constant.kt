@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.common
+package com.kucingselfie.kadesubmission.common
 
 const val ID_LEAGUE = "4328"
 const val SOCCER = "Soccer"

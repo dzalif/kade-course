@@ -1,14 +1,14 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.searchevent
+package com.kucingselfie.kadesubmission.ui.searchevent
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kucingselfie.kotlindicodingsubmission2.api.TheSportsApi
-import com.kucingselfie.kotlindicodingsubmission2.common.ENGLAND
-import com.kucingselfie.kotlindicodingsubmission2.common.SOCCER
-import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
-import com.kucingselfie.kotlindicodingsubmission2.model.Result
-import com.kucingselfie.kotlindicodingsubmission2.model.Search
+import com.kucingselfie.kadesubmission.api.TheSportsApi
+import com.kucingselfie.kadesubmission.common.ENGLAND
+import com.kucingselfie.kadesubmission.common.SOCCER
+import com.kucingselfie.kadesubmission.model.DetailLeague
+import com.kucingselfie.kadesubmission.model.Result
+import com.kucingselfie.kadesubmission.model.Search
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

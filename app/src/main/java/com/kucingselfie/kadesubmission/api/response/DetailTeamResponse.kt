@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.api.response
+package com.kucingselfie.kadesubmission.api.response
 
 import com.google.gson.annotations.SerializedName
 

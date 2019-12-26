@@ -6,7 +6,7 @@
     app:startDestination="@id/listLeagueFragment">
     <fragment
         android:id="@+id/listLeagueFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.listleague.ListLeagueFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.listleague.ListLeagueFragment"
         android:label="List League"
         tools:layout="@layout/fragment_list_league">
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailLeagueFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.detailleague.DetailLeagueFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.detailleague.DetailLeagueFragment"
         android:label="Detail League"
         tools:layout="@layout/fragment_detail_league">
 
@@ -55,7 +55,7 @@
 
     <fragment
         android:id="@+id/nextMatchFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch.NextMatchFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchFragment"
         android:label="Next Match"
         tools:layout="@layout/fragment_next_match">
         <argument
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/previousMatchFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.match.previousmatch.PreviousMatchFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.match.previousmatch.PreviousMatchFragment"
         android:label="Previous Match"
         tools:layout="@layout/fragment_previous_match">
         <argument
@@ -87,7 +87,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailMatchFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.detailmatch.DetailMatchFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.detailmatch.DetailMatchFragment"
         android:label="Detail Match"
         tools:layout="@layout/fragment_detail_match">
         <argument
@@ -108,7 +108,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteMatchFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch.FavoriteMatchFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.favoritematch.FavoriteMatchFragment"
         android:label="Favorite Match"
         tools:layout="@layout/fragment_favorite_match">
         <action
@@ -117,7 +117,7 @@
     </fragment>
     <fragment
         android:id="@+id/lastMatchFavoriteFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch.PreviousMatchFavoriteFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.favoritematch.PreviousMatchFavoriteFragment"
         tools:layout="@layout/fragment_last_match_favorite"
         android:label="LastMatchFavoriteFragment" >
         <action
@@ -126,7 +126,7 @@
     </fragment>
     <fragment
         android:id="@+id/nextMatchFavoriteFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch.NextMatchFavoriteFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.favoritematch.NextMatchFavoriteFragment"
         tools:layout="@layout/fragment_next_match_favorite"
         android:label="NextMatchFavoriteFragment" >
         <action
@@ -135,7 +135,7 @@
     </fragment>
     <fragment
         android:id="@+id/matchFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.match.MatchFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.match.MatchFragment"
         android:label="Match Fragment"
         tools:layout="@layout/fragment_match">
         <action
@@ -147,7 +147,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseLeagueFragment"
-        android:name="com.kucingselfie.kotlindicodingsubmission2.ui.match.chooseleague.ChooseLeagueFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.match.chooseleague.ChooseLeagueFragment"
         tools:layout="@layout/fragment_choose_league"
         android:label="Choose League" >
         <action

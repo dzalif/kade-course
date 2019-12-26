@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.model
+package com.kucingselfie.kadesubmission.model
 
 data class LastMatchFavorite(
     val id: Long?,

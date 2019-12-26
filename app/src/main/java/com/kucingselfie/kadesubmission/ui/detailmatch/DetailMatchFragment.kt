@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.detailmatch
+package com.kucingselfie.kadesubmission.ui.detailmatch
 
 
 import android.database.sqlite.SQLiteConstraintException
@@ -14,13 +14,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.google.android.material.snackbar.Snackbar
-import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentDetailMatchBinding
-import com.kucingselfie.kotlindicodingsubmission2.db.database
-import com.kucingselfie.kotlindicodingsubmission2.model.*
-import com.kucingselfie.kotlindicodingsubmission2.util.invisible
-import com.kucingselfie.kotlindicodingsubmission2.util.toGMT7
-import com.kucingselfie.kotlindicodingsubmission2.util.visible
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.databinding.FragmentDetailMatchBinding
+import com.kucingselfie.kadesubmission.db.database
+import com.kucingselfie.kadesubmission.model.*
+import com.kucingselfie.kadesubmission.util.invisible
+import com.kucingselfie.kadesubmission.util.toGMT7
+import com.kucingselfie.kadesubmission.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 import kotlinx.android.synthetic.main.fragment_detail_match.*
 import org.jetbrains.anko.db.classParser

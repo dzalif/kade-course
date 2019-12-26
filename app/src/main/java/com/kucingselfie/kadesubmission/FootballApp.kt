@@ -1,9 +1,9 @@
-package com.kucingselfie.kotlindicodingsubmission2
+package com.kucingselfie.kadesubmission
 
 import android.app.Application
 import timber.log.Timber
 
-class App : Application() {
+class FootballApp : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {

@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch
+package com.kucingselfie.kadesubmission.ui.match.nextmatch
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,9 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.model.NextMatchFavorite
 
 class NextMatchAdapter(private val context: Context, private var items: List<NextMatchFavorite>, private val clickListener: (NextMatchFavorite) -> Unit) : RecyclerView.Adapter<NextMatchAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

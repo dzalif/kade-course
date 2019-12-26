@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.match
+package com.kucingselfie.kadesubmission.ui.match
 
 
 import android.content.Context
@@ -12,10 +12,10 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
-import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentMatchBinding
-import com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch.NextMatchFragment
-import com.kucingselfie.kotlindicodingsubmission2.ui.match.previousmatch.PreviousMatchFragment
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.databinding.FragmentMatchBinding
+import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchFragment
+import com.kucingselfie.kadesubmission.ui.match.previousmatch.PreviousMatchFragment
 
 /**
  * A simple [Fragment] subclass.

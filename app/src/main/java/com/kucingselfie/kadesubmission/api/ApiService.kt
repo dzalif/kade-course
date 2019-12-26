@@ -1,10 +1,10 @@
-package com.kucingselfie.kotlindicodingsubmission2.api
+package com.kucingselfie.kadesubmission.api
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.kucingselfie.kotlindicodingsubmission2.BuildConfig
-import com.kucingselfie.kotlindicodingsubmission2.api.response.*
+import com.kucingselfie.kadesubmission.BuildConfig
+import com.kucingselfie.kadesubmission.api.response.*
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

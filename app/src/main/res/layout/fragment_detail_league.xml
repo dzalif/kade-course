@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.kucingselfie.kotlindicodingsubmission2.ui.detailleague.DetailLeagueViewModel" />
+            type="com.kucingselfie.kadesubmission.ui.detailleague.DetailLeagueViewModel" />
     </data>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

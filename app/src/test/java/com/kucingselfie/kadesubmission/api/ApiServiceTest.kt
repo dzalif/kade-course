@@ -1,10 +1,8 @@
-package com.kucingselfie.kotlindicodingsubmission2.api
+package com.kucingselfie.kadesubmission.api
 
 import com.google.gson.Gson
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.kucingselfie.kotlindicodingsubmission2.api.response.ListLeagueResponse
-import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
-import com.kucingselfie.kotlindicodingsubmission2.ui.searchevent.SearchViewModel
+import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse
+import com.kucingselfie.kadesubmission.model.DetailLeague
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
@@ -17,8 +15,6 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 @RunWith(JUnit4::class)
 class ApiServiceTest {

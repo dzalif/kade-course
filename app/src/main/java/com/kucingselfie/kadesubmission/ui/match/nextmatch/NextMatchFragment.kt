@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch
+package com.kucingselfie.kadesubmission.ui.match.nextmatch
 
 
 import android.os.Bundle
@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentNextMatchBinding
-import com.kucingselfie.kotlindicodingsubmission2.model.Match
-import com.kucingselfie.kotlindicodingsubmission2.model.Result
-import com.kucingselfie.kotlindicodingsubmission2.ui.match.MatchFragmentDirections
-import com.kucingselfie.kotlindicodingsubmission2.util.invisible
-import com.kucingselfie.kotlindicodingsubmission2.util.visible
+import com.kucingselfie.kadesubmission.databinding.FragmentNextMatchBinding
+import com.kucingselfie.kadesubmission.model.Match
+import com.kucingselfie.kadesubmission.model.Result
+import com.kucingselfie.kadesubmission.ui.match.MatchFragmentDirections
+import com.kucingselfie.kadesubmission.util.invisible
+import com.kucingselfie.kadesubmission.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 import kotlinx.android.synthetic.main.fragment_next_match.*
 

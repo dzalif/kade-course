@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.searchevent
+package com.kucingselfie.kadesubmission.ui.searchevent
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.model.Search
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.model.Search
 
 class SearchAdapter(
     val context: Context,

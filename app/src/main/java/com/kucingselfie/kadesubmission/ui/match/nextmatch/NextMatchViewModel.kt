@@ -1,13 +1,11 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch
+package com.kucingselfie.kadesubmission.ui.match.nextmatch
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.kucingselfie.kotlindicodingsubmission2.api.TheSportsApi
-import com.kucingselfie.kotlindicodingsubmission2.api.response.DetailTeam
-import com.kucingselfie.kotlindicodingsubmission2.model.Match
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatch
-import com.kucingselfie.kotlindicodingsubmission2.model.Result
+import com.kucingselfie.kadesubmission.api.TheSportsApi
+import com.kucingselfie.kadesubmission.model.Match
+import com.kucingselfie.kadesubmission.model.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

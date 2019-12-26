@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch
+package com.kucingselfie.kadesubmission.ui.favoritematch
 
 
 import android.content.Context
@@ -11,8 +11,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentFavoriteMatchBinding
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.databinding.FragmentFavoriteMatchBinding
 
 /**
  * A simple [Fragment] subclass.

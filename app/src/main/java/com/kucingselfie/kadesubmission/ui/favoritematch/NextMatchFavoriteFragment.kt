@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.favoritematch
+package com.kucingselfie.kadesubmission.ui.favoritematch
 
 
 import android.os.Bundle
@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentNextMatchFavoriteBinding
-import com.kucingselfie.kotlindicodingsubmission2.db.database
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
-import com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch.NextMatchAdapter
-import com.kucingselfie.kotlindicodingsubmission2.util.invisible
-import com.kucingselfie.kotlindicodingsubmission2.util.visible
+import com.kucingselfie.kadesubmission.databinding.FragmentNextMatchFavoriteBinding
+import com.kucingselfie.kadesubmission.db.database
+import com.kucingselfie.kadesubmission.model.NextMatchFavorite
+import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchAdapter
+import com.kucingselfie.kadesubmission.util.invisible
+import com.kucingselfie.kadesubmission.util.visible
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 

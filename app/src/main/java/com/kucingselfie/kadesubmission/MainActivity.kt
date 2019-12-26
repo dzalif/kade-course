@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2
+package com.kucingselfie.kadesubmission
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

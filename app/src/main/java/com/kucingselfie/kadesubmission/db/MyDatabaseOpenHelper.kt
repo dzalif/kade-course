@@ -1,9 +1,9 @@
-package com.kucingselfie.kotlindicodingsubmission2.db
+package com.kucingselfie.kadesubmission.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.kucingselfie.kotlindicodingsubmission2.model.LastMatchFavorite
-import com.kucingselfie.kotlindicodingsubmission2.model.NextMatchFavorite
+import com.kucingselfie.kadesubmission.model.LastMatchFavorite
+import com.kucingselfie.kadesubmission.model.NextMatchFavorite
 import org.jetbrains.anko.db.*
 
 class MyDatabaseOpenHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "FavoriteTeams.db", null, 2) {

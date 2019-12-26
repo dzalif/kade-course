@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch
+package com.kucingselfie.kadesubmission.ui.match.nextmatch
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.model.Match
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.model.Match
 
 class MatchAdapter(private val context: Context, private var items: List<Match>, private val clickListener: (Match) -> Unit) : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

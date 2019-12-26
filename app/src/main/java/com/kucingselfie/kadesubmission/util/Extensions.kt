@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.util
+package com.kucingselfie.kadesubmission.util
 
 import android.view.View
 import java.text.DateFormat

@@ -1,4 +1,4 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.listleague
+package com.kucingselfie.kadesubmission.ui.listleague
 
 
 import android.os.Bundle
@@ -8,17 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-
-import com.kucingselfie.kotlindicodingsubmission2.R
-import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentListLeagueBinding
-import com.kucingselfie.kotlindicodingsubmission2.model.DetailLeague
-import com.kucingselfie.kotlindicodingsubmission2.model.Result
-import com.kucingselfie.kotlindicodingsubmission2.model.Search
-import com.kucingselfie.kotlindicodingsubmission2.ui.searchevent.SearchAdapter
-import com.kucingselfie.kotlindicodingsubmission2.ui.searchevent.SearchViewModel
-import com.kucingselfie.kotlindicodingsubmission2.util.gone
-import com.kucingselfie.kotlindicodingsubmission2.util.invisible
-import com.kucingselfie.kotlindicodingsubmission2.util.visible
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.databinding.FragmentListLeagueBinding
+import com.kucingselfie.kadesubmission.model.DetailLeague
+import com.kucingselfie.kadesubmission.model.Result
+import com.kucingselfie.kadesubmission.model.Search
+import com.kucingselfie.kadesubmission.ui.searchevent.SearchAdapter
+import com.kucingselfie.kadesubmission.ui.searchevent.SearchViewModel
+import com.kucingselfie.kadesubmission.util.gone
+import com.kucingselfie.kadesubmission.util.invisible
+import com.kucingselfie.kadesubmission.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 
 

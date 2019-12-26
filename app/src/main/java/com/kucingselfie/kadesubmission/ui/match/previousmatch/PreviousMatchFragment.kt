@@ -1,23 +1,21 @@
-package com.kucingselfie.kotlindicodingsubmission2.ui.match.previousmatch
+package com.kucingselfie.kadesubmission.ui.match.previousmatch
 
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.kucingselfie.kotlindicodingsubmission2.common.ID_LEAGUE
-import com.kucingselfie.kotlindicodingsubmission2.databinding.FragmentPreviousMatchBinding
-import com.kucingselfie.kotlindicodingsubmission2.model.Match
-import com.kucingselfie.kotlindicodingsubmission2.model.Result
-import com.kucingselfie.kotlindicodingsubmission2.ui.match.MatchFragmentDirections
-import com.kucingselfie.kotlindicodingsubmission2.ui.match.nextmatch.MatchAdapter
-import com.kucingselfie.kotlindicodingsubmission2.util.invisible
-import com.kucingselfie.kotlindicodingsubmission2.util.visible
+import com.kucingselfie.kadesubmission.databinding.FragmentPreviousMatchBinding
+import com.kucingselfie.kadesubmission.model.Match
+import com.kucingselfie.kadesubmission.model.Result
+import com.kucingselfie.kadesubmission.ui.match.MatchFragmentDirections
+import com.kucingselfie.kadesubmission.ui.match.nextmatch.MatchAdapter
+import com.kucingselfie.kadesubmission.util.invisible
+import com.kucingselfie.kadesubmission.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 import kotlinx.android.synthetic.main.fragment_previous_match.*
 

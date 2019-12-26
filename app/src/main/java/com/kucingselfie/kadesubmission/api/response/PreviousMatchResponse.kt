@@ -1,7 +1,7 @@
-package com.kucingselfie.kotlindicodingsubmission2.api.response
+package com.kucingselfie.kadesubmission.api.response
 
 import com.google.gson.annotations.SerializedName
-import com.kucingselfie.kotlindicodingsubmission2.model.Match
+import com.kucingselfie.kadesubmission.model.Match
 
 class PreviousMatchResponse(
     @SerializedName("events")
