@@ -59,6 +59,10 @@ dependencies {
     implementation deps.navigation.ui_ktx
     implementation "com.squareup.okhttp3:logging-interceptor:4.2.1"
     implementation "org.jetbrains.anko:anko-sqlite:0.10.8"
+    androidTestImplementation deps.arch_core.testing
+    androidTestImplementation deps.mockito.core
+    androidTestImplementation deps.mockito.android
+    testImplementation "org.mockito:mockito-inline:2.25.0"
 
     implementation deps.timber
 
