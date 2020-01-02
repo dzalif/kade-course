@@ -4,7 +4,9 @@ import android.os.Handler;
 
 import com.kucingselfie.kadesubmission.api.ApiClient;
 import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse;
+import com.kucingselfie.kadesubmission.api.response.SearchResponse;
 import com.kucingselfie.kadesubmission.model.League;
+import com.kucingselfie.kadesubmission.model.Search;
 import com.kucingselfie.kadesubmission.util.EspressoIdlingResource;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +39,7 @@ public class RemoteRepository {
             @Override
             public void onResponse(@NotNull Call<ListLeagueResponse> call, @NotNull Response<ListLeagueResponse> response) {
                 if (response.isSuccessful()) {
-                    callback.onSuccess(response.body().getCountries());
+                    callback.onSuccess(response.body() != null ? response.body().getCountries() : null);
                     EspressoIdlingResource.decrement();
                 }
             }
@@ -49,8 +51,31 @@ public class RemoteRepository {
         }), SERVICE_LATENCY_IN_MILLIS);
     }
 
+    public void search(String query, final SearchMatchCallback callback) {
+        EspressoIdlingResource.increment();
+        handler.postDelayed(() -> apiClient.create().searchEvents(query, SOCCER).enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<SearchResponse> call, @NotNull Response<SearchResponse> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body() != null ? response.body().getEvent() : null);
+                    EspressoIdlingResource.decrement();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<SearchResponse> call, @NotNull Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        }), SERVICE_LATENCY_IN_MILLIS);
+    }
+
     public interface LoadListLeagueCallback {
         void onSuccess(List<League> response);
+        void onError(String message);
+    }
+
+    public interface SearchMatchCallback {
+        void onSuccess(List<Search> response);
         void onError(String message);
     }
 

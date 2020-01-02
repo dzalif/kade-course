@@ -2,6 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="com.kucingselfie.kadesubmission.model.League" />
+        <import type="com.kucingselfie.kadesubmission.model.Search" />
         <import type="java.util.List" />
         <import type="com.kucingselfie.kadesubmission.common.Result" />
         <import type="androidx.lifecycle.LiveData"/>
@@ -11,6 +12,10 @@
         <variable
             name="results"
             type="LiveData&lt;Result&lt;List&lt;League>>>" />
+
+        <variable
+            name="resultSearch"
+            type="LiveData&lt;Result&lt;List&lt;Search>>>" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
