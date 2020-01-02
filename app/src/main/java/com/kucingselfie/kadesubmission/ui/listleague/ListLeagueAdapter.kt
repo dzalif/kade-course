@@ -1,57 +1,49 @@
 package com.kucingselfie.kadesubmission.ui.listleague
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.kucingselfie.kadesubmission.R
-import com.kucingselfie.kadesubmission.model.DetailLeague
-import org.jetbrains.anko.find
+import com.kucingselfie.kadesubmission.databinding.ItemLeagueBinding
+import com.kucingselfie.kadesubmission.model.League
+import com.kucingselfie.kadesubmission.util.AppExecutors
+import com.kucingselfie.kadesubmission.util.DataBoundListAdapter
 
 class ListLeagueAdapter(
-    val context: Context,
-    private var items: List<DetailLeague>,
-    private val clickListener: (DetailLeague) -> Unit
-) : RecyclerView.Adapter<ListLeagueAdapter.ViewHolder>() {
-    override fun getItemCount(): Int = items.size
+    private val dataBindingComponent: DataBindingComponent,
+    appExecutors: AppExecutors,
+    private val clickListener: ((League) -> Unit)?
+) : DataBoundListAdapter<League, ItemLeagueBinding>(
+    appExecutors = appExecutors,
+    diffCallback = object : DiffUtil.ItemCallback<League>() {
+        override fun areItemsTheSame(oldItem: League, newItem: League): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_league, parent, false)
-        )
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(context, items[position], clickListener)
-    }
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val name = view.findViewById<TextView>(R.id.league_name)
-        private val image = view.find<ImageView>(R.id.leagueLogo)
-        fun bind(
-            context: Context,
-            league: DetailLeague,
-            clickListener: (league: DetailLeague) -> Unit
-        ) {
-            name.text = league.leagueName
-            Glide.with(context).load(league.badge).placeholder(R.drawable.trophy)
-                .into(image)
-            itemView.setOnClickListener {
-                clickListener(league)
-            }
+        override fun areContentsTheSame(oldItem: League, newItem: League): Boolean {
+            return oldItem == newItem
         }
     }
-
-    fun refreshData(items: List<DetailLeague>) {
-        this.items = items
-        notifyDataSetChanged()
+) {
+    override fun createBinding(parent: ViewGroup): ItemLeagueBinding {
+        val binding = DataBindingUtil.inflate<ItemLeagueBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.item_league,
+            parent,
+            false,
+            dataBindingComponent
+        )
+        binding.root.setOnClickListener {
+            binding.model?.let {
+                clickListener?.invoke(it)
+            }
+        }
+        return binding
     }
 
+    override fun bind(binding: ItemLeagueBinding, item: League) {
+        binding.model = item
+    }
 }

@@ -8,6 +8,7 @@ import com.kucingselfie.kadesubmission.api.response.*
 import kotlinx.coroutines.Deferred
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -34,7 +35,7 @@ private val retrofit = Retrofit.Builder()
 
 interface ApiService {
     @GET("search_all_leagues.php")
-    fun getListLeague(@Query("c") c: String, @Query("s") s: String) : Deferred<ListLeagueResponse>
+    fun getListLeague(@Query("c") c: String, @Query("s") s: String) : Call<ListLeagueResponse>
 
     @GET("lookupleague.php")
     fun getDetailLeague(@Query("id") idleague: Int) : Deferred<DetailLeagueResponse>

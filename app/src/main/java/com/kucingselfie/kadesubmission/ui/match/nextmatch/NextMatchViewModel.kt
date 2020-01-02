@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kadesubmission.api.TheSportsApi
 import com.kucingselfie.kadesubmission.model.Match
-import com.kucingselfie.kadesubmission.model.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -13,9 +12,9 @@ import kotlinx.coroutines.launch
 
 class NextMatchViewModel : ViewModel() {
 
-    private val _status = MutableLiveData<Result>()
-    val status: LiveData<Result>
-        get() = _status
+//    private val _status = MutableLiveData<Result>()
+//    val status: LiveData<Result>
+//        get() = _status
 
     private val _nextMatch = MutableLiveData<List<Match>>()
     val nextMatch: LiveData<List<Match>>
@@ -27,19 +26,19 @@ class NextMatchViewModel : ViewModel() {
     fun getNextMatch(idLeague: String) {
         coroutineScope.launch {
             val getDetailDeferred = TheSportsApi.retrofitService.getNextMatch(idLeague.toInt())
-            try {
-                _status.value = Result.LOADING
-                val listResult = getDetailDeferred.await()
-                _nextMatch.value = listResult.events
-                if (listResult.events.isEmpty()) {
-                    _status.value = Result.NO_DATA
-                } else {
-                    _status.value = Result.SUCCESS
-                }
-            } catch (e: Exception) {
-                _status.value = Result.ERROR
-                _nextMatch.value = mutableListOf()
-            }
+//            try {
+//                _status.value = Result.LOADING
+//                val listResult = getDetailDeferred.await()
+//                _nextMatch.value = listResult.events
+//                if (listResult.events.isEmpty()) {
+//                    _status.value = Result.NO_DATA
+//                } else {
+//                    _status.value = Result.SUCCESS
+//                }
+//            } catch (e: Exception) {
+//                _status.value = Result.ERROR
+//                _nextMatch.value = mutableListOf()
+//            }
         }
     }
 

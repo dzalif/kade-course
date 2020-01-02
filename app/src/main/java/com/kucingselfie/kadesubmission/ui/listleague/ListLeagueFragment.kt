@@ -4,23 +4,20 @@ package com.kucingselfie.kadesubmission.ui.listleague
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
 import com.kucingselfie.kadesubmission.databinding.FragmentListLeagueBinding
 import com.kucingselfie.kadesubmission.di.Injectable
-import com.kucingselfie.kadesubmission.model.DetailLeague
-import com.kucingselfie.kadesubmission.model.Result
+import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.model.Search
-import com.kucingselfie.kadesubmission.ui.searchevent.SearchAdapter
-import com.kucingselfie.kadesubmission.ui.searchevent.SearchViewModel
-import com.kucingselfie.kadesubmission.util.gone
-import com.kucingselfie.kadesubmission.util.invisible
-import com.kucingselfie.kadesubmission.util.visible
-import kotlinx.android.synthetic.main.fragment_detail_league.*
+import com.kucingselfie.kadesubmission.util.AppExecutors
+import com.kucingselfie.kadesubmission.util.autoCleared
 import javax.inject.Inject
 
 
@@ -28,99 +25,81 @@ class ListLeagueFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var adapter: SearchAdapter
-    private lateinit var listLeagueAdapter: ListLeagueAdapter
+    @Inject
+    lateinit var appExecutors: AppExecutors
 
-    private var items: MutableList<DetailLeague> = mutableListOf()
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    var binding by autoCleared<FragmentListLeagueBinding>()
+//    private var adapter by autoCleared<SearchAdapter>()
+    private var listLeagueAdapter by autoCleared<ListLeagueAdapter>()
 
+    private var items: MutableList<League> = mutableListOf()
     private var itemsResult: MutableList<Search> = mutableListOf()
 
-    lateinit var binding: FragmentListLeagueBinding
-
-    private val vm: SearchViewModel by viewModels { viewModelFactory }
+    private val vm: ListLeagueViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentListLeagueBinding.inflate(inflater)
-        binding.lifecycleOwner = this
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_list_league, container, false, dataBindingComponent
+        )
 
         setHasOptionsMenu(true)
-
-        initData()
         initAdapter()
-        observeData()
-
-        vm.status.observe(this, Observer {
-            when (it) {
-                Result.LOADING -> {
-                    progressBar.visible()
-                }
-                else -> {
-                    progressBar.invisible()
-                }
-            }
-        })
 
         //Observe search data
-        vm.search.observe(this, Observer {
-            it?.let {
-                if (it.isNotEmpty()) {
-                    binding.rvSearch.visible()
-                    binding.listLeague.gone()
-                    displayData(it)
-                }
-            }
-        })
+//        vm.search.observe(this, Observer {
+//            it?.let {
+//                if (it.isNotEmpty()) {
+//                    binding.rvSearch.visible()
+//                    binding.listLeague.gone()
+//                    displayData(it)
+//                }
+//            }
+//        })
 
         return binding.root
     }
 
-    private fun observeData() {
-        //Observe list league data
-        vm.listLeague.observe(this, Observer {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.lifecycleOwner = viewLifecycleOwner
+        val rvAdapter = ListLeagueAdapter(
+            dataBindingComponent = dataBindingComponent,
+            appExecutors = appExecutors
+        ) {
+            //TODO: navigate
+        }
+        vm.leagues.observe(this, Observer {
             it?.let {
-                binding.rvSearch.gone()
-                binding.listLeague.visible()
-                displayListLeague(it)
+                listLeagueAdapter.submitList(it.data)
             }
         })
-    }
-
-    private fun displayListLeague(it: List<DetailLeague>) {
-        items.clear()
-        itemsResult.clear()
-        items.addAll(it)
-        listLeagueAdapter.refreshData(items)
+        binding.results = vm.leagues
+        binding.rvListLeague.adapter = rvAdapter
+        listLeagueAdapter = rvAdapter
     }
 
     private fun displayData(it: MutableList<Search>) {
         items.clear()
         itemsResult.clear()
         itemsResult.addAll(it)
-        adapter.refreshData(itemsResult)
+//        adapter.refreshData(itemsResult)
     }
 
     private fun initAdapter() {
-        adapter = SearchAdapter(requireContext(), itemsResult) {
-            val action = ListLeagueFragmentDirections.actionListLeagueFragmentToDetailMatchFragment(
-                it.idEvent,
-                it.imageEvent ?: "",
-                "",
-                "",
-                false
-            )
-            findNavController().navigate(action)
-        }
-        binding.rvSearch.adapter = adapter
-
-        listLeagueAdapter = ListLeagueAdapter(requireContext(), items) {
-            val action =
-                ListLeagueFragmentDirections.actionListLeagueFragmentToDetailLeagueFragment(it.id)
-            findNavController().navigate(action)
-        }
-        binding.listLeague.adapter = listLeagueAdapter
+//        adapter = SearchAdapter(requireContext(), itemsResult) {
+//            val action = ListLeagueFragmentDirections.actionListLeagueFragmentToDetailMatchFragment(
+//                it.idEvent,
+//                it.imageEvent ?: "",
+//                "",
+//                "",
+//                false
+//            )
+//            findNavController().navigate(action)
+//        }
+//        binding.rvSearch.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -146,16 +125,11 @@ class ListLeagueFragment : Fragment(), Injectable {
     }
 
     private fun resetUI() {
-        adapter.clear()
-        initData()
-        binding.rvSearch.gone()
+//        adapter.clear()
+//        binding.rvSearch.gone()
     }
 
     private fun doSearch(query: String) {
-        vm.doSearch(query)
-    }
-
-    private fun initData() {
-        vm.getListLeague()
+//        vm.doSearch(query)
     }
 }

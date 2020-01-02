@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kadesubmission.api.TheSportsApi
-import com.kucingselfie.kadesubmission.model.DetailLeague
-import com.kucingselfie.kadesubmission.model.Result
+import com.kucingselfie.kadesubmission.model.League
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -14,12 +13,12 @@ import java.lang.Exception
 
 class DetailLeagueViewModel : ViewModel() {
 
-    private val _status = MutableLiveData<Result>()
-    val status: LiveData<Result>
-            get() = _status
+//    private val _status = MutableLiveData<Result>()
+//    val status: LiveData<Result>
+//            get() = _status
 
-    private val _detailLeague = MutableLiveData<List<DetailLeague>>()
-    val detailLeague: LiveData<List<DetailLeague>>
+    private val _detailLeague = MutableLiveData<List<League>>()
+    val league: LiveData<List<League>>
     get() = _detailLeague
 
     private var vmJob = Job()
@@ -28,15 +27,15 @@ class DetailLeagueViewModel : ViewModel() {
     fun getDetailLeague(idLeague: String) {
         coroutineScope.launch {
             val getDetailDeferred = TheSportsApi.retrofitService.getDetailLeague(idLeague.toInt())
-            try {
-                _status.value = Result.LOADING
-                val listResult = getDetailDeferred.await()
-                _detailLeague.value = listResult.leagues
-                _status.value = Result.SUCCESS
-            } catch (e: Exception) {
-                _status.value = Result.ERROR
-                _detailLeague.value = mutableListOf()
-            }
+//            try {
+//                _status.value = Result.LOADING
+//                val listResult = getDetailDeferred.await()
+//                _detailLeague.value = listResult.leagues
+//                _status.value = Result.SUCCESS
+//            } catch (e: Exception) {
+//                _status.value = Result.ERROR
+//                _detailLeague.value = mutableListOf()
+//            }
         }
     }
 

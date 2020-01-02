@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.kucingselfie.kadesubmission.api.TheSportsApi
 import com.kucingselfie.kadesubmission.api.response.DetailTeam
 import com.kucingselfie.kadesubmission.model.DetailMatch
-import com.kucingselfie.kadesubmission.model.Result
 import com.kucingselfie.kadesubmission.util.toGMT7
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,9 +24,9 @@ class DetailMatchViewModel : ViewModel() {
         const val DF = "(DF)"
     }
 
-    private val _status = MutableLiveData<Result>()
-    val status: LiveData<Result>
-        get() = _status
+//    private val _status = MutableLiveData<Result>()
+//    val status: LiveData<Result>
+//        get() = _status
 
     private val _detailMatch = MutableLiveData<DetailMatch>()
     val detailMatch: LiveData<DetailMatch>
@@ -45,20 +44,20 @@ class DetailMatchViewModel : ViewModel() {
     fun getDetailMatch(idEvent: String, teamHomeId: String, teamAwayId: String) {
         coroutineScope.launch {
             val getDetailDeferred = TheSportsApi.retrofitService.getDetailMatch(idEvent.toInt())
-            try {
-                _status.value = Result.LOADING
-                val listResult = getDetailDeferred.await()
-                val event = setEventData(listResult.events)
-                _detailMatch.value = event
-            } catch (e: Throwable) {
-                when(e) {
-                    is IOException -> _status.value = Result.NO_INTERNET_CONNECTION
-                    is TimeoutException -> _status.value = Result.TIMEOUT
-                    else -> _status.value = Result.UNKNOWN_ERROR
-                }
-                _status.value = Result.ERROR
-                _detailMatch.value = null
-            }
+//            try {
+//                _status.value = Result.LOADING
+//                val listResult = getDetailDeferred.await()
+//                val event = setEventData(listResult.events)
+//                _detailMatch.value = event
+//            } catch (e: Throwable) {
+//                when(e) {
+//                    is IOException -> _status.value = Result.NO_INTERNET_CONNECTION
+//                    is TimeoutException -> _status.value = Result.TIMEOUT
+//                    else -> _status.value = Result.UNKNOWN_ERROR
+//                }
+//                _status.value = Result.ERROR
+//                _detailMatch.value = null
+//            }
         }
 
         getDetailHomeTeam(teamHomeId)
@@ -96,38 +95,38 @@ class DetailMatchViewModel : ViewModel() {
     fun getDetailHomeTeam(teamHomeId: String) {
         coroutineScope.launch {
             val getDetailDeferred = TheSportsApi.retrofitService.getDetailTeam(teamHomeId)
-            try {
-                _status.value = Result.LOADING
-                val listResult = getDetailDeferred.await()
-                _detailHomeTeam.value = listResult.teams
-                if (listResult.teams.isEmpty()) {
-                    _status.value = Result.NO_DATA
-                } else {
-                    _status.value = Result.SUCCESS
-                }
-            } catch (e: Exception) {
-                _status.value = Result.ERROR
-                _detailHomeTeam.value = mutableListOf()
-            }
+//            try {
+//                _status.value = Result.LOADING
+//                val listResult = getDetailDeferred.await()
+//                _detailHomeTeam.value = listResult.teams
+//                if (listResult.teams.isEmpty()) {
+//                    _status.value = Result.NO_DATA
+//                } else {
+//                    _status.value = Result.SUCCESS
+//                }
+//            } catch (e: Exception) {
+//                _status.value = Result.ERROR
+//                _detailHomeTeam.value = mutableListOf()
+//            }
         }
     }
 
     fun getDetailAwayTeam(teamAwayId: String) {
         coroutineScope.launch {
             val getDetailDeferred = TheSportsApi.retrofitService.getDetailTeam(teamAwayId)
-            try {
-                _status.value = Result.LOADING
-                val listResult = getDetailDeferred.await()
-                _detailAwayTeam.value = listResult.teams
-                if (listResult.teams.isEmpty()) {
-                    _status.value = Result.NO_DATA
-                } else {
-                    _status.value = Result.SUCCESS
-                }
-            } catch (e: Exception) {
-                _status.value = Result.ERROR
-                _detailAwayTeam.value = mutableListOf()
-            }
+//            try {
+//                _status.value = Result.LOADING
+//                val listResult = getDetailDeferred.await()
+//                _detailAwayTeam.value = listResult.teams
+//                if (listResult.teams.isEmpty()) {
+//                    _status.value = Result.NO_DATA
+//                } else {
+//                    _status.value = Result.SUCCESS
+//                }
+//            } catch (e: Exception) {
+//                _status.value = Result.ERROR
+//                _detailAwayTeam.value = mutableListOf()
+//            }
         }
     }
 }

@@ -70,31 +70,31 @@ class DetailMatchFragment : Fragment() {
 
         vm.getDetailMatch(idEvent, teamHomeId, teamAwayId)
 
-        vm.status.observe(this, Observer {
-            it?.let {
-                when (it) {
-                    Result.LOADING -> {
-                        progressBar.visible()
-                        group.invisible()
-                        setEnabledMenuFavorite(false)
-                    }
-                    Result.NO_INTERNET_CONNECTION -> {
-                        showSnackbar(R.string.no_internet_connection)
-                    }
-                    Result.UNKNOWN_ERROR -> {
-                        showSnackbar(R.string.unknown_error)
-                    }
-                    Result.TIMEOUT -> {
-                        showSnackbar(R.string.timeout)
-                    }
-                    Result.SUCCESS -> {
-                        group.visible()
-                        progressBar.invisible()
-                        setEnabledMenuFavorite(true)
-                    }
-                }
-            }
-        })
+//        vm.status.observe(this, Observer {
+//            it?.let {
+//                when (it) {
+////                    Result.LOADING -> {
+////                        progressBar.visible()
+////                        group.invisible()
+////                        setEnabledMenuFavorite(false)
+////                    }
+////                    Result.NO_INTERNET_CONNECTION -> {
+////                        showSnackbar(R.string.no_internet_connection)
+////                    }
+////                    Result.UNKNOWN_ERROR -> {
+////                        showSnackbar(R.string.unknown_error)
+////                    }
+////                    Result.TIMEOUT -> {
+////                        showSnackbar(R.string.timeout)
+////                    }
+////                    Result.SUCCESS -> {
+////                        group.visible()
+////                        progressBar.invisible()
+////                        setEnabledMenuFavorite(true)
+////                    }
+//                }
+//            }
+//        })
 
         vm.detailMatch.observe(this, Observer {
             it?.let {

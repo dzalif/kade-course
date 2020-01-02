@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kadesubmission.databinding.FragmentPreviousMatchBinding
 import com.kucingselfie.kadesubmission.model.Match
-import com.kucingselfie.kadesubmission.model.Result
 import com.kucingselfie.kadesubmission.ui.match.MatchFragmentDirections
 import com.kucingselfie.kadesubmission.ui.match.nextmatch.MatchAdapter
 import com.kucingselfie.kadesubmission.util.invisible
@@ -52,22 +51,22 @@ class PreviousMatchFragment : Fragment() {
         initAdapter()
         vm.getPreviousMatch(idLeague)
 
-        vm.status.observe(this, Observer {
-            when(it) {
-                Result.LOADING -> {
-                    progressBar.visible()
-                    layoutEmptyData.invisible()
-                }
-                Result.NO_DATA -> {
-                    progressBar.invisible()
-                    layoutEmptyData.visible()
-                }
-                Result.SUCCESS -> {
-                    progressBar.invisible()
-                    layoutEmptyData.invisible()
-                }
-            }
-        })
+//        vm.status.observe(this, Observer {
+//            when(it) {
+////                Result.LOADING -> {
+////                    progressBar.visible()
+////                    layoutEmptyData.invisible()
+////                }
+////                Result.NO_DATA -> {
+////                    progressBar.invisible()
+////                    layoutEmptyData.visible()
+////                }
+////                Result.SUCCESS -> {
+////                    progressBar.invisible()
+////                    layoutEmptyData.invisible()
+////                }
+//            }
+//        })
 
         vm.nextMatch.observe(this, Observer {
             if (it.isNotEmpty()) {

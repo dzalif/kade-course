@@ -2,7 +2,7 @@ package com.kucingselfie.kadesubmission.api
 
 import com.google.gson.Gson
 import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse
-import com.kucingselfie.kadesubmission.model.DetailLeague
+import com.kucingselfie.kadesubmission.model.League
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
@@ -42,7 +42,7 @@ class ApiServiceTest {
 
     @Test
     fun getListLeague() {
-        val listLeague = mutableListOf<DetailLeague>()
+        val listLeague = mutableListOf<League>()
         val response = ListLeagueResponse(listLeague)
         runBlocking {
             Mockito.`when`(apiService.getListLeague(anyString(), anyString())).thenReturn(

@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.kucingselfie.kadesubmission.R
 import com.kucingselfie.kadesubmission.databinding.FragmentDetailLeagueBinding
-import com.kucingselfie.kadesubmission.model.DetailLeague
-import com.kucingselfie.kadesubmission.model.Result
+import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.util.invisible
 import com.kucingselfie.kadesubmission.util.visible
 import kotlinx.android.synthetic.main.fragment_detail_league.*
@@ -39,14 +38,14 @@ class DetailLeagueFragment : Fragment() {
 
         vm.getDetailLeague(idLeague)
 
-        vm.status.observe(this, Observer {
-            when(it) {
-                Result.LOADING -> { progressBar.visible() }
-                else -> { progressBar.invisible() }
-            }
-        })
+//        vm.status.observe(this, Observer {
+//            when(it) {
+////                Result.LOADING -> { progressBar.visible() }
+////                else -> { progressBar.invisible() }
+//            }
+//        })
 
-        vm.detailLeague.observe(this, Observer {
+        vm.league.observe(this, Observer {
             if (it.isNotEmpty()) {
                 displayData(it)
             }
@@ -60,7 +59,7 @@ class DetailLeagueFragment : Fragment() {
         idLeague = DetailLeagueFragmentArgs.fromBundle(arguments!!).idLeague
     }
 
-    private fun displayData(it: List<DetailLeague>) {
+    private fun displayData(it: List<League>) {
         leagueTitle.text = it[0].leagueName
         leagueDesc.text = it[0].description
         idLeague = it[0].id
