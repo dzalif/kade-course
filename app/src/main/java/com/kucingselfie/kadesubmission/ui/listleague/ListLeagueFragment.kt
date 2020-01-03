@@ -10,13 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kadesubmission.R
 import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
 import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.databinding.FragmentListLeagueBinding
 import com.kucingselfie.kadesubmission.di.Injectable
-import com.kucingselfie.kadesubmission.model.League
-import com.kucingselfie.kadesubmission.model.Search
 import com.kucingselfie.kadesubmission.util.AppExecutors
 import com.kucingselfie.kadesubmission.util.autoCleared
 import com.kucingselfie.kadesubmission.util.gone
@@ -35,9 +35,6 @@ class ListLeagueFragment : Fragment(), Injectable {
     var binding by autoCleared<FragmentListLeagueBinding>()
     private var searchAdapter by autoCleared<SearchAdapter>()
     private var listLeagueAdapter by autoCleared<ListLeagueAdapter>()
-
-    private var items: MutableList<League> = mutableListOf()
-    private var itemsResult: MutableList<Search> = mutableListOf()
 
     private val vm: ListLeagueViewModel by viewModels { viewModelFactory }
 
@@ -59,7 +56,7 @@ class ListLeagueFragment : Fragment(), Injectable {
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
         ) {
-            //TODO: navigate
+            navController().navigate(ListLeagueFragmentDirections.actionListLeagueFragmentToDetailLeagueFragment(it.id))
         }
         vm.leagues.observe(this, Observer {
             it?.let {
@@ -83,7 +80,15 @@ class ListLeagueFragment : Fragment(), Injectable {
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
         ) {
-
+            navController().navigate(
+                ListLeagueFragmentDirections.actionListLeagueFragmentToDetailMatchFragment(
+                    it.idEvent,
+                    it.imageEvent ?: "",
+                    "",
+                    "",
+                    false
+                )
+            )
         }
         vm.resultSearch.observe(this, Observer {
             it?.let {
@@ -134,4 +139,9 @@ class ListLeagueFragment : Fragment(), Injectable {
     private fun doSearch(query: String) {
         vm.setQuery(query)
     }
+
+    /**
+     * Created to be able to override in tests
+     */
+    fun navController() = findNavController()
 }
