@@ -7,35 +7,44 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 
 import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
+import com.kucingselfie.kadesubmission.databinding.FragmentChooseLeagueBinding
 import com.kucingselfie.kadesubmission.databinding.FragmentMatchBinding
+import com.kucingselfie.kadesubmission.di.Injectable
 import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchFragment
 import com.kucingselfie.kadesubmission.ui.match.previousmatch.PreviousMatchFragment
+import com.kucingselfie.kadesubmission.util.autoCleared
 
 /**
  * A simple [Fragment] subclass.
  */
 
-class MatchFragment : Fragment() {
+class MatchFragment : Fragment(), Injectable {
 
-    private lateinit var binding: FragmentMatchBinding
     private lateinit var viewPager : ViewPager
     private lateinit var viewPagerAdapter : ViewPagerFragment
     private lateinit var tabLayout : TabLayout
     private lateinit var idLeague: String
+
+    var binding by autoCleared<FragmentMatchBinding>()
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentMatchBinding.inflate(inflater)
-        binding.executePendingBindings()
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_match, container, false, dataBindingComponent
+        )
         viewPager = binding.viewPager
         tabLayout = binding.tabLayout
 
