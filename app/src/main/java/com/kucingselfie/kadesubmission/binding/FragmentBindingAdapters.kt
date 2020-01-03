@@ -12,7 +12,11 @@ import javax.inject.Inject
 class FragmentBindingAdapters @Inject constructor(val fragment: Fragment) {
     @BindingAdapter("imageUrl")
     fun bindImage(imgView: ImageView, imgUrl: String?) {
-        imgUrl?.let {
+        if (imgUrl == null) {
+            Glide.with(imgView.context)
+                .load(R.drawable.trophy)
+                .into(imgView)
+        } else {
             Glide.with(imgView.context)
                 .load(imgUrl).placeholder(R.drawable.trophy)
                 .into(imgView)

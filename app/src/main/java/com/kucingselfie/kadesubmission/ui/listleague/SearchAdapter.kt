@@ -11,7 +11,7 @@ import com.kucingselfie.kadesubmission.model.Search
 import com.kucingselfie.kadesubmission.util.AppExecutors
 import com.kucingselfie.kadesubmission.util.DataBoundListAdapter
 
-class SearchAdapter_(
+class SearchAdapter(
     private val dataBindingComponent: DataBindingComponent,
     appExecutors: AppExecutors,
     private val clickListener: ((Search) -> Unit)?

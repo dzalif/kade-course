@@ -33,7 +33,7 @@ class ListLeagueFragment : Fragment(), Injectable {
 
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
     var binding by autoCleared<FragmentListLeagueBinding>()
-    private var searchAdapter by autoCleared<SearchAdapter_>()
+    private var searchAdapter by autoCleared<SearchAdapter>()
     private var listLeagueAdapter by autoCleared<ListLeagueAdapter>()
 
     private var items: MutableList<League> = mutableListOf()
@@ -79,7 +79,7 @@ class ListLeagueFragment : Fragment(), Injectable {
         binding.rvListLeague.adapter = rvAdapter
         listLeagueAdapter = rvAdapter
 
-        val rvSearchAdapter = SearchAdapter_(
+        val rvSearchAdapter = SearchAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
         ) {
@@ -127,8 +127,8 @@ class ListLeagueFragment : Fragment(), Injectable {
     }
 
     private fun resetUI() {
-//        adapter.clear()
-//        binding.rvSearch.gone()
+        binding.rvSearch.gone()
+        binding.rvListLeague.visible()
     }
 
     private fun doSearch(query: String) {
