@@ -2,6 +2,7 @@ package com.kucingselfie.kadesubmission.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.kucingselfie.kadesubmission.ui.detailleague.DetailLeagueViewModel
 import com.kucingselfie.kadesubmission.ui.listleague.ListLeagueViewModel
 import com.kucingselfie.kadesubmission.ui.searchevent.SearchViewModel
 import com.kucingselfie.kadesubmission.util.FootballViewModelFactory
@@ -20,6 +21,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ListLeagueViewModel::class)
     abstract fun bindListLeagueViewModel(viewModel: ListLeagueViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailLeagueViewModel::class)
+    abstract fun bindDetailLeagueViewModel(viewModel: DetailLeagueViewModel) : ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: FootballViewModelFactory): ViewModelProvider.Factory

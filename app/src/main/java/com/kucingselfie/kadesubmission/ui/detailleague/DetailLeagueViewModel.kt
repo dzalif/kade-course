@@ -2,45 +2,23 @@ package com.kucingselfie.kadesubmission.ui.detailleague
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.kucingselfie.kadesubmission.api.TheSportsApi
+import com.kucingselfie.kadesubmission.common.Result
+import com.kucingselfie.kadesubmission.data.LeagueRepository
 import com.kucingselfie.kadesubmission.model.League
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import java.lang.Exception
+import javax.inject.Inject
 
-class DetailLeagueViewModel : ViewModel() {
+class DetailLeagueViewModel @Inject constructor(repo: LeagueRepository) : ViewModel() {
 
-//    private val _status = MutableLiveData<Result>()
-//    val status: LiveData<Result>
-//            get() = _status
+    private val _idLeague = MutableLiveData<String>()
+    val idLeague: LiveData<String> get() = _idLeague
 
-    private val _detailLeague = MutableLiveData<List<League>>()
-    val league: LiveData<List<League>>
-    get() = _detailLeague
-
-    private var vmJob = Job()
-    private val coroutineScope = CoroutineScope(vmJob + Dispatchers.Main)
-
-    fun getDetailLeague(idLeague: String) {
-        coroutineScope.launch {
-            val getDetailDeferred = TheSportsApi.retrofitService.getDetailLeague(idLeague.toInt())
-//            try {
-//                _status.value = Result.LOADING
-//                val listResult = getDetailDeferred.await()
-//                _detailLeague.value = listResult.leagues
-//                _status.value = Result.SUCCESS
-//            } catch (e: Exception) {
-//                _status.value = Result.ERROR
-//                _detailLeague.value = mutableListOf()
-//            }
-        }
+    fun setIdLeague(id: String) {
+        _idLeague.value = id
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        vmJob.cancel()
+    val detailLeague: LiveData<Result<List<League>>> = Transformations.switchMap(_idLeague) {
+        repo.getDetailLeague(it)
     }
 }

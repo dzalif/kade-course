@@ -3,6 +3,7 @@ package com.kucingselfie.kadesubmission.data.remote;
 import android.os.Handler;
 
 import com.kucingselfie.kadesubmission.api.ApiClient;
+import com.kucingselfie.kadesubmission.api.response.DetailLeagueResponse;
 import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse;
 import com.kucingselfie.kadesubmission.api.response.SearchResponse;
 import com.kucingselfie.kadesubmission.model.League;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
+import kotlinx.coroutines.GlobalScope;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,6 +71,26 @@ public class RemoteRepository {
         }), SERVICE_LATENCY_IN_MILLIS);
     }
 
+    public void getDetailLeague(String idLeague, final LoadDetailLeagueCallback callback) {
+        EspressoIdlingResource.increment();
+        int id = Integer.valueOf(idLeague);
+        handler.postDelayed(() ->
+                apiClient.create().getDetailLeague(id).enqueue(new Callback<DetailLeagueResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<DetailLeagueResponse> call, @NotNull Response<DetailLeagueResponse> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body() != null ? response.body().getLeagues() : null);
+                    EspressoIdlingResource.decrement();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<DetailLeagueResponse> call, @NotNull Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        }), SERVICE_LATENCY_IN_MILLIS);
+    }
+
     public interface LoadListLeagueCallback {
         void onSuccess(List<League> response);
         void onError(String message);
@@ -76,6 +98,11 @@ public class RemoteRepository {
 
     public interface SearchMatchCallback {
         void onSuccess(List<Search> response);
+        void onError(String message);
+    }
+
+    public interface LoadDetailLeagueCallback {
+        void onSuccess(List<League> response);
         void onError(String message);
     }
 

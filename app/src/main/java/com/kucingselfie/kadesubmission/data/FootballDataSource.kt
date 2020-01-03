@@ -8,4 +8,5 @@ import com.kucingselfie.kadesubmission.model.Search
 interface FootballDataSource {
     fun getListLeagues(): LiveData<Result<List<League>>>
     fun search(query: String): LiveData<Result<List<Search>>>
+    fun getDetailLeague(id: String): LiveData<Result<List<League>>>
 }
