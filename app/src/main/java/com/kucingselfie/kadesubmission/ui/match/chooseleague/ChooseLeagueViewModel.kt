@@ -5,39 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kadesubmission.api.TheSportsApi
 import com.kucingselfie.kadesubmission.common.ENGLAND
+import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.common.SOCCER
+import com.kucingselfie.kadesubmission.data.LeagueRepository
 import com.kucingselfie.kadesubmission.model.League
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.lang.Exception
+import javax.inject.Inject
 
-class ChooseLeagueViewModel : ViewModel() {
-
-//    private val _status = MutableLiveData<Result>()
-//    val status: LiveData<Result>
-//        get() = _status
-
-    private val _listLeague = MutableLiveData<List<League>>()
-    val listLeague: LiveData<List<League>>
-        get() = _listLeague
-
-    private var vmJob = Job()
-    private val coroutineScope = CoroutineScope(vmJob + Dispatchers.Main)
-
-    fun getListLeague() {
-        coroutineScope.launch {
-            val result = TheSportsApi.retrofitService.getListLeague(ENGLAND, SOCCER)
-//            try {
-//                _status.value = Result.LOADING
-//                val listResult = result.await()
-//                _listLeague.value = listResult.countries
-//                _status.value = Result.SUCCESS
-//            } catch (e: Exception) {
-//                _status.value = Result.ERROR
-//            }
-        }
-    }
-
+class ChooseLeagueViewModel @Inject constructor(repo: LeagueRepository) : ViewModel() {
+    val leagues: LiveData<Result<List<League>>> = repo.getListLeagues()
 }

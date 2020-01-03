@@ -5,73 +5,79 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
+import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.databinding.FragmentChooseLeagueBinding
-import com.kucingselfie.kadesubmission.model.League
-import com.kucingselfie.kadesubmission.util.visible
+import com.kucingselfie.kadesubmission.di.Injectable
+import com.kucingselfie.kadesubmission.ui.listleague.ListLeagueAdapter
+import com.kucingselfie.kadesubmission.util.AppExecutors
+import com.kucingselfie.kadesubmission.util.autoCleared
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class ChooseLeagueFragment : Fragment() {
+class ChooseLeagueFragment : Fragment(), Injectable {
 
-//    private lateinit var listLeagueAdapter: ListLeagueAdapter
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private var items: MutableList<League> = mutableListOf()
+    @Inject
+    lateinit var appExecutors: AppExecutors
 
-    lateinit var binding: FragmentChooseLeagueBinding
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    var binding by autoCleared<FragmentChooseLeagueBinding>()
+    private var listLeagueAdapter by autoCleared<ListLeagueAdapter>()
 
-    private val vm: ChooseLeagueViewModel by lazy {
-        ViewModelProviders.of(this).get(ChooseLeagueViewModel::class.java)
-    }
+    private val vm: ChooseLeagueViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentChooseLeagueBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-
-        initData()
-        observedata()
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_choose_league, container, false, dataBindingComponent
+        )
 
         return binding.root
     }
 
-    private fun observedata() {
-        //Observe status
-//        vm.status.observe(this, Observer {
-//            when (it) {
-////                Result.LOADING -> {
-////                    progressBar.visible()
-////                }
-////                else -> {
-////                    progressBar.invisible()
-////                }
-//            }
-//        })
-
-        //Observe list league data
-        vm.listLeague.observe(this, Observer {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.lifecycleOwner = viewLifecycleOwner
+        val rvAdapter = ListLeagueAdapter(
+            dataBindingComponent = dataBindingComponent,
+            appExecutors = appExecutors
+        ) {
+            navController().navigate(ChooseLeagueFragmentDirections.actionChooseLeagueFragmentToMatchFragment(it.id))
+        }
+        vm.leagues.observe(this, Observer {
             it?.let {
-                binding.listLeague.visible()
-                displayListLeague(it)
+                when(it) {
+                    is Result.Loading -> {
+                    }
+                    is Result.Success -> {
+                        listLeagueAdapter.submitList(it.data)
+                    }
+                }
             }
         })
+        binding.results = vm.leagues
+        binding.rvListLeague.adapter = rvAdapter
+        listLeagueAdapter = rvAdapter
     }
 
-    private fun displayListLeague(it: List<League>) {
-        items.clear()
-        items.addAll(it)
-//        listLeagueAdapter.refreshData(items)
-    }
-
-    private fun initData() {
-        vm.getListLeague()
-    }
+    /**
+     * Created to be able to override in tests
+     */
+    fun navController() = findNavController()
 
 }
