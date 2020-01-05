@@ -1,51 +1,49 @@
 package com.kucingselfie.kadesubmission.ui.match.nextmatch
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.databinding.ItemMatchBinding
 import com.kucingselfie.kadesubmission.model.Match
+import com.kucingselfie.kadesubmission.util.AppExecutors
+import com.kucingselfie.kadesubmission.util.DataBoundListAdapter
 
-class MatchAdapter(private val context: Context, private var items: List<Match>, private val clickListener: (Match) -> Unit) : RecyclerView.Adapter<MatchAdapter.ViewHolder>() {
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(context, items[position], clickListener)
-    }
+class MatchAdapter(
+    private val dataBindingComponent: DataBindingComponent,
+    appExecutors: AppExecutors,
+    private val clickListener: ((Match) -> Unit)?
+) : DataBoundListAdapter<Match, ItemMatchBinding>(
+    appExecutors = appExecutors,
+    diffCallback = object : DiffUtil.ItemCallback<Match>() {
+        override fun areItemsTheSame(oldItem: Match, newItem: Match): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_match, parent, false)
-        )
-    }
-
-    override fun getItemCount(): Int = items.size
-
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val name = view.findViewById<TextView>(R.id.eventInfo)
-        private val image = view.findViewById<ImageView>(R.id.eventImage)
-        fun bind(
-            context: Context,
-            match: Match,
-            clickListener: (league: Match) -> Unit
-        ) {
-            name.text = match.event
-            Glide.with(context).load(match.eventImage).placeholder(R.drawable.ic_match_placeholder).into(image)
-
-            itemView.setOnClickListener {
-                clickListener(match)
-            }
+        override fun areContentsTheSame(oldItem: Match, newItem: Match): Boolean {
+            return oldItem == newItem
         }
     }
+) {
+    override fun createBinding(parent: ViewGroup): ItemMatchBinding {
+        val binding = DataBindingUtil.inflate<ItemMatchBinding>(
+            LayoutInflater.from(parent.context),
+            R.layout.item_match,
+            parent,
+            false,
+            dataBindingComponent
+        )
+        binding.root.setOnClickListener {
+            binding.model?.let {
+                clickListener?.invoke(it)
+            }
+        }
+        return binding
+    }
 
-    fun refreshData(items: List<Match>) {
-        this.items = items
-        notifyDataSetChanged()
+    override fun bind(binding: ItemMatchBinding, item: Match) {
+        binding.model = item
     }
 }

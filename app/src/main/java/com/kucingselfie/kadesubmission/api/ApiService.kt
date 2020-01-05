@@ -41,7 +41,7 @@ interface ApiService {
     fun getDetailLeague(@Query("id") idleague: Int) : Call<DetailLeagueResponse>
 
     @GET("eventsnextleague.php")
-    fun getNextMatch(@Query("id") idleague: Int) : Deferred<NextMatchResponse>
+    fun getNextMatch(@Query("id") idleague: Int) : Call<NextMatchResponse>
 
     @GET("eventspastleague.php")
     fun getPreviousMatch(@Query("id") idleague: Int) : Deferred<PreviousMatchResponse>

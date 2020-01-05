@@ -3,20 +3,18 @@ package com.kucingselfie.kadesubmission.ui.match
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
-
 import com.kucingselfie.kadesubmission.R
 import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
-import com.kucingselfie.kadesubmission.databinding.FragmentChooseLeagueBinding
 import com.kucingselfie.kadesubmission.databinding.FragmentMatchBinding
 import com.kucingselfie.kadesubmission.di.Injectable
 import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchFragment

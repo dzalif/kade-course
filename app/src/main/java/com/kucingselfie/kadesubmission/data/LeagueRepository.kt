@@ -8,7 +8,7 @@ import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.model.Search
 import javax.inject.Inject
 
-class LeagueRepository @Inject constructor(private val remote: RemoteRepository) : FootballDataSource {
+class LeagueRepository @Inject constructor(private val remote: RemoteRepository) : LeagueDataSource {
     override fun getDetailLeague(id: String): LiveData<Result<List<League>>> {
         val detailLeague = MutableLiveData<Result<List<League>>>()
         detailLeague.postValue(Result.Loading(null))
@@ -61,5 +61,4 @@ class LeagueRepository @Inject constructor(private val remote: RemoteRepository)
         })
         return leagues
     }
-
 }

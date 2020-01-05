@@ -42,7 +42,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:text="@string/semicolon"
+                android:text="@string/colon"
                 app:layout_constraintBottom_toBottomOf="@+id/homeScore"
                 app:layout_constraintEnd_toStartOf="@+id/awayScore"
                 app:layout_constraintStart_toEndOf="@+id/homeScore"

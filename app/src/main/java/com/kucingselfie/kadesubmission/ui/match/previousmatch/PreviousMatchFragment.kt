@@ -12,11 +12,6 @@ import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kadesubmission.databinding.FragmentPreviousMatchBinding
 import com.kucingselfie.kadesubmission.model.Match
 import com.kucingselfie.kadesubmission.ui.match.MatchFragmentDirections
-import com.kucingselfie.kadesubmission.ui.match.nextmatch.MatchAdapter
-import com.kucingselfie.kadesubmission.util.invisible
-import com.kucingselfie.kadesubmission.util.visible
-import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
-import kotlinx.android.synthetic.main.fragment_previous_match.*
 
 /**
  * A simple [Fragment] subclass.

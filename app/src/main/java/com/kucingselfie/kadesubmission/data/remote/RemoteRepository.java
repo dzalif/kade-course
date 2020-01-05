@@ -5,8 +5,10 @@ import android.os.Handler;
 import com.kucingselfie.kadesubmission.api.ApiClient;
 import com.kucingselfie.kadesubmission.api.response.DetailLeagueResponse;
 import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse;
+import com.kucingselfie.kadesubmission.api.response.NextMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.SearchResponse;
 import com.kucingselfie.kadesubmission.model.League;
+import com.kucingselfie.kadesubmission.model.Match;
 import com.kucingselfie.kadesubmission.model.Search;
 import com.kucingselfie.kadesubmission.util.EspressoIdlingResource;
 
@@ -16,7 +18,6 @@ import java.util.List;
 
 import javax.inject.Singleton;
 
-import kotlinx.coroutines.GlobalScope;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,6 +92,26 @@ public class RemoteRepository {
         }), SERVICE_LATENCY_IN_MILLIS);
     }
 
+    public void getNextMatch(String idLeague, final LoadNextMatchCallback callback) {
+        EspressoIdlingResource.increment();
+        int id = Integer.valueOf(idLeague);
+        handler.postDelayed(() ->
+                apiClient.create().getNextMatch(id).enqueue(new Callback<NextMatchResponse>() {
+                    @Override
+                    public void onResponse(@NotNull Call<NextMatchResponse> call, @NotNull Response<NextMatchResponse> response) {
+                        if (response.isSuccessful()) {
+                            callback.onSuccess(response.body() != null ? response.body().getEvents() : null);
+                            EspressoIdlingResource.decrement();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<NextMatchResponse> call, @NotNull Throwable t) {
+                        callback.onError(t.getMessage());
+                    }
+                }), SERVICE_LATENCY_IN_MILLIS);
+    }
+
     public interface LoadListLeagueCallback {
         void onSuccess(List<League> response);
         void onError(String message);
@@ -103,6 +124,11 @@ public class RemoteRepository {
 
     public interface LoadDetailLeagueCallback {
         void onSuccess(List<League> response);
+        void onError(String message);
+    }
+
+    public interface LoadNextMatchCallback {
+        void onSuccess(List<Match> response);
         void onError(String message);
     }
 

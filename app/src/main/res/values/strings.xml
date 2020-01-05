@@ -34,5 +34,5 @@
     <string name="added_to_next_match_favorite">Added to next match favorite</string>
     <string name="removed_from_next_match_favorite">Remove from next match favorite</string>
     <string name="removed_from_previous_match_favorite">Removed from previous match favorite</string>
-    <string name="semicolon">:</string>
+    <string name="colon">:</string>
 </resources>
