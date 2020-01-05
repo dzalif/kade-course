@@ -5,84 +5,85 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
+import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.databinding.FragmentPreviousMatchBinding
-import com.kucingselfie.kadesubmission.model.Match
+import com.kucingselfie.kadesubmission.di.Injectable
 import com.kucingselfie.kadesubmission.ui.match.MatchFragmentDirections
+import com.kucingselfie.kadesubmission.ui.match.nextmatch.MatchAdapter
+import com.kucingselfie.kadesubmission.util.AppExecutors
+import com.kucingselfie.kadesubmission.util.autoCleared
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
 
-class PreviousMatchFragment : Fragment() {
+class PreviousMatchFragment : Fragment(), Injectable {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var appExecutors: AppExecutors
+
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    var binding by autoCleared<FragmentPreviousMatchBinding>()
 
     private lateinit var idLeague: String
 
-    private lateinit var binding: FragmentPreviousMatchBinding
+    private var adapter by autoCleared<MatchAdapter>()
 
-    private lateinit var adapter: MatchAdapter
-
-    private var items: MutableList<Match> = mutableListOf()
-
-    private val vm: PreviousMatchViewModel by lazy {
-        ViewModelProviders.of(this).get(PreviousMatchViewModel::class.java)
-    }
+    private val vm: PreviousMatchViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
-        binding = FragmentPreviousMatchBinding.inflate(inflater)
-        binding.lifecycleOwner = this
-
-        //Get id league
-        idLeague = arguments?.getString("idLeague")!!
-
-        initAdapter()
-        vm.getPreviousMatch(idLeague)
-
-//        vm.status.observe(this, Observer {
-//            when(it) {
-////                Result.LOADING -> {
-////                    progressBar.visible()
-////                    layoutEmptyData.invisible()
-////                }
-////                Result.NO_DATA -> {
-////                    progressBar.invisible()
-////                    layoutEmptyData.visible()
-////                }
-////                Result.SUCCESS -> {
-////                    progressBar.invisible()
-////                    layoutEmptyData.invisible()
-////                }
-//            }
-//        })
-
-        vm.nextMatch.observe(this, Observer {
-            if (it.isNotEmpty()) {
-                displayData(it)
-            }
-        })
-
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_previous_match, container, false, dataBindingComponent
+        )
         return binding.root
     }
 
-    private fun displayData(it: List<Match>) {
-        items.clear()
-        adapter.refreshData(it)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        //Get id league
+        idLeague = arguments?.getString("idLeague").toString()
+        vm.setIdLeague(idLeague)
+
+        setAdapter()
+        observeData()
     }
 
-    private fun initAdapter() {
-        adapter = MatchAdapter(
-            requireContext(),
-            items
+    private fun observeData() {
+        vm.previousMatch.observe(this, Observer {
+            it?.let {
+                when(it) {
+                    is Result.Success -> {
+                        adapter.submitList(it.data)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setAdapter() {
+        val rvAdapter = MatchAdapter(
+            dataBindingComponent = dataBindingComponent,
+            appExecutors = appExecutors
         ) {
-            val action =
+            navController().navigate(
                 MatchFragmentDirections.actionMatchFragmentToDetailMatchFragment(
                     it.id,
                     it.eventImage ?: "",
@@ -90,9 +91,12 @@ class PreviousMatchFragment : Fragment() {
                     it.teamAwayId,
                     false
                 )
-            findNavController().navigate(action)
+            )
         }
-        binding.rvPreviousMatch.adapter = adapter
+        binding.results = vm.previousMatch
+        binding.rvPreviousMatch.adapter = rvAdapter
+        adapter = rvAdapter
     }
 
+    fun navController() = findNavController()
 }

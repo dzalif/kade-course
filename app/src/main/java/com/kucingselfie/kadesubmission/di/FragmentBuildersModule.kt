@@ -5,6 +5,7 @@ import com.kucingselfie.kadesubmission.ui.listleague.ListLeagueFragment
 import com.kucingselfie.kadesubmission.ui.match.MatchFragment
 import com.kucingselfie.kadesubmission.ui.match.chooseleague.ChooseLeagueFragment
 import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchFragment
+import com.kucingselfie.kadesubmission.ui.match.previousmatch.PreviousMatchFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -24,4 +25,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeNextMatchFragment(): NextMatchFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributePreviousMatchFragment(): PreviousMatchFragment
 }

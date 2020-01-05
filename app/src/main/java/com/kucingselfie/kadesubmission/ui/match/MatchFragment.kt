@@ -71,7 +71,7 @@ class MatchFragment : Fragment(), Injectable {
 
         private val tabTitles = arrayOf(tabNextMatch, tabLastMatch)
 
-        private val pages = listOf(
+        private val pages: List<Fragment> = listOf(
             nextMatchFragment,
             previousMatchFragment
         )

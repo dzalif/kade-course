@@ -6,4 +6,5 @@ import com.kucingselfie.kadesubmission.model.Match
 
 interface MatchDataSource {
     fun getNextMatch(id: String) : LiveData<Result<List<Match>>>
+    fun getPreviousMatch(id: String) : LiveData<Result<List<Match>>>
 }

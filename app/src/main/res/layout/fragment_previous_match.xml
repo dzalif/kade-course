@@ -2,6 +2,18 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.kucingselfie.kadesubmission.model.Match" />
+        <import type="java.util.List" />
+        <import type="com.kucingselfie.kadesubmission.common.Result" />
+        <import type="androidx.lifecycle.LiveData"/>
+        <variable
+            name="viewmodel"
+            type="com.kucingselfie.kadesubmission.ui.match.previousmatch.PreviousMatchViewModel" />
+        <variable
+            name="results"
+            type="LiveData&lt;Result&lt;List&lt;Match>>>" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,20 +30,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
+        <include
+            layout="@layout/loading_state"
+            app:result="@{(Result) results}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?android:attr/progressBarStyleSmall"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <include
-            android:id="@+id/layoutEmptyData"
-            layout="@layout/layout_empty_data"
-            android:visibility="invisible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -35,9 +35,7 @@ class NextMatchFragment : Fragment(), Injectable {
     var binding by autoCleared<FragmentNextMatchBinding>()
 
     private lateinit var idLeague: String
-
     private var adapter by autoCleared<MatchAdapter>()
-
     private val vm: NextMatchViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
@@ -48,7 +46,6 @@ class NextMatchFragment : Fragment(), Injectable {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_next_match, container, false, dataBindingComponent
         )
-
         return binding.root
     }
 
@@ -57,6 +54,24 @@ class NextMatchFragment : Fragment(), Injectable {
         //Get id league
         idLeague = arguments?.getString("idLeague")!!
         vm.setIdLeague(idLeague)
+
+        setAdapter()
+        observeData()
+    }
+
+    private fun observeData() {
+        vm.nextMatch.observe(this, Observer {
+            it?.let {
+                when(it) {
+                    is Result.Success -> {
+                        adapter.submitList(it.data)
+                    }
+                }
+            }
+        })
+    }
+
+    private fun setAdapter() {
         val rvAdapter = MatchAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
@@ -71,17 +86,6 @@ class NextMatchFragment : Fragment(), Injectable {
                 )
             )
         }
-
-        vm.nextMatch.observe(this, Observer {
-            it?.let {
-                when(it) {
-                    is Result.Success -> {
-                        adapter.submitList(it.data)
-                    }
-                }
-            }
-        })
-
         binding.results = vm.nextMatch
         binding.rvNextMatch.adapter = rvAdapter
         adapter = rvAdapter
