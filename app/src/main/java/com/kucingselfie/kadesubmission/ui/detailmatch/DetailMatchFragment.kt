@@ -87,9 +87,11 @@ class DetailMatchFragment : Fragment(), Injectable {
                 when(it) {
                     is Result.Loading -> {
                         group.invisible()
+                        setEnabledMenuFavorite(false)
                     }
                     is Result.Success -> {
                         group.visible()
+                        setEnabledMenuFavorite(true)
                         val data = it.data?.get(0)
                         setDetailMatch(data)
                         //Bind model data
