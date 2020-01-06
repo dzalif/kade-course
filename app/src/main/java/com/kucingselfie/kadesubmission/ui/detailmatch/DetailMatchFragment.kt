@@ -1,40 +1,45 @@
 package com.kucingselfie.kadesubmission.ui.detailmatch
 
-
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import com.google.android.material.snackbar.Snackbar
 import com.kucingselfie.kadesubmission.R
+import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
+import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.databinding.FragmentDetailMatchBinding
 import com.kucingselfie.kadesubmission.db.database
+import com.kucingselfie.kadesubmission.di.Injectable
 import com.kucingselfie.kadesubmission.model.*
+import com.kucingselfie.kadesubmission.util.autoCleared
 import com.kucingselfie.kadesubmission.util.invisible
 import com.kucingselfie.kadesubmission.util.toGMT7
 import com.kucingselfie.kadesubmission.util.visible
-import kotlinx.android.synthetic.main.fragment_detail_league.progressBar
 import kotlinx.android.synthetic.main.fragment_detail_match.*
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
+import javax.inject.Inject
 
+class DetailMatchFragment : Fragment(), Injectable {
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-/**
- * A simple [Fragment] subclass.
- */
-class DetailMatchFragment : Fragment() {
-
-    private lateinit var binding: FragmentDetailMatchBinding
+    var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
+    var binding by autoCleared<FragmentDetailMatchBinding>()
 
     private lateinit var idEvent: String
     private var imageEvent: String? = null
@@ -46,89 +51,123 @@ class DetailMatchFragment : Fragment() {
     private lateinit var teamHomeId: String
     private lateinit var teamAwayId: String
 
-    private val vm: DetailMatchViewModel by lazy {
-        ViewModelProviders.of(this).get(DetailMatchViewModel::class.java)
+    private val vm: DetailMatchViewModel by viewModels { viewModelFactory }
+
+    companion object {
+        const val GK = "(GK)"
+        const val FW = "(FW)"
+        const val MD = "(MD)"
+        const val DF = "(DF)"
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailMatchBinding.inflate(inflater)
-
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_detail_match, container, false, dataBindingComponent
+        )
         setHasOptionsMenu(true)
+        return binding.root
+    }
 
-        //Get id event
-        idEvent = DetailMatchFragmentArgs.fromBundle(arguments!!).idEvent
-
-        imageEvent = DetailMatchFragmentArgs.fromBundle(arguments!!).imageEvent
-        isNextMatch = DetailMatchFragmentArgs.fromBundle(arguments!!).isNextMatch
-        teamHomeId = DetailMatchFragmentArgs.fromBundle(arguments!!).idHomeTeam
-        teamAwayId = DetailMatchFragmentArgs.fromBundle(arguments!!).idAwayTeam
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.lifecycleOwner = viewLifecycleOwner
+        getIntentData()
         favoriteState()
+        observeData()
+    }
 
-        vm.getDetailMatch(idEvent, teamHomeId, teamAwayId)
-
-//        vm.status.observe(this, Observer {
-//            it?.let {
-//                when (it) {
-////                    Result.LOADING -> {
-////                        progressBar.visible()
-////                        group.invisible()
-////                        setEnabledMenuFavorite(false)
-////                    }
-////                    Result.NO_INTERNET_CONNECTION -> {
-////                        showSnackbar(R.string.no_internet_connection)
-////                    }
-////                    Result.UNKNOWN_ERROR -> {
-////                        showSnackbar(R.string.unknown_error)
-////                    }
-////                    Result.TIMEOUT -> {
-////                        showSnackbar(R.string.timeout)
-////                    }
-////                    Result.SUCCESS -> {
-////                        group.visible()
-////                        progressBar.invisible()
-////                        setEnabledMenuFavorite(true)
-////                    }
-//                }
-//            }
-//        })
-
-        vm.detailMatch.observe(this, Observer {
-            it?.let {
-                //Bind model data
-                binding.model = it
-                //Concat date and match time
-                val formattedMatchTime = formatDate(it)
-                //Get team badge
-                if (isNextMatch) {
-                    nextMatch = NextMatch(idEvent, it.eventName, imageEvent, formattedMatchTime)
-                } else {
-                    lastMatch = LastMatch(idEvent, it.eventName, imageEvent, formattedMatchTime)
-                }
-            }
-        })
-
+    private fun observeData() {
         //Enable cross fade transition on glide
         val transition = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
 
+        vm.detailMatch.observe(this, Observer {
+            it?.let {
+                when(it) {
+                    is Result.Loading -> {
+                        group.invisible()
+                    }
+                    is Result.Success -> {
+                        group.visible()
+                        val data = it.data?.get(0)
+                        setDetailMatch(data)
+                        //Bind model data
+                        binding.model = data
+                        //Concat date and match time
+                        val formattedMatchTime = data?.let { match -> formatDate(match) }
+                        //Get team badge
+                        if (isNextMatch) {
+                            nextMatch = NextMatch(idEvent, data?.eventName, imageEvent, formattedMatchTime)
+                        } else {
+                            lastMatch = LastMatch(idEvent, data?.eventName, imageEvent, formattedMatchTime)
+                        }
+                    }
+                    is Result.Error -> {
+                        showSnackbar(R.string.unknown_error)
+                    }
+                }
+            }
+            binding.results = vm.detailMatch
+        })
+
         vm.detailHomeTeam.observe(this, Observer {
             it?.let {
-                val homeTeamBadge = it[0].strTeamBadge
-                displayTeamLogo(homeTeamBadge, binding.homeTeamBadge, transition)
+                val homeTeamBadge = it.data?.get(0)?.strTeamBadge
+                homeTeamBadge?.let {
+                    displayTeamLogo(homeTeamBadge, binding.homeTeamBadge, transition)
+                }
             }
         })
 
         vm.detailAwayTeam.observe(this, Observer {
             it?.let {
-                val awayTeamBadge = it[0].strTeamBadge
-                displayTeamLogo(awayTeamBadge, binding.awayTeamBadge, transition)
+                val awayTeamBadge = it.data?.get(0)?.strTeamBadge
+                awayTeamBadge?.let {
+                    displayTeamLogo(awayTeamBadge, binding.awayTeamBadge, transition)
+                }
             }
         })
+    }
 
-        return binding.root
+    private fun setDetailMatch(data: DetailMatch?) : DetailMatch {
+        return DetailMatch(
+            data?.dateEvent,
+            data?.idEvent,
+            data?.eventName,
+            data?.intAwayScore,
+            data?.intHomeScore,
+            data?.strAwayTeam,
+            data?.strHomeTeam,
+            data?.strTime?.toGMT7() ?: "",
+            data?.strHomeFormation ?: "",
+            data?.strAwayFormation ?: "",
+            data?.strHomeGK + GK,
+            data?.strHomeFW + FW,
+            data?.strHomeMD + MD,
+            data?.strHomeDF + DF,
+            data?.strAwayGK + GK,
+            data?.strAwayFW + FW,
+            data?.strAwayMD + MD,
+            data?.strAwayDF + DF
+        )
+    }
+
+    private fun getIntentData() {
+        arguments?.let {
+            idEvent = DetailMatchFragmentArgs.fromBundle(it).idEvent
+            imageEvent = DetailMatchFragmentArgs.fromBundle(it).imageEvent
+            isNextMatch = DetailMatchFragmentArgs.fromBundle(it).isNextMatch
+            teamHomeId = DetailMatchFragmentArgs.fromBundle(it).idHomeTeam
+            teamAwayId = DetailMatchFragmentArgs.fromBundle(it).idAwayTeam
+        }
+        setViewModelData(idEvent, teamHomeId, teamAwayId)
+    }
+
+    private fun setViewModelData(idEvent: String, teamHomeId: String, teamAwayId: String) {
+        vm.setIdEvent(idEvent)
+        vm.setTeamHomeId(teamHomeId)
+        vm.setTeamAwayId(teamAwayId)
     }
 
     private fun displayTeamLogo(teamUrl: String, teamImage: ImageView, transition: DrawableCrossFadeFactory) {
@@ -204,7 +243,6 @@ class DetailMatchFragment : Fragment() {
                     if (isNextMatch) addToNextMatchFavorite()
                     else addToLastMatchFavorite()
                 }
-
                 isFavorite = !isFavorite
                 setFavorite()
                 return true

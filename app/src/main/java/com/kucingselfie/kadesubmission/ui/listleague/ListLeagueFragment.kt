@@ -46,7 +46,6 @@ class ListLeagueFragment : Fragment(), Injectable {
             inflater, R.layout.fragment_list_league, container, false, dataBindingComponent
         )
         setHasOptionsMenu(true)
-
         return binding.root
     }
 

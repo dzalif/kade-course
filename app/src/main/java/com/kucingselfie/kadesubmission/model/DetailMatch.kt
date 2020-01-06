@@ -11,9 +11,9 @@ data class DetailMatch(
     @SerializedName("strEvent")
     val eventName: String? = null,
     @SerializedName("intAwayScore")
-    val intAwayScore: String? = "0",
+    val intAwayScore: String? = null,
     @SerializedName("intHomeScore")
-    val intHomeScore: String? = "0",
+    val intHomeScore: String? = null,
     @SerializedName("strAwayTeam")
     val strAwayTeam: String? = null,
     @SerializedName("strHomeTeam")

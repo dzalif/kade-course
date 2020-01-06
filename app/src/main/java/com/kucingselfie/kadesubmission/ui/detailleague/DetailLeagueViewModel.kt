@@ -10,7 +10,6 @@ import com.kucingselfie.kadesubmission.model.League
 import javax.inject.Inject
 
 class DetailLeagueViewModel @Inject constructor(repo: LeagueRepository) : ViewModel() {
-
     private val _idLeague = MutableLiveData<String>()
     val idLeague: LiveData<String> get() = _idLeague
 

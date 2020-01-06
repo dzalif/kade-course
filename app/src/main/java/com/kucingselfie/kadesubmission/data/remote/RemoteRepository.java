@@ -4,11 +4,15 @@ import android.os.Handler;
 
 import com.kucingselfie.kadesubmission.api.ApiClient;
 import com.kucingselfie.kadesubmission.api.response.DetailLeagueResponse;
+import com.kucingselfie.kadesubmission.api.response.DetailMatchResponse;
+import com.kucingselfie.kadesubmission.api.response.DetailTeamResponse;
 import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse;
 import com.kucingselfie.kadesubmission.api.response.NextMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.PreviousMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.SearchResponse;
+import com.kucingselfie.kadesubmission.data.LoadDetailHomeCallback;
 import com.kucingselfie.kadesubmission.data.LoadDetailLeagueCallback;
+import com.kucingselfie.kadesubmission.data.LoadDetailMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadListLeagueCallback;
 import com.kucingselfie.kadesubmission.data.LoadNextMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadPreviousMatchCallback;
@@ -132,9 +136,64 @@ public class RemoteRepository {
 
                     @Override
                     public void onFailure(@NotNull Call<PreviousMatchResponse> call, @NotNull Throwable t) {
-                        callback.onError(t.getMessage());
+                        callback.onError(Objects.requireNonNull(t.getMessage()));
                     }
                 }), SERVICE_LATENCY_IN_MILLIS);
+    }
+
+    public void getDetailMatch(String idEvent, final LoadDetailMatchCallback callback) {
+        EspressoIdlingResource.increment();
+        int id = Integer.valueOf(idEvent);
+        handler.postDelayed(() -> apiClient.create().getDetailMatch(id).enqueue(new Callback<DetailMatchResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<DetailMatchResponse> call, @NotNull Response<DetailMatchResponse> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body() != null ? response.body().getEvents() : null);
+                    EspressoIdlingResource.decrement();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<DetailMatchResponse> call, @NotNull Throwable t) {
+                callback.onError(Objects.requireNonNull(t.getMessage()));
+            }
+        }), SERVICE_LATENCY_IN_MILLIS);
+    }
+
+    public void getDetailHomeTeam(String id, final LoadDetailHomeCallback callback) {
+        EspressoIdlingResource.increment();
+        handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<DetailTeamResponse> call, @NotNull Response<DetailTeamResponse> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body() != null ? response.body().getTeams() : null);
+                    EspressoIdlingResource.decrement();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<DetailTeamResponse> call, @NotNull Throwable t) {
+                callback.onError(Objects.requireNonNull(t.getMessage()));
+            }
+        }), SERVICE_LATENCY_IN_MILLIS);
+    }
+
+    public void getDetailAwayTeam(String id, final LoadDetailHomeCallback callback) {
+        EspressoIdlingResource.increment();
+        handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<DetailTeamResponse> call, @NotNull Response<DetailTeamResponse> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body() != null ? response.body().getTeams() : null);
+                    EspressoIdlingResource.decrement();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<DetailTeamResponse> call, @NotNull Throwable t) {
+                callback.onError(Objects.requireNonNull(t.getMessage()));
+            }
+        }), SERVICE_LATENCY_IN_MILLIS);
     }
 
 }
