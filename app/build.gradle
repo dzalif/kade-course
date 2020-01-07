@@ -6,8 +6,15 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'kotlin-allopen'
+
 //Apply Safe Args Plugin for Navigation Component
 apply plugin: 'androidx.navigation.safeargs'
+
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'com.kucingselfie.kadesubmission.testing.OpenClass'
+}
 
 android {
     compileSdkVersion 29
@@ -25,6 +32,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+            testCoverageEnabled !project.hasProperty('android.injected.invoked.from.ide')
         }
     }
 

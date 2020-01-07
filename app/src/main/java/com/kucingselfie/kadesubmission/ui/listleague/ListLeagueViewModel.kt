@@ -8,8 +8,10 @@ import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.data.LeagueRepository
 import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.model.Search
+import com.kucingselfie.kadesubmission.util.OpenForTesting
 import javax.inject.Inject
 
+@OpenForTesting
 class ListLeagueViewModel @Inject constructor(repository: LeagueRepository) : ViewModel() {
     private val _query = MutableLiveData<String>()
     val query: LiveData<String> get() = _query

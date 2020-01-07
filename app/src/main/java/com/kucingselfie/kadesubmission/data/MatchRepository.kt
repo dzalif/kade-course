@@ -9,7 +9,7 @@ import com.kucingselfie.kadesubmission.model.DetailMatch
 import com.kucingselfie.kadesubmission.model.Match
 import javax.inject.Inject
 
-class MatchRepository @Inject constructor(private val remote: RemoteRepository) : MatchDataSource {
+open class MatchRepository @Inject constructor(private val remote: RemoteRepository) : MatchDataSource {
     override fun getNextMatch(id: String): LiveData<Result<List<Match>>> {
         val nextMatch = MutableLiveData<Result<List<Match>>>()
         nextMatch.postValue(Result.Loading(null))
