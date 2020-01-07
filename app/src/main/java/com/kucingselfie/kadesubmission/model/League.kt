@@ -10,9 +10,9 @@ data class League(
     @SerializedName("strDescriptionEN")
     val description: String,
     @SerializedName("strLogo")
-    val logo: String,
+    val logo: String?,
     @SerializedName("strBadge")
-    val badge: String,
+    val badge: String?,
     @SerializedName("strNaming")
     val strNaming: String
 )
