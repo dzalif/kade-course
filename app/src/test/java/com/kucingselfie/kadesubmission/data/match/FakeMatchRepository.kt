@@ -1,15 +1,19 @@
-package com.kucingselfie.kadesubmission.data
+package com.kucingselfie.kadesubmission.data.match
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kucingselfie.kadesubmission.api.response.DetailTeam
 import com.kucingselfie.kadesubmission.common.Result
+import com.kucingselfie.kadesubmission.data.*
 import com.kucingselfie.kadesubmission.data.remote.RemoteRepository
 import com.kucingselfie.kadesubmission.model.DetailMatch
 import com.kucingselfie.kadesubmission.model.Match
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class MatchRepository @Inject constructor(private val remote: RemoteRepository) : MatchDataSource {
+@Singleton
+open class FakeMatchRepository @Inject constructor(private val remote: RemoteRepository) :
+    MatchDataSource {
     override fun getNextMatch(id: String): LiveData<Result<List<Match>>> {
         val nextMatch = MutableLiveData<Result<List<Match>>>()
         nextMatch.postValue(Result.Loading(null))

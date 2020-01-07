@@ -31,7 +31,7 @@ class LeagueRepositoryTest {
     private val leagueDetailResponse =
         FakeRemoteData.getDummyDetailLeague()
     private val searchResponse =
-        FakeRemoteData.getSearchResult()
+        FakeRemoteData.getDummySearchResult()
 
     @Test
     fun getLeagues() {

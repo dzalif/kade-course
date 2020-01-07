@@ -1,6 +1,9 @@
 package com.kucingselfie.kadesubmission.data
 
+import com.kucingselfie.kadesubmission.api.response.DetailTeam
+import com.kucingselfie.kadesubmission.model.DetailMatch
 import com.kucingselfie.kadesubmission.model.League
+import com.kucingselfie.kadesubmission.model.Match
 import com.kucingselfie.kadesubmission.model.Search
 
 object FakeRemoteData {
@@ -83,7 +86,7 @@ object FakeRemoteData {
         return leagues
     }
 
-    fun getSearchResult() : List<Search> {
+    fun getDummySearchResult() : List<Search> {
         val results = mutableListOf<Search>()
         results.add(
             Search(
@@ -436,5 +439,334 @@ object FakeRemoteData {
             )
         )
         return results
+    }
+
+    fun getDummyNextMatch() : List<Match> {
+        val matches = mutableListOf<Match>()
+        matches.add(
+            Match(
+                "605171",
+                "Doncaster vs Shrewsbury",
+                null,
+                "133620",
+                "134377"
+            )
+        )
+        matches.add(
+            Match(
+                "605272",
+                "Sunderland vs Wycombe",
+                null,
+                "133603",
+                "134382"
+            )
+        )
+        matches.add(
+            Match(
+                "605273",
+                "Oxford Utd vs Rotherham",
+                null,
+                "134361",
+                "134231"
+            )
+        )
+        matches.add(
+            Match(
+                "605274",
+                "Peterboro vs Gillingham",
+                null,
+                "133631",
+                "134230"
+            )
+        )
+        matches.add(
+            Match(
+                "605275",
+                "Blackpool vs Bury",
+                null,
+                "133618",
+                "134359"
+            )
+        )
+        matches.add(
+            Match(
+                "605276",
+                "Portsmouth vs Wimbledon",
+                null,
+                "133629",
+                "134241"
+            )
+        )
+        matches.add(
+            Match(
+                "605277",
+                "Bristol Rovers vs Doncaster",
+                null,
+                "134358",
+                "133620"
+            )
+        )
+        matches.add(
+            Match(
+                "605278",
+                "Rochdale vs Bolton",
+                null,
+                "134364",
+                "133606"
+            )
+        )
+        matches.add(
+            Match(
+                "605279",
+                "Burton vs Fleetwood Town",
+                null,
+                "134376",
+                "134374"
+            )
+        )
+        matches.add(
+            Match(
+                "605280",
+                "Shrewsbury vs Lincoln",
+                null,
+                "134377",
+                "135900"
+            )
+        )
+        matches.add(
+            Match(
+                "605281",
+                "Coventry vs Milton Keynes Dons",
+                null,
+                "133625",
+                "134371"
+            )
+        )
+        matches.add(
+            Match(
+                "605282",
+                "Southend vs Tranmere",
+                null,
+                "134209",
+                "134267"
+            )
+        )
+        matches.add(
+            Match(
+                "605283",
+                "Ipswich vs Accrington",
+                null,
+                "133622",
+                "134368"
+            )
+        )
+        matches.add(
+            Match(
+                "605147",
+                "Lincoln vs Bolton",
+                null,
+                "135900",
+                "133606"
+            )
+        )
+        matches.add(
+            Match(
+                "605174",
+                "Oxford Utd vs Ipswich",
+                null,
+                "134361",
+                "133622"
+            )
+        )
+        return matches
+    }
+
+    fun getDummyPreviousMatch() : List<Match> {
+        val matches = mutableListOf<Match>()
+        matches.add(
+            Match(
+                "605271",
+                "Southend vs Gillingham",
+                null,
+                "134209",
+                "134230"
+            )
+        )
+        matches.add(
+            Match(
+                "605270",
+                "Coventry vs Rotherham",
+                null,
+                "133625",
+                "134231"
+            )
+        )
+        matches.add(
+            Match(
+                "605269",
+                "Shrewsbury vs Tranmere",
+                null,
+                "134377",
+                "134267"
+            )
+        )
+        matches.add(
+            Match(
+                "605268",
+                "Burton vs Milton Keynes Dons",
+                null,
+                "134376",
+                "134371"
+            )
+        )
+        matches.add(
+            Match(
+                "605267",
+                "Rochdale vs Wimbledon",
+                null,
+                "134364",
+                "134241"
+            )
+        )
+        matches.add(
+            Match(
+                "605266",
+                "Bristol Rovers vs Bury",
+                null,
+                "134358",
+                "134359"
+            )
+        )
+        matches.add(
+            Match(
+                "605265",
+                "Portsmouth vs Doncaster",
+                null,
+                "133629",
+                "133620"
+            )
+        )
+        matches.add(
+            Match(
+                "605263",
+                "Peterboro vs Wycombe",
+                null,
+                "133631",
+                "134382"
+            )
+        )
+        matches.add(
+            Match(
+                "605262",
+                "Oxford Utd vs Accrington",
+                null,
+                "134361",
+                "134368"
+            )
+        )
+        matches.add(
+            Match(
+                "605261",
+                "Sunderland vs Lincoln",
+                null,
+                "133603",
+                "135900"
+            )
+        )
+        matches.add(
+            Match(
+                "605260",
+                "Ipswich vs Fleetwood Town",
+                null,
+                "133622",
+                "134374"
+            )
+        )
+        matches.add(
+            Match(
+                "605259",
+                "Rotherham vs Blackpool",
+                null,
+                "134231",
+                "133618"
+            )
+        )
+        matches.add(
+            Match(
+                "605258",
+                "Bolton vs Burton",
+                null,
+                "133606",
+                "134376"
+            )
+        )
+        matches.add(
+            Match(
+                "605257",
+                "Milton Keynes Dons vs Bristol Rovers",
+                null,
+                "134371",
+                "134358"
+            )
+        )
+        matches.add(
+            Match(
+                "605256",
+                "Wimbledon vs Southend",
+                null,
+                "134241",
+                "134209"
+            )
+        )
+        return matches
+    }
+
+    fun getDummyDetailMatch() : List<DetailMatch> {
+        val detailMatch = mutableListOf<DetailMatch>()
+        detailMatch.add(
+            DetailMatch(
+                "2020-01-07",
+                "605171",
+                "Doncaster vs Shrewsbury",
+                "0",
+                "0",
+                "Shrewsbury",
+                "Doncaster",
+                "19:45:00",
+                null,
+                null,
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
+        )
+        return detailMatch
+    }
+
+    fun getDummyDetailTeamHome() : List<DetailTeam> {
+        val detailTeam = mutableListOf<DetailTeam>()
+        detailTeam.add(
+            DetailTeam(
+                "133620",
+                "https://www.thesportsdb.com/images/media/team/badge/ssvpvx1424033260.png"
+            )
+        )
+        return detailTeam
+    }
+
+    fun getDummyDetailTeamAway() : List<DetailTeam> {
+        val detailTeam = mutableListOf<DetailTeam>()
+        detailTeam.add(
+            DetailTeam(
+                "134377",
+                "https://www.thesportsdb.com/images/media/team/badge/9zqhpw1546434997.png"
+            )
+        )
+        return detailTeam
     }
 }

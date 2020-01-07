@@ -36,7 +36,7 @@ interface LoadDetailMatchCallback {
     fun onError(message: String)
 }
 
-interface LoadDetailHomeCallback {
+interface LoadDetailTeamCallback {
     fun onSuccess(response: List<DetailTeam>)
     fun onError(message: String)
 }

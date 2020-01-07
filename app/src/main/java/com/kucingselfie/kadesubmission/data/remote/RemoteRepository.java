@@ -10,7 +10,7 @@ import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse;
 import com.kucingselfie.kadesubmission.api.response.NextMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.PreviousMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.SearchResponse;
-import com.kucingselfie.kadesubmission.data.LoadDetailHomeCallback;
+import com.kucingselfie.kadesubmission.data.LoadDetailTeamCallback;
 import com.kucingselfie.kadesubmission.data.LoadDetailLeagueCallback;
 import com.kucingselfie.kadesubmission.data.LoadDetailMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadListLeagueCallback;
@@ -160,7 +160,7 @@ public class RemoteRepository {
         }), SERVICE_LATENCY_IN_MILLIS);
     }
 
-    public void getDetailHomeTeam(String id, final LoadDetailHomeCallback callback) {
+    public void getDetailHomeTeam(String id, final LoadDetailTeamCallback callback) {
         EspressoIdlingResource.increment();
         handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
             @Override
@@ -178,7 +178,7 @@ public class RemoteRepository {
         }), SERVICE_LATENCY_IN_MILLIS);
     }
 
-    public void getDetailAwayTeam(String id, final LoadDetailHomeCallback callback) {
+    public void getDetailAwayTeam(String id, final LoadDetailTeamCallback callback) {
         EspressoIdlingResource.increment();
         handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
             @Override
