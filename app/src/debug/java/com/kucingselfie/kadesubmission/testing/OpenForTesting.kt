@@ -1,4 +1,4 @@
-package com.kucingselfie.kadesubmission.util
+package com.kucingselfie.kadesubmission.testing
 
 /**
  * This annotation allows us to open some classes for mocking purposes while they are final in

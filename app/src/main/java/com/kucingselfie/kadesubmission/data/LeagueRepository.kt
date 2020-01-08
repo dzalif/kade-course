@@ -6,11 +6,11 @@ import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.data.remote.RemoteRepository
 import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.model.Search
-import com.kucingselfie.kadesubmission.util.OpenForTesting
+import com.kucingselfie.kadesubmission.testing.OpenForTesting
 import javax.inject.Inject
-import javax.inject.Singleton
 
-open class LeagueRepository @Inject constructor(private val remote: RemoteRepository) : LeagueDataSource {
+@OpenForTesting
+class LeagueRepository @Inject constructor(private val remote: RemoteRepository) : LeagueDataSource {
     override fun getDetailLeague(id: String): LiveData<Result<List<League>>> {
         val detailLeague = MutableLiveData<Result<List<League>>>()
         detailLeague.postValue(Result.Loading(null))

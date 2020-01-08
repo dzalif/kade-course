@@ -8,7 +8,7 @@ import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.data.LeagueRepository
 import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.model.Search
-import com.kucingselfie.kadesubmission.util.OpenForTesting
+import com.kucingselfie.kadesubmission.testing.OpenForTesting
 import javax.inject.Inject
 
 @OpenForTesting
