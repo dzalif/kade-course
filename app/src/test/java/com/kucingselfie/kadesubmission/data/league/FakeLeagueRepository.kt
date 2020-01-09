@@ -53,7 +53,7 @@ open class FakeLeagueRepository @Inject constructor(private val remote: RemoteRe
         leagues.postValue(Result.Loading(null))
         remote.getListLeagues(object : LoadListLeagueCallback {
             override fun onError(message: String) {
-                message?.let {
+                message.let {
                     leagues.postValue(Result.Error(message, null))
                 }
             }

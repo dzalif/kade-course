@@ -1,6 +1,7 @@
 package com.kucingselfie.kadesubmission
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -9,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.kucingselfie.kadesubmission.di.Injectable
+import com.kucingselfie.kadesubmission.util.gone
+import com.kucingselfie.kadesubmission.util.visible
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
@@ -46,17 +49,26 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
             invalidateOptionsMenu()
             when(destination.id) {
                 R.id.listLeagueFragment -> {
-                    hideToolbarBack()
+                    setEnabledToolbar(false)
                 }
                 R.id.chooseLeagueFragment -> {
+                    setEnabledToolbar(true)
                     hideToolbarBack()
                 }
                 R.id.favoriteMatchFragment -> {
+                    setEnabledToolbar(true)
                     hideToolbarBack()
                 }
             }
 
         }
+
+    private fun setEnabledToolbar(isEnabled: Boolean) {
+        if (isEnabled)
+            appbarLayout.visible()
+        else
+            appbarLayout.gone()
+    }
 
     private fun hideToolbarBack() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)

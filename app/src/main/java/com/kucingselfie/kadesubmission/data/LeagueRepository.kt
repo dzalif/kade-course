@@ -47,7 +47,7 @@ class LeagueRepository @Inject constructor(private val remote: RemoteRepository)
         leagues.postValue(Result.Loading(null))
         remote.getListLeagues(object : LoadListLeagueCallback {
             override fun onError(message: String) {
-                message?.let {
+                message.let {
                     leagues.postValue(Result.Error(message, null))
                 }
             }

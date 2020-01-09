@@ -1,38 +1,26 @@
 <resources>
     <string name="app_name">Kotlin Dicoding Submission 3</string>
-    <array name="league">
-        <item>English Premier League</item>
-        <item>English League Championship</item>
-        <item>German Bundesliga</item>
-        <item>Italian Serie A</item>
-        <item>French Ligue 1</item>
-        <item>Spanish La Liga</item>
-    </array>
 
     <string name="league_title">League Title</string>
     <string name="next_match">Next Match</string>
     <string name="previous_match">Previous Match</string>
     <string name="home">Home</string>
     <string name="away">Away</string>
-    <string name="match_score">%s : %s</string>
     <string name="date_and_time_match">Waktu match : \n%s %s</string>
     <string name="lineup">Lineup</string>
     <string name="favorite">favorite</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="label_league">League</string>
     <string name="label_match">Match</string>
     <string name="label_favorite">Favorite</string>
-    <string name="no_internet_connection">No Internet Connection</string>
     <string name="unknown_error">Unknown Error</string>
-    <string name="timeout">Timeout</string>
     <string name="layout_empty_data">Tidak ada data</string>
     <string name="match_title">Match Title</string>
-    <string name="match_time">Jadwal Pertandingan :\n</string>
     <string name="please_choose_league">Silahkan pilih liga</string>
     <string name="added_to_previous_match_favorite">Added to previous match favorite</string>
     <string name="added_to_next_match_favorite">Added to next match favorite</string>
     <string name="removed_from_next_match_favorite">Remove from next match favorite</string>
     <string name="removed_from_previous_match_favorite">Removed from previous match favorite</string>
     <string name="colon">:</string>
+    <string name="search_input">Search..</string>
 </resources>
