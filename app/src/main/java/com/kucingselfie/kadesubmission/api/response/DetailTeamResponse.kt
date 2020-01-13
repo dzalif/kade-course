@@ -9,6 +9,12 @@ data class DetailTeamResponse(
 data class DetailTeam(
     @SerializedName("idTeam")
     val teamId: String,
+    @SerializedName("strTeam")
+    val team: String,
     @SerializedName("strTeamBadge")
-    val strTeamBadge: String
+    val strTeamBadge: String,
+    @SerializedName("strDescriptionEN")
+    val description: String,
+    @SerializedName("strStadium")
+    val stadium: String
 )

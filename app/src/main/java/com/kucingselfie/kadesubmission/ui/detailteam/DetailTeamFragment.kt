@@ -6,8 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.kucingselfie.kadesubmission.debug.R
+import com.kucingselfie.kadesubmission.R
 
 class DetailTeamFragment : Fragment() {
 

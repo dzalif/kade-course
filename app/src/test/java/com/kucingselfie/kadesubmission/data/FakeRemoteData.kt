@@ -753,7 +753,10 @@ object FakeRemoteData {
         detailTeam.add(
             DetailTeam(
                 "133620",
-                "https://www.thesportsdb.com/images/media/team/badge/ssvpvx1424033260.png"
+                "Doncaster",
+                "https://www.thesportsdb.com/images/media/team/badge/ssvpvx1424033260.png",
+                "Doncaster Rovers Football Club is an English football club based in Doncaster, South Yorkshire. They play in League One, the third tier of the English football league system after relegation from The Championship in 2013–14.\r\n\r\nThe club was founded in 1879 and turned professional in 1885. Doncaster have spent the majority of their playing history between the third and fourth tiers of the English football league system and are one of four clubs to win the Division 3\"/League Two title three times.\r\n\r\nThe club's colours have traditionally been red and white. Their home strip is red and white hoops, which has been the main design of the club's home shirt since 2001.\r\n\r\nThe associated Doncaster Rovers Belles L.F.C. are one of the most successful women's clubs in English football.\r\n\r\nFollowing promotion in 2012–13, manager Brian Flynn moved to become director of football at the club, with Paul Dickov becoming manager a few weeks later.",
+                "Keepmoat Stadium"
             )
         )
         return detailTeam
@@ -764,7 +767,10 @@ object FakeRemoteData {
         detailTeam.add(
             DetailTeam(
                 "134377",
-                "https://www.thesportsdb.com/images/media/team/badge/9zqhpw1546434997.png"
+                "Shrewsbury",
+                "https://www.thesportsdb.com/images/media/team/badge/9zqhpw1546434997.png",
+                "Shrewsbury Town Football Club is a football club in Shrewsbury, Shropshire, which plays in League One, the third tier of the English football league system.\r\n\r\nThe club was formed in 1886 and was elected to The Football League in 1950, where it has played in all of its bottom three divisions, apart from spending the 2003–04 season in the Conference Premier. It has also competed in the Welsh Cup, winning it six times, a record for an English team.\r\n\r\nFrom 1886 onwards, the club was based at Gay Meadow on the banks of the River Severn; since 2007, they have played at the New Meadow, a UEFA Category four stadium with a capacity of 9,875.",
+                "New Meadow"
             )
         )
         return detailTeam

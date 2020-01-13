@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -63,11 +62,6 @@ class TeamFragment : Fragment(), Injectable {
     }
 
     private fun initSearchInput() {
-        binding.searchInput.doOnTextChanged { text, _, _, _ ->
-            if (text.toString().isEmpty()) {
-                resetUI()
-            }
-        }
         binding.searchInput.setOnEditorActionListener { view: View, actionId: Int, _: KeyEvent? ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 doSearch(view)
@@ -84,10 +78,6 @@ class TeamFragment : Fragment(), Injectable {
                 false
             }
         }
-    }
-
-    private fun resetUI() {
-
     }
 
     private fun doSearch(v: View) {

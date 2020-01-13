@@ -8,12 +8,26 @@ import com.kucingselfie.kadesubmission.data.*
 import com.kucingselfie.kadesubmission.data.remote.RemoteRepository
 import com.kucingselfie.kadesubmission.model.DetailMatch
 import com.kucingselfie.kadesubmission.model.Match
+import com.kucingselfie.kadesubmission.model.Standing
+import com.kucingselfie.kadesubmission.model.Team
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 open class FakeMatchRepository @Inject constructor(private val remote: RemoteRepository) :
     MatchDataSource {
+    override fun getStandings(id: String): LiveData<Result<List<Standing>>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun getListTeam(id: String): LiveData<Result<List<Team>>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun searchTeam(query: String): LiveData<Result<List<Team>>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun getNextMatch(id: String): LiveData<Result<List<Match>>> {
         val nextMatch = MutableLiveData<Result<List<Match>>>()
         nextMatch.postValue(Result.Loading(null))
