@@ -20,11 +20,8 @@ import com.kucingselfie.kadesubmission.di.Injectable
 import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchFragment
 import com.kucingselfie.kadesubmission.ui.match.previousmatch.PreviousMatchFragment
 import com.kucingselfie.kadesubmission.ui.match.standings.StandingsFragment
+import com.kucingselfie.kadesubmission.ui.match.team.TeamFragment
 import com.kucingselfie.kadesubmission.util.autoCleared
-
-/**
- * A simple [Fragment] subclass.
- */
 
 class MatchFragment : Fragment(), Injectable {
     private lateinit var viewPager : ViewPager
@@ -52,6 +49,7 @@ class MatchFragment : Fragment(), Injectable {
         val nextMatchFragment = NextMatchFragment()
         val previousMatchFragment = PreviousMatchFragment()
         val standingsFragment = StandingsFragment()
+        val teamFragment = TeamFragment()
 
         //Send idLeague from Match Fragment to Next Match Fragment and Previous Match Fragment
         val bundle = Bundle()
@@ -59,6 +57,7 @@ class MatchFragment : Fragment(), Injectable {
         nextMatchFragment.arguments = bundle
         previousMatchFragment.arguments = bundle
         standingsFragment.arguments = bundle
+        teamFragment.arguments = bundle
 
         viewPagerAdapter =
             ViewPagerFragment(
@@ -66,7 +65,9 @@ class MatchFragment : Fragment(), Injectable {
                 requireContext(),
                 nextMatchFragment,
                 previousMatchFragment,
-                standingsFragment)
+                standingsFragment,
+                teamFragment
+            )
         viewPager.adapter = viewPagerAdapter
         tabLayout.setupWithViewPager(viewPager,true)
         return binding.root
@@ -77,21 +78,25 @@ class MatchFragment : Fragment(), Injectable {
         context: Context,
         nextMatchFragment: NextMatchFragment,
         previousMatchFragment: PreviousMatchFragment,
-        standingsFragment: StandingsFragment): FragmentPagerAdapter(fm) {
+        standingsFragment: StandingsFragment,
+        teamFragment: TeamFragment): FragmentPagerAdapter(fm) {
         private val tabNextMatch = context.resources.getString(R.string.next_match)
         private val tabLastMatch = context.resources.getString(R.string.previous_match)
         private val tabStandings = context.resources.getString(R.string.standings)
+        private val tabTeam = context.resources.getString(R.string.teams)
 
         private val tabTitles = arrayOf(
             tabNextMatch,
             tabLastMatch,
-            tabStandings
+            tabStandings,
+            tabTeam
         )
 
         private val pages: List<Fragment> = listOf(
             nextMatchFragment,
             previousMatchFragment,
-            standingsFragment
+            standingsFragment,
+            teamFragment
         )
         override fun getItem(position: Int): Fragment {
             return pages[position]

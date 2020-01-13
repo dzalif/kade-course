@@ -42,3 +42,8 @@ interface LoadStandingCallback {
     fun onSuccess(response: List<Standing>)
     fun onError(message: String)
 }
+
+interface LoadListTeamCallback {
+    fun onSuccess(response: List<Team>)
+    fun onError(message: String)
+}

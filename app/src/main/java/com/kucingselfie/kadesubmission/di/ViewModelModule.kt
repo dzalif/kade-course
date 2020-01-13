@@ -9,6 +9,7 @@ import com.kucingselfie.kadesubmission.ui.match.chooseleague.ChooseLeagueViewMod
 import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchViewModel
 import com.kucingselfie.kadesubmission.ui.match.previousmatch.PreviousMatchViewModel
 import com.kucingselfie.kadesubmission.ui.match.standings.StandingsViewModel
+import com.kucingselfie.kadesubmission.ui.match.team.TeamViewModel
 import com.kucingselfie.kadesubmission.util.FootballViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -50,6 +51,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(StandingsViewModel::class)
     abstract fun bindStandingsViewModel(viewModel: StandingsViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(TeamViewModel::class)
+    abstract fun bindTeamViewModel(viewModel: TeamViewModel) : ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: FootballViewModelFactory): ViewModelProvider.Factory

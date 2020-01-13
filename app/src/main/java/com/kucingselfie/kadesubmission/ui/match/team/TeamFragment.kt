@@ -1,4 +1,4 @@
-package com.kucingselfie.kadesubmission.ui.match.standings
+package com.kucingselfie.kadesubmission.ui.match.team
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,22 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kadesubmission.R
 import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
 import com.kucingselfie.kadesubmission.common.Result
-import com.kucingselfie.kadesubmission.databinding.FragmentStandingsBinding
+import com.kucingselfie.kadesubmission.databinding.FragmentTeamBinding
 import com.kucingselfie.kadesubmission.di.Injectable
-import com.kucingselfie.kadesubmission.ui.listleague.ListLeagueAdapter
-import com.kucingselfie.kadesubmission.ui.listleague.ListLeagueFragmentDirections
-import com.kucingselfie.kadesubmission.ui.match.nextmatch.MatchAdapter
-import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchViewModel
 import com.kucingselfie.kadesubmission.util.AppExecutors
 import com.kucingselfie.kadesubmission.util.autoCleared
 import javax.inject.Inject
 
-class StandingsFragment : Fragment(), Injectable {
+class TeamFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -33,18 +27,18 @@ class StandingsFragment : Fragment(), Injectable {
     lateinit var appExecutors: AppExecutors
 
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
-    var binding by autoCleared<FragmentStandingsBinding>()
+    var binding by autoCleared<FragmentTeamBinding>()
 
     private lateinit var idLeague: String
-    private var adapter by autoCleared<StandingsAdapter>()
-    private val vm: StandingsViewModel by viewModels { viewModelFactory }
+    private var adapter by autoCleared<TeamAdapter>()
+    private val vm: TeamViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_standings, container, false, dataBindingComponent
+            inflater, R.layout.fragment_team, container, false, dataBindingComponent
         )
         return binding.root
     }
@@ -59,7 +53,7 @@ class StandingsFragment : Fragment(), Injectable {
     }
 
     private fun observeData() {
-        vm.standings.observe(this, Observer {
+        vm.teams.observe(this, Observer {
             it?.let {
                 when(it) {
                     is Result.Success -> {
@@ -71,16 +65,14 @@ class StandingsFragment : Fragment(), Injectable {
     }
 
     private fun initAdapter() {
-        val rvAdapter = StandingsAdapter(
+        val rvAdapter = TeamAdapter(
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
         ) {
             // navController().navigate(ListLeagueFragmentDirections.actionListLeagueFragmentToDetailLeagueFragment(it.id))
         }
-        binding.results = vm.standings
-        binding.rvStanding.adapter = rvAdapter
+        binding.results = vm.teams
+        binding.rvTeam.adapter = rvAdapter
         adapter = rvAdapter
     }
-
-    fun navController() = findNavController()
 }

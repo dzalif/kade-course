@@ -8,6 +8,7 @@ import com.kucingselfie.kadesubmission.data.remote.RemoteRepository
 import com.kucingselfie.kadesubmission.model.DetailMatch
 import com.kucingselfie.kadesubmission.model.Match
 import com.kucingselfie.kadesubmission.model.Standing
+import com.kucingselfie.kadesubmission.model.Team
 import com.kucingselfie.kadesubmission.testing.OpenForTesting
 import javax.inject.Inject
 
@@ -103,5 +104,20 @@ class MatchRepository @Inject constructor(private val remote: RemoteRepository) 
             }
         })
         return standings
+    }
+
+    override fun getListTeam(id: String): LiveData<Result<List<Team>>> {
+        val teams = MutableLiveData<Result<List<Team>>>()
+        teams.postValue(Result.Loading(null))
+        remote.getListTeam(id, object : LoadListTeamCallback {
+            override fun onSuccess(response: List<Team>) {
+                teams.postValue(Result.Success(response))
+            }
+
+            override fun onError(message: String) {
+                teams.postValue(Result.Error(message, null))
+            }
+        })
+        return teams
     }
 }

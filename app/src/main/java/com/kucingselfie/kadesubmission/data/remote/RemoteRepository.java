@@ -7,6 +7,7 @@ import com.kucingselfie.kadesubmission.api.response.DetailLeagueResponse;
 import com.kucingselfie.kadesubmission.api.response.DetailMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.DetailTeamResponse;
 import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse;
+import com.kucingselfie.kadesubmission.api.response.ListTeamResponse;
 import com.kucingselfie.kadesubmission.api.response.NextMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.PreviousMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.SearchResponse;
@@ -15,6 +16,7 @@ import com.kucingselfie.kadesubmission.data.LoadDetailTeamCallback;
 import com.kucingselfie.kadesubmission.data.LoadDetailLeagueCallback;
 import com.kucingselfie.kadesubmission.data.LoadDetailMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadListLeagueCallback;
+import com.kucingselfie.kadesubmission.data.LoadListTeamCallback;
 import com.kucingselfie.kadesubmission.data.LoadNextMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadPreviousMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadStandingCallback;
@@ -211,6 +213,24 @@ public class RemoteRepository {
 
             @Override
             public void onFailure(@NotNull Call<StandingResponse> call, @NotNull Throwable t) {
+                callback.onError(Objects.requireNonNull(t.getMessage()));
+            }
+        }), SERVICE_LATENCY_IN_MILLIS);
+    }
+
+    public void getListTeam(String id, final LoadListTeamCallback callback) {
+        EspressoIdlingResource.increment();
+        handler.postDelayed(() -> apiClient.create().getListTeam(id).enqueue(new Callback<ListTeamResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<ListTeamResponse> call, @NotNull Response<ListTeamResponse> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body().getData());
+                    EspressoIdlingResource.decrement();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<ListTeamResponse> call, @NotNull Throwable t) {
                 callback.onError(Objects.requireNonNull(t.getMessage()));
             }
         }), SERVICE_LATENCY_IN_MILLIS);
