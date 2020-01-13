@@ -1,10 +1,7 @@
 package com.kucingselfie.kadesubmission.data
 
 import com.kucingselfie.kadesubmission.api.response.DetailTeam
-import com.kucingselfie.kadesubmission.model.DetailMatch
-import com.kucingselfie.kadesubmission.model.League
-import com.kucingselfie.kadesubmission.model.Match
-import com.kucingselfie.kadesubmission.model.Search
+import com.kucingselfie.kadesubmission.model.*
 
 interface LoadListLeagueCallback {
     fun onSuccess(response: List<League>)
@@ -38,5 +35,10 @@ interface LoadDetailMatchCallback {
 
 interface LoadDetailTeamCallback {
     fun onSuccess(response: List<DetailTeam>)
+    fun onError(message: String)
+}
+
+interface LoadStandingCallback {
+    fun onSuccess(response: List<Standing>)
     fun onError(message: String)
 }

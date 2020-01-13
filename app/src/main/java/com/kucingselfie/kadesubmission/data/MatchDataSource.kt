@@ -5,6 +5,7 @@ import com.kucingselfie.kadesubmission.api.response.DetailTeam
 import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.model.DetailMatch
 import com.kucingselfie.kadesubmission.model.Match
+import com.kucingselfie.kadesubmission.model.Standing
 
 interface MatchDataSource {
     fun getNextMatch(id: String) : LiveData<Result<List<Match>>>
@@ -12,4 +13,5 @@ interface MatchDataSource {
     fun getDetailMatch(id: String) : LiveData<Result<List<DetailMatch>>>
     fun getDetailHomeTeam(id: String) : LiveData<Result<List<DetailTeam>>>
     fun getDetailAwayTeam(id: String) : LiveData<Result<List<DetailTeam>>>
+    fun getStandings(id: String) : LiveData<Result<List<Standing>>>
 }

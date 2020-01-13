@@ -100,9 +100,6 @@ class ListLeagueFragment : Fragment(), Injectable {
         vm.resultSearch.observe(this, Observer {
             it?.let {
                 when(it) {
-                    is Result.Loading -> {
-
-                    }
                     is Result.Success -> {
                         binding.rvListLeague.gone()
                         binding.rvSearch.visible()

@@ -7,6 +7,7 @@ import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.data.remote.RemoteRepository
 import com.kucingselfie.kadesubmission.model.DetailMatch
 import com.kucingselfie.kadesubmission.model.Match
+import com.kucingselfie.kadesubmission.model.Standing
 import com.kucingselfie.kadesubmission.testing.OpenForTesting
 import javax.inject.Inject
 
@@ -87,5 +88,20 @@ class MatchRepository @Inject constructor(private val remote: RemoteRepository) 
             }
         })
         return detailAway
+    }
+
+    override fun getStandings(id: String): LiveData<Result<List<Standing>>> {
+        val standings = MutableLiveData<Result<List<Standing>>>()
+        standings.postValue(Result.Loading(null))
+        remote.getStandings(id, object: LoadStandingCallback {
+            override fun onSuccess(response: List<Standing>) {
+                standings.postValue(Result.Success(response))
+            }
+
+            override fun onError(message: String) {
+                standings.postValue(Result.Error(message, null))
+            }
+        })
+        return standings
     }
 }

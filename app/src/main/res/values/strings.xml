@@ -23,4 +23,11 @@
     <string name="removed_from_previous_match_favorite">Removed from previous match favorite</string>
     <string name="colon">:</string>
     <string name="search_input">Search..</string>
+    <string name="team">Team</string>
+    <string name="played">Played</string>
+    <string name="win">Win</string>
+    <string name="draw">Draw</string>
+    <string name="loss">Loss</string>
+    <string name="total">Total</string>
+    <string name="standings">Standings</string>
 </resources>

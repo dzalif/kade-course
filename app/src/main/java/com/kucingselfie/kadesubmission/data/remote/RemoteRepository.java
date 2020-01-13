@@ -10,12 +10,14 @@ import com.kucingselfie.kadesubmission.api.response.ListLeagueResponse;
 import com.kucingselfie.kadesubmission.api.response.NextMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.PreviousMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.SearchResponse;
+import com.kucingselfie.kadesubmission.api.response.StandingResponse;
 import com.kucingselfie.kadesubmission.data.LoadDetailTeamCallback;
 import com.kucingselfie.kadesubmission.data.LoadDetailLeagueCallback;
 import com.kucingselfie.kadesubmission.data.LoadDetailMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadListLeagueCallback;
 import com.kucingselfie.kadesubmission.data.LoadNextMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadPreviousMatchCallback;
+import com.kucingselfie.kadesubmission.data.LoadStandingCallback;
 import com.kucingselfie.kadesubmission.data.SearchMatchCallback;
 import com.kucingselfie.kadesubmission.util.EspressoIdlingResource;
 
@@ -129,7 +131,7 @@ public class RemoteRepository {
                     @Override
                     public void onResponse(@NotNull Call<PreviousMatchResponse> call, @NotNull Response<PreviousMatchResponse> response) {
                         if (response.isSuccessful()) {
-                            callback.onSuccess(response.body() != null ? response.body().getEvents() : null);
+                            callback.onSuccess(response.body().getEvents());
                             EspressoIdlingResource.decrement();
                         }
                     }
@@ -191,6 +193,24 @@ public class RemoteRepository {
 
             @Override
             public void onFailure(@NotNull Call<DetailTeamResponse> call, @NotNull Throwable t) {
+                callback.onError(Objects.requireNonNull(t.getMessage()));
+            }
+        }), SERVICE_LATENCY_IN_MILLIS);
+    }
+
+    public void getStandings(String id, final LoadStandingCallback callback) {
+        EspressoIdlingResource.increment();
+        handler.postDelayed(() -> apiClient.create().getStandings(id).enqueue(new Callback<StandingResponse>() {
+            @Override
+            public void onResponse(@NotNull Call<StandingResponse> call, @NotNull Response<StandingResponse> response) {
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body().getData());
+                    EspressoIdlingResource.decrement();
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<StandingResponse> call, @NotNull Throwable t) {
                 callback.onError(Objects.requireNonNull(t.getMessage()));
             }
         }), SERVICE_LATENCY_IN_MILLIS);
