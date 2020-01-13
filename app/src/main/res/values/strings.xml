@@ -31,4 +31,5 @@
     <string name="total">Total</string>
     <string name="standings">Standings</string>
     <string name="teams">Teams</string>
+    <string name="search_team">Search team..</string>
 </resources>

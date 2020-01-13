@@ -16,4 +16,5 @@ interface MatchDataSource {
     fun getDetailAwayTeam(id: String) : LiveData<Result<List<DetailTeam>>>
     fun getStandings(id: String) : LiveData<Result<List<Standing>>>
     fun getListTeam(id: String) : LiveData<Result<List<Team>>>
+    fun searchTeam(query: String) : LiveData<Result<List<Team>>>
 }

@@ -11,6 +11,7 @@ import com.kucingselfie.kadesubmission.api.response.ListTeamResponse;
 import com.kucingselfie.kadesubmission.api.response.NextMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.PreviousMatchResponse;
 import com.kucingselfie.kadesubmission.api.response.SearchResponse;
+import com.kucingselfie.kadesubmission.api.response.SearchTeamResponse;
 import com.kucingselfie.kadesubmission.api.response.StandingResponse;
 import com.kucingselfie.kadesubmission.data.LoadDetailTeamCallback;
 import com.kucingselfie.kadesubmission.data.LoadDetailLeagueCallback;
@@ -22,6 +23,7 @@ import com.kucingselfie.kadesubmission.data.LoadPreviousMatchCallback;
 import com.kucingselfie.kadesubmission.data.LoadStandingCallback;
 import com.kucingselfie.kadesubmission.data.SearchMatchCallback;
 import com.kucingselfie.kadesubmission.util.EspressoIdlingResource;
+import com.kucingselfie.kadesubmission.util.ExecutorsKt;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,191 +51,235 @@ public class RemoteRepository {
 
     public void getListLeagues(final LoadListLeagueCallback callback) {
         EspressoIdlingResource.increment();
-        handler.postDelayed(() -> apiClient.create().getListLeague(ENGLAND, SOCCER).enqueue(new Callback<ListLeagueResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<ListLeagueResponse> call, @NotNull Response<ListLeagueResponse> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body() != null ? response.body().getCountries() : null);
-                    EspressoIdlingResource.decrement();
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<ListLeagueResponse> call, @NotNull Throwable t) {
-                callback.onError(Objects.requireNonNull(t.getMessage()));
-            }
-        }), SERVICE_LATENCY_IN_MILLIS);
-    }
-
-    public void search(String query, final SearchMatchCallback callback) {
-        EspressoIdlingResource.increment();
-        handler.postDelayed(() -> {
-            apiClient.create().searchEvents(query, SOCCER).enqueue(new Callback<SearchResponse>() {
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> apiClient.create().getListLeague(ENGLAND, SOCCER).enqueue(new Callback<ListLeagueResponse>() {
                 @Override
-                public void onResponse(@NotNull Call<SearchResponse> call, @NotNull Response<SearchResponse> response) {
+                public void onResponse(@NotNull Call<ListLeagueResponse> call, @NotNull Response<ListLeagueResponse> response) {
                     if (response.isSuccessful()) {
-                        callback.onSuccess(response.body() != null ? response.body().getEvent() : null);
+                        callback.onSuccess(response.body() != null ? response.body().getCountries() : null);
                         EspressoIdlingResource.decrement();
                     }
                 }
 
                 @Override
-                public void onFailure(@NotNull Call<SearchResponse> call, @NotNull Throwable t) {
+                public void onFailure(@NotNull Call<ListLeagueResponse> call, @NotNull Throwable t) {
                     callback.onError(Objects.requireNonNull(t.getMessage()));
                 }
-            });
-        }, SERVICE_LATENCY_IN_MILLIS);
+            }), SERVICE_LATENCY_IN_MILLIS);
+        });
+    }
+
+    public void search(String query, final SearchMatchCallback callback) {
+        EspressoIdlingResource.increment();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> {
+                apiClient.create().searchEvents(query, SOCCER).enqueue(new Callback<SearchResponse>() {
+                    @Override
+                    public void onResponse(@NotNull Call<SearchResponse> call, @NotNull Response<SearchResponse> response) {
+                        if (response.isSuccessful()) {
+                            callback.onSuccess(response.body() != null ? response.body().getEvent() : null);
+                            EspressoIdlingResource.decrement();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull Call<SearchResponse> call, @NotNull Throwable t) {
+                        callback.onError(Objects.requireNonNull(t.getMessage()));
+                    }
+                });
+            }, SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
     public void getDetailLeague(String idLeague, final LoadDetailLeagueCallback callback) {
         EspressoIdlingResource.increment();
         int id = Integer.valueOf(idLeague);
-        handler.postDelayed(() ->
-                apiClient.create().getDetailLeague(id).enqueue(new Callback<DetailLeagueResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<DetailLeagueResponse> call, @NotNull Response<DetailLeagueResponse> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body() != null ? response.body().getLeagues() : null);
-                    EspressoIdlingResource.decrement();
-                }
-            }
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() ->
+                    apiClient.create().getDetailLeague(id).enqueue(new Callback<DetailLeagueResponse>() {
+                        @Override
+                        public void onResponse(@NotNull Call<DetailLeagueResponse> call, @NotNull Response<DetailLeagueResponse> response) {
+                            if (response.isSuccessful()) {
+                                callback.onSuccess(response.body() != null ? response.body().getLeagues() : null);
+                                EspressoIdlingResource.decrement();
+                            }
+                        }
 
-            @Override
-            public void onFailure(@NotNull Call<DetailLeagueResponse> call, @NotNull Throwable t) {
-                callback.onError(Objects.requireNonNull(t.getMessage()));
-            }
-        }), SERVICE_LATENCY_IN_MILLIS);
+                        @Override
+                        public void onFailure(@NotNull Call<DetailLeagueResponse> call, @NotNull Throwable t) {
+                            callback.onError(Objects.requireNonNull(t.getMessage()));
+                        }
+                    }), SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
     public void getNextMatch(String idLeague, final LoadNextMatchCallback callback) {
         EspressoIdlingResource.increment();
         int id = Integer.valueOf(idLeague);
-        handler.postDelayed(() ->
-                apiClient.create().getNextMatch(id).enqueue(new Callback<NextMatchResponse>() {
-                    @Override
-                    public void onResponse(@NotNull Call<NextMatchResponse> call, @NotNull Response<NextMatchResponse> response) {
-                        if (response.isSuccessful()) {
-                            callback.onSuccess(response.body() != null ? response.body().getEvents() : null);
-                            EspressoIdlingResource.decrement();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() ->
+                    apiClient.create().getNextMatch(id).enqueue(new Callback<NextMatchResponse>() {
+                        @Override
+                        public void onResponse(@NotNull Call<NextMatchResponse> call, @NotNull Response<NextMatchResponse> response) {
+                            if (response.isSuccessful()) {
+                                callback.onSuccess(response.body() != null ? response.body().getEvents() : null);
+                                EspressoIdlingResource.decrement();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(@NotNull Call<NextMatchResponse> call, @NotNull Throwable t) {
-                        callback.onError(t.getMessage());
-                    }
-                }), SERVICE_LATENCY_IN_MILLIS);
+                        @Override
+                        public void onFailure(@NotNull Call<NextMatchResponse> call, @NotNull Throwable t) {
+                            callback.onError(t.getMessage());
+                        }
+                    }), SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
     public void getPreviousMatch(String idLeague, final LoadPreviousMatchCallback callback) {
         EspressoIdlingResource.increment();
         int id = Integer.valueOf(idLeague);
-        handler.postDelayed(() ->
-                apiClient.create().getPreviousMatch(id).enqueue(new Callback<PreviousMatchResponse>() {
-                    @Override
-                    public void onResponse(@NotNull Call<PreviousMatchResponse> call, @NotNull Response<PreviousMatchResponse> response) {
-                        if (response.isSuccessful()) {
-                            callback.onSuccess(response.body().getEvents());
-                            EspressoIdlingResource.decrement();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() ->
+                    apiClient.create().getPreviousMatch(id).enqueue(new Callback<PreviousMatchResponse>() {
+                        @Override
+                        public void onResponse(@NotNull Call<PreviousMatchResponse> call, @NotNull Response<PreviousMatchResponse> response) {
+                            if (response.isSuccessful()) {
+                                callback.onSuccess(response.body().getEvents());
+                                EspressoIdlingResource.decrement();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(@NotNull Call<PreviousMatchResponse> call, @NotNull Throwable t) {
-                        callback.onError(Objects.requireNonNull(t.getMessage()));
-                    }
-                }), SERVICE_LATENCY_IN_MILLIS);
+                        @Override
+                        public void onFailure(@NotNull Call<PreviousMatchResponse> call, @NotNull Throwable t) {
+                            callback.onError(Objects.requireNonNull(t.getMessage()));
+                        }
+                    }), SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
     public void getDetailMatch(String idEvent, final LoadDetailMatchCallback callback) {
         EspressoIdlingResource.increment();
         int id = Integer.valueOf(idEvent);
-        handler.postDelayed(() -> apiClient.create().getDetailMatch(id).enqueue(new Callback<DetailMatchResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<DetailMatchResponse> call, @NotNull Response<DetailMatchResponse> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body() != null ? response.body().getEvents() : null);
-                    EspressoIdlingResource.decrement();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> apiClient.create().getDetailMatch(id).enqueue(new Callback<DetailMatchResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<DetailMatchResponse> call, @NotNull Response<DetailMatchResponse> response) {
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body() != null ? response.body().getEvents() : null);
+                        EspressoIdlingResource.decrement();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NotNull Call<DetailMatchResponse> call, @NotNull Throwable t) {
-                callback.onError(Objects.requireNonNull(t.getMessage()));
-            }
-        }), SERVICE_LATENCY_IN_MILLIS);
+                @Override
+                public void onFailure(@NotNull Call<DetailMatchResponse> call, @NotNull Throwable t) {
+                    callback.onError(Objects.requireNonNull(t.getMessage()));
+                }
+            }), SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
     public void getDetailHomeTeam(String id, final LoadDetailTeamCallback callback) {
         EspressoIdlingResource.increment();
-        handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<DetailTeamResponse> call, @NotNull Response<DetailTeamResponse> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body() != null ? response.body().getTeams() : null);
-                    EspressoIdlingResource.decrement();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<DetailTeamResponse> call, @NotNull Response<DetailTeamResponse> response) {
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body() != null ? response.body().getTeams() : null);
+                        EspressoIdlingResource.decrement();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NotNull Call<DetailTeamResponse> call, @NotNull Throwable t) {
-                callback.onError(Objects.requireNonNull(t.getMessage()));
-            }
-        }), SERVICE_LATENCY_IN_MILLIS);
+                @Override
+                public void onFailure(@NotNull Call<DetailTeamResponse> call, @NotNull Throwable t) {
+                    callback.onError(Objects.requireNonNull(t.getMessage()));
+                }
+            }), SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
     public void getDetailAwayTeam(String id, final LoadDetailTeamCallback callback) {
         EspressoIdlingResource.increment();
-        handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<DetailTeamResponse> call, @NotNull Response<DetailTeamResponse> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body() != null ? response.body().getTeams() : null);
-                    EspressoIdlingResource.decrement();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<DetailTeamResponse> call, @NotNull Response<DetailTeamResponse> response) {
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body() != null ? response.body().getTeams() : null);
+                        EspressoIdlingResource.decrement();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NotNull Call<DetailTeamResponse> call, @NotNull Throwable t) {
-                callback.onError(Objects.requireNonNull(t.getMessage()));
-            }
-        }), SERVICE_LATENCY_IN_MILLIS);
+                @Override
+                public void onFailure(@NotNull Call<DetailTeamResponse> call, @NotNull Throwable t) {
+                    callback.onError(Objects.requireNonNull(t.getMessage()));
+                }
+            }), SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
     public void getStandings(String id, final LoadStandingCallback callback) {
         EspressoIdlingResource.increment();
-        handler.postDelayed(() -> apiClient.create().getStandings(id).enqueue(new Callback<StandingResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<StandingResponse> call, @NotNull Response<StandingResponse> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body().getData());
-                    EspressoIdlingResource.decrement();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> apiClient.create().getStandings(id).enqueue(new Callback<StandingResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<StandingResponse> call, @NotNull Response<StandingResponse> response) {
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body().getData());
+                        EspressoIdlingResource.decrement();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NotNull Call<StandingResponse> call, @NotNull Throwable t) {
-                callback.onError(Objects.requireNonNull(t.getMessage()));
-            }
-        }), SERVICE_LATENCY_IN_MILLIS);
+                @Override
+                public void onFailure(@NotNull Call<StandingResponse> call, @NotNull Throwable t) {
+                    callback.onError(Objects.requireNonNull(t.getMessage()));
+                }
+            }), SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
     public void getListTeam(String id, final LoadListTeamCallback callback) {
         EspressoIdlingResource.increment();
-        handler.postDelayed(() -> apiClient.create().getListTeam(id).enqueue(new Callback<ListTeamResponse>() {
-            @Override
-            public void onResponse(@NotNull Call<ListTeamResponse> call, @NotNull Response<ListTeamResponse> response) {
-                if (response.isSuccessful()) {
-                    callback.onSuccess(response.body().getData());
-                    EspressoIdlingResource.decrement();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> apiClient.create().getListTeam(id).enqueue(new Callback<ListTeamResponse>() {
+                @Override
+                public void onResponse(@NotNull Call<ListTeamResponse> call, @NotNull Response<ListTeamResponse> response) {
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body().getData());
+                        EspressoIdlingResource.decrement();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NotNull Call<ListTeamResponse> call, @NotNull Throwable t) {
-                callback.onError(Objects.requireNonNull(t.getMessage()));
-            }
-        }), SERVICE_LATENCY_IN_MILLIS);
+                @Override
+                public void onFailure(@NotNull Call<ListTeamResponse> call, @NotNull Throwable t) {
+                    callback.onError(Objects.requireNonNull(t.getMessage()));
+                }
+            }), SERVICE_LATENCY_IN_MILLIS);
+        });
+    }
+
+    public void searchTeam(String query, final LoadListTeamCallback callback) {
+        EspressoIdlingResource.increment();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> apiClient.create().searchTeam(query).enqueue(new Callback<SearchTeamResponse>() {
+                @Override
+                public void onResponse(Call<SearchTeamResponse> call, Response<SearchTeamResponse> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body().getData() == null) {
+                            return;
+                        } else {
+                            callback.onSuccess(response.body().getData());
+                        }
+                        EspressoIdlingResource.decrement();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<SearchTeamResponse> call, @NotNull Throwable t) {
+                    callback.onError(Objects.requireNonNull(t.getMessage()));
+                }
+            }), SERVICE_LATENCY_IN_MILLIS);
+        });
     }
 
 }

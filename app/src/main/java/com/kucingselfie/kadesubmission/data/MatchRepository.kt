@@ -120,4 +120,19 @@ class MatchRepository @Inject constructor(private val remote: RemoteRepository) 
         })
         return teams
     }
+
+    override fun searchTeam(query: String): LiveData<Result<List<Team>>> {
+        val teams = MutableLiveData<Result<List<Team>>>()
+        teams.postValue(Result.Loading(null))
+        remote.searchTeam(query, object : LoadListTeamCallback {
+            override fun onSuccess(response: List<Team>) {
+                teams.postValue(Result.Success(response))
+            }
+
+            override fun onError(message: String) {
+                teams.postValue(Result.Error(message, null))
+            }
+        })
+        return teams
+    }
 }
