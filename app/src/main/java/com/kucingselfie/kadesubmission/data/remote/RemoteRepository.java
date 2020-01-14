@@ -282,4 +282,23 @@ public class RemoteRepository {
         });
     }
 
+    public void getDetailTeam(String id, final LoadDetailTeamCallback callback) {
+        EspressoIdlingResource.increment();
+        ExecutorsKt.getBACKGROUND().submit(() -> {
+            handler.postDelayed(() -> apiClient.create().getDetailTeam(id).enqueue(new Callback<DetailTeamResponse>() {
+                @Override
+                public void onResponse(Call<DetailTeamResponse> call, Response<DetailTeamResponse> response) {
+                    if (response.isSuccessful()) {
+                        callback.onSuccess(response.body().getTeams());
+                        EspressoIdlingResource.decrement();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull Call<DetailTeamResponse> call, @NotNull Throwable t) {
+                    callback.onError(Objects.requireNonNull(t.getMessage()));
+                }
+            }), SERVICE_LATENCY_IN_MILLIS);
+        });
+    }
 }

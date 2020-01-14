@@ -3,7 +3,7 @@ package com.kucingselfie.kadesubmission.data.league
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kucingselfie.kadesubmission.common.Result
-import com.kucingselfie.kadesubmission.data.LeagueDataSource
+import com.kucingselfie.kadesubmission.data.repository.league.LeagueDataSource
 import com.kucingselfie.kadesubmission.data.LoadDetailLeagueCallback
 import com.kucingselfie.kadesubmission.data.LoadListLeagueCallback
 import com.kucingselfie.kadesubmission.data.SearchMatchCallback

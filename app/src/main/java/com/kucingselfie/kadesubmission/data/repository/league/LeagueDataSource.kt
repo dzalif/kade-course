@@ -1,4 +1,4 @@
-package com.kucingselfie.kadesubmission.data
+package com.kucingselfie.kadesubmission.data.repository.league
 
 import androidx.lifecycle.LiveData
 import com.kucingselfie.kadesubmission.common.Result

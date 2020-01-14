@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.kucingselfie.kadesubmission.common.Result
-import com.kucingselfie.kadesubmission.data.MatchRepository
+import com.kucingselfie.kadesubmission.data.repository.match.MatchRepository
 import com.kucingselfie.kadesubmission.model.Match
 import javax.inject.Inject
 

@@ -1,9 +1,10 @@
-package com.kucingselfie.kadesubmission.data
+package com.kucingselfie.kadesubmission.data.repository.match
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kucingselfie.kadesubmission.api.response.DetailTeam
 import com.kucingselfie.kadesubmission.common.Result
+import com.kucingselfie.kadesubmission.data.*
 import com.kucingselfie.kadesubmission.data.remote.RemoteRepository
 import com.kucingselfie.kadesubmission.model.DetailMatch
 import com.kucingselfie.kadesubmission.model.Match
@@ -13,11 +14,13 @@ import com.kucingselfie.kadesubmission.testing.OpenForTesting
 import javax.inject.Inject
 
 @OpenForTesting
-class MatchRepository @Inject constructor(private val remote: RemoteRepository) : MatchDataSource {
+class MatchRepository @Inject constructor(private val remote: RemoteRepository) :
+    MatchDataSource {
     override fun getNextMatch(id: String): LiveData<Result<List<Match>>> {
         val nextMatch = MutableLiveData<Result<List<Match>>>()
         nextMatch.postValue(Result.Loading(null))
-        remote.getNextMatch(id, object : LoadNextMatchCallback {
+        remote.getNextMatch(id, object :
+            LoadNextMatchCallback {
             override fun onSuccess(response: List<Match>) {
                 nextMatch.postValue(Result.Success(response))
             }
@@ -32,7 +35,8 @@ class MatchRepository @Inject constructor(private val remote: RemoteRepository) 
     override fun getPreviousMatch(id: String): LiveData<Result<List<Match>>> {
         val previousMatch = MutableLiveData<Result<List<Match>>>()
         previousMatch.postValue(Result.Loading(null))
-        remote.getPreviousMatch(id, object : LoadPreviousMatchCallback {
+        remote.getPreviousMatch(id, object :
+            LoadPreviousMatchCallback {
             override fun onSuccess(response: List<Match>) {
                 previousMatch.postValue(Result.Success(response))
             }
@@ -48,7 +52,8 @@ class MatchRepository @Inject constructor(private val remote: RemoteRepository) 
     override fun getDetailMatch(id: String): LiveData<Result<List<DetailMatch>>> {
         val detailMatch = MutableLiveData<Result<List<DetailMatch>>>()
         detailMatch.postValue(Result.Loading(null))
-        remote.getDetailMatch(id, object : LoadDetailMatchCallback {
+        remote.getDetailMatch(id, object :
+            LoadDetailMatchCallback {
             override fun onSuccess(response: List<DetailMatch>) {
                 detailMatch.postValue(Result.Success(response))
             }
@@ -64,7 +69,8 @@ class MatchRepository @Inject constructor(private val remote: RemoteRepository) 
     override fun getDetailHomeTeam(id: String): LiveData<Result<List<DetailTeam>>> {
         val detailHome = MutableLiveData<Result<List<DetailTeam>>>()
         detailHome.postValue(Result.Loading(null))
-        remote.getDetailHomeTeam(id, object : LoadDetailTeamCallback {
+        remote.getDetailHomeTeam(id, object :
+            LoadDetailTeamCallback {
             override fun onSuccess(response: List<DetailTeam>) {
                 detailHome.postValue(Result.Success(response))
             }
@@ -79,7 +85,8 @@ class MatchRepository @Inject constructor(private val remote: RemoteRepository) 
     override fun getDetailAwayTeam(id: String): LiveData<Result<List<DetailTeam>>> {
         val detailAway = MutableLiveData<Result<List<DetailTeam>>>()
         detailAway.postValue(Result.Loading(null))
-        remote.getDetailAwayTeam(id, object : LoadDetailTeamCallback {
+        remote.getDetailAwayTeam(id, object :
+            LoadDetailTeamCallback {
             override fun onSuccess(response: List<DetailTeam>) {
                 detailAway.postValue(Result.Success(response))
             }
@@ -124,7 +131,8 @@ class MatchRepository @Inject constructor(private val remote: RemoteRepository) 
     override fun searchTeam(query: String): LiveData<Result<List<Team>>> {
         val teams = MutableLiveData<Result<List<Team>>>()
         teams.postValue(Result.Loading(null))
-        remote.searchTeam(query, object : LoadListTeamCallback {
+        remote.searchTeam(query, object :
+            LoadListTeamCallback {
             override fun onSuccess(response: List<Team>) {
                 teams.postValue(Result.Success(response))
             }

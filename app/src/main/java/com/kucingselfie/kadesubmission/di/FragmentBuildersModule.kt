@@ -2,6 +2,7 @@ package com.kucingselfie.kadesubmission.di
 
 import com.kucingselfie.kadesubmission.ui.detailleague.DetailLeagueFragment
 import com.kucingselfie.kadesubmission.ui.detailmatch.DetailMatchFragment
+import com.kucingselfie.kadesubmission.ui.detailteam.DetailTeamFragment
 import com.kucingselfie.kadesubmission.ui.listleague.ListLeagueFragment
 import com.kucingselfie.kadesubmission.ui.match.MatchFragment
 import com.kucingselfie.kadesubmission.ui.match.chooseleague.ChooseLeagueFragment
@@ -40,4 +41,7 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeTeamFragment(): TeamFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeDetailTeamFragment(): DetailTeamFragment
 }

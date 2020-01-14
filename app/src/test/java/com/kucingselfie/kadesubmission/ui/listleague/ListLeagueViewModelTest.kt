@@ -5,11 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.data.FakeRemoteData
-import com.kucingselfie.kadesubmission.data.LeagueRepository
+import com.kucingselfie.kadesubmission.data.repository.league.LeagueRepository
 import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.model.Search
 import com.kucingselfie.kadesubmission.util.mock
-import junit.framework.Assert
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import org.junit.Before
@@ -17,7 +16,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.Mock
 import org.mockito.Mockito.*
 
 @RunWith(JUnit4::class)

@@ -141,6 +141,9 @@
         <action
             android:id="@+id/action_matchFragment_to_detailMatchFragment"
             app:destination="@id/detailMatchFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_detailTeamFragment"
+            app:destination="@id/detailTeamFragment" />
         <argument
             android:name="idLeague"
             app:argType="string" />
@@ -153,5 +156,18 @@
         <action
             android:id="@+id/action_chooseLeagueFragment_to_matchFragment"
             app:destination="@id/matchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.match.team.TeamFragment"
+        android:label="TeamFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/detailTeamFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.detailteam.DetailTeamFragment"
+        android:label="Detail Team">
+        <argument
+            android:name="idTeam"
+            app:argType="string" />
     </fragment>
 </navigation>

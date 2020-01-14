@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kucingselfie.kadesubmission.ui.detailleague.DetailLeagueViewModel
 import com.kucingselfie.kadesubmission.ui.detailmatch.DetailMatchViewModel
+import com.kucingselfie.kadesubmission.ui.detailteam.DetailTeamViewModel
 import com.kucingselfie.kadesubmission.ui.listleague.ListLeagueViewModel
 import com.kucingselfie.kadesubmission.ui.match.chooseleague.ChooseLeagueViewModel
 import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchViewModel
@@ -56,6 +57,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TeamViewModel::class)
     abstract fun bindTeamViewModel(viewModel: TeamViewModel) : ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailTeamViewModel::class)
+    abstract fun bindDetailTeamViewModel(viewModel: DetailTeamViewModel) : ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: FootballViewModelFactory): ViewModelProvider.Factory

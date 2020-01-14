@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.data.FakeRemoteData
-import com.kucingselfie.kadesubmission.data.LeagueRepository
+import com.kucingselfie.kadesubmission.data.repository.league.LeagueRepository
 import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.util.mock
 import junit.framework.Assert.assertEquals

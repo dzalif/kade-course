@@ -15,11 +15,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kadesubmission.R
 import com.kucingselfie.kadesubmission.binding.FragmentDataBindingComponent
 import com.kucingselfie.kadesubmission.common.Result
 import com.kucingselfie.kadesubmission.databinding.FragmentTeamBinding
 import com.kucingselfie.kadesubmission.di.Injectable
+import com.kucingselfie.kadesubmission.ui.match.MatchFragment
+import com.kucingselfie.kadesubmission.ui.match.MatchFragmentDirections
 import com.kucingselfie.kadesubmission.util.AppExecutors
 import com.kucingselfie.kadesubmission.util.autoCleared
 import com.kucingselfie.kadesubmission.util.gone
@@ -121,11 +124,12 @@ class TeamFragment : Fragment(), Injectable {
             dataBindingComponent = dataBindingComponent,
             appExecutors = appExecutors
         ) {
-            // navController().navigate(ListLeagueFragmentDirections.actionListLeagueFragmentToDetailLeagueFragment(it.id))
+             navController().navigate(MatchFragmentDirections.actionTeamFragmentToDetailTeamFragment(it.id))
         }
         binding.results = vm.teams
         binding.resultSearch = vm.resultSearch
         binding.rvTeam.adapter = rvAdapter
         adapter = rvAdapter
     }
+    fun navController() = findNavController()
 }

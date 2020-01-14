@@ -1,4 +1,4 @@
-package com.kucingselfie.kadesubmission.data
+package com.kucingselfie.kadesubmission.data.repository.match
 
 import androidx.lifecycle.LiveData
 import com.kucingselfie.kadesubmission.api.response.DetailTeam

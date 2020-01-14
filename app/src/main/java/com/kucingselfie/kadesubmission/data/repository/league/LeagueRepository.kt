@@ -1,8 +1,11 @@
-package com.kucingselfie.kadesubmission.data
+package com.kucingselfie.kadesubmission.data.repository.league
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kucingselfie.kadesubmission.common.Result
+import com.kucingselfie.kadesubmission.data.LoadDetailLeagueCallback
+import com.kucingselfie.kadesubmission.data.LoadListLeagueCallback
+import com.kucingselfie.kadesubmission.data.SearchMatchCallback
 import com.kucingselfie.kadesubmission.data.remote.RemoteRepository
 import com.kucingselfie.kadesubmission.model.League
 import com.kucingselfie.kadesubmission.model.Search
@@ -10,11 +13,13 @@ import com.kucingselfie.kadesubmission.testing.OpenForTesting
 import javax.inject.Inject
 
 @OpenForTesting
-class LeagueRepository @Inject constructor(private val remote: RemoteRepository) : LeagueDataSource {
+class LeagueRepository @Inject constructor(private val remote: RemoteRepository) :
+    LeagueDataSource {
     override fun getDetailLeague(id: String): LiveData<Result<List<League>>> {
         val detailLeague = MutableLiveData<Result<List<League>>>()
         detailLeague.postValue(Result.Loading(null))
-        remote.getDetailLeague(id, object : LoadDetailLeagueCallback {
+        remote.getDetailLeague(id, object :
+            LoadDetailLeagueCallback {
             override fun onSuccess(response: List<League>) {
                 detailLeague.postValue(Result.Success(response))
             }
