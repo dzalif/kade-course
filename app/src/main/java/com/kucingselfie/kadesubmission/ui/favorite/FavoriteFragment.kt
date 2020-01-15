@@ -1,4 +1,4 @@
-package com.kucingselfie.kadesubmission.ui.favoritematch
+package com.kucingselfie.kadesubmission.ui.favorite
 
 
 import android.content.Context
@@ -13,12 +13,11 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.kucingselfie.kadesubmission.R
 import com.kucingselfie.kadesubmission.databinding.FragmentFavoriteMatchBinding
+import com.kucingselfie.kadesubmission.ui.favorite.match.NextMatchFavoriteFragment
+import com.kucingselfie.kadesubmission.ui.favorite.match.PreviousMatchFavoriteFragment
+import com.kucingselfie.kadesubmission.ui.favorite.team.TeamFavoriteFragment
 
-/**
- * A simple [Fragment] subclass.
- */
-class FavoriteMatchFragment : Fragment() {
-
+class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteMatchBinding
     private lateinit var viewPager : ViewPager
     private lateinit var viewPagerAdapter : ViewPagerFragment
@@ -43,12 +42,14 @@ class FavoriteMatchFragment : Fragment() {
     class ViewPagerFragment(fm: FragmentManager, context: Context): FragmentPagerAdapter(fm) {
         private val tabNextMatch = context.resources.getString(R.string.next_match)
         private val tabLastMatch = context.resources.getString(R.string.previous_match)
+        private val tabFavorite = context.resources.getString(R.string.team)
 
-        private val tabTitles = arrayOf(tabNextMatch, tabLastMatch)
+        private val tabTitles = arrayOf(tabNextMatch, tabLastMatch, tabFavorite)
 
         private val pages = listOf(
             NextMatchFavoriteFragment(),
-            PreviousMatchFavoriteFragment()
+            PreviousMatchFavoriteFragment(),
+            TeamFavoriteFragment()
         )
         override fun getItem(position: Int): Fragment {
             return pages[position]

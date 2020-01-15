@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
@@ -56,37 +57,33 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@{model.description}"
-                app:layout_constraintEnd_toEndOf="@+id/imageView3"
-                app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:layout_constraintEnd_toEndOf="@+id/textView13"
+                app:layout_constraintStart_toStartOf="@+id/textView13"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"
                 tools:text="Description" />
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@{model.stadium}"
-                app:layout_constraintEnd_toEndOf="@+id/textView14"
-                app:layout_constraintStart_toStartOf="@+id/textView14"
-                app:layout_constraintTop_toBottomOf="@+id/textView14"
-                tools:text="Stadium" />
-
-            <TextView
-                android:id="@+id/textView14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/stadium"
+                android:text="@{model.stadium}"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="@android:color/white"
+                android:background="@drawable/round_corner"
                 app:layout_constraintEnd_toEndOf="@+id/imageView3"
                 app:layout_constraintStart_toStartOf="@+id/imageView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                tools:text="Stadium" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="textView14,imageView3"/>
+                app:constraint_referenced_ids="imageView3,textView13"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
 
             <include
                 android:id="@+id/progressBar"

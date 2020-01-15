@@ -108,16 +108,19 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteMatchFragment"
-        android:name="com.kucingselfie.kadesubmission.ui.favoritematch.FavoriteMatchFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.favorite.FavoriteFragment"
         android:label="Favorite Match"
         tools:layout="@layout/fragment_favorite_match">
         <action
             android:id="@+id/action_favoriteMatchFragment_to_detailMatchFragment"
             app:destination="@id/detailMatchFragment" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_detailTeamFavoriteFragment"
+            app:destination="@id/detailTeamFragment" />
     </fragment>
     <fragment
         android:id="@+id/lastMatchFavoriteFragment"
-        android:name="com.kucingselfie.kadesubmission.ui.favoritematch.PreviousMatchFavoriteFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.favorite.match.PreviousMatchFavoriteFragment"
         tools:layout="@layout/fragment_last_match_favorite"
         android:label="LastMatchFavoriteFragment" >
         <action
@@ -126,7 +129,7 @@
     </fragment>
     <fragment
         android:id="@+id/nextMatchFavoriteFragment"
-        android:name="com.kucingselfie.kadesubmission.ui.favoritematch.NextMatchFavoriteFragment"
+        android:name="com.kucingselfie.kadesubmission.ui.favorite.match.NextMatchFavoriteFragment"
         tools:layout="@layout/fragment_next_match_favorite"
         android:label="NextMatchFavoriteFragment" >
         <action

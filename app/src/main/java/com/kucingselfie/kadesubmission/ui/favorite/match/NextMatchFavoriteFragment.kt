@@ -1,4 +1,4 @@
-package com.kucingselfie.kadesubmission.ui.favoritematch
+package com.kucingselfie.kadesubmission.ui.favorite.match
 
 
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.kucingselfie.kadesubmission.databinding.FragmentNextMatchFavoriteBinding
 import com.kucingselfie.kadesubmission.db.database
 import com.kucingselfie.kadesubmission.model.NextMatchFavorite
+import com.kucingselfie.kadesubmission.ui.favorite.FavoriteFragmentDirections
 import com.kucingselfie.kadesubmission.ui.match.nextmatch.NextMatchAdapter
 import com.kucingselfie.kadesubmission.util.invisible
 import com.kucingselfie.kadesubmission.util.visible
@@ -61,7 +62,7 @@ class NextMatchFavoriteFragment : Fragment() {
             favorites
         ) {
             val action =
-                FavoriteMatchFragmentDirections.actionFavoriteMatchFragmentToDetailMatchFragment(
+                FavoriteFragmentDirections.actionFavoriteMatchFragmentToDetailMatchFragment(
                     it.matchId!!,
                     it.matchPicture ?: "",
                     it.homeTeamId!!,

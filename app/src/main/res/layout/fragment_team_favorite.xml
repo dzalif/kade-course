@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.kucingselfie.kadesubmission.ui.favorite.team.TeamFavoriteFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTeam"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_favorite_team"/>
+
+        <include
+            android:id="@+id/layoutEmptyData"
+            layout="@layout/layout_empty_data"
+            android:visibility="invisible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

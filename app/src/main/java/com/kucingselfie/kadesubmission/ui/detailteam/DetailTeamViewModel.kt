@@ -17,6 +17,17 @@ class DetailTeamViewModel @Inject constructor(repository: TeamRepository) : View
         _idTeam.value = id
     }
 
+    private val _data = MutableLiveData<DetailTeam>()
+    val data: LiveData<DetailTeam> get() = _data
+
+    fun setData(data: DetailTeam?) {
+        _data.value = data
+    }
+
+    fun getData() : DetailTeam? {
+        return _data.value
+    }
+
     val team: LiveData<Result<List<DetailTeam>>> = Transformations.switchMap(_idTeam) {
         repository.getDetailTeam(it)
     }

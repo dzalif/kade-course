@@ -33,4 +33,6 @@
     <string name="teams">Teams</string>
     <string name="search_team">Search team..</string>
     <string name="stadium">Stadium</string>
+    <string name="removed_from_favorite">Removed from favorite</string>
+    <string name="added_to_favorite">Added to favorite</string>
 </resources>
